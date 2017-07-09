@@ -6,13 +6,6 @@ Created on 24 June 2017
 @description: Main python code file for Applying ANN as a TPMS
 
 """
-from __future__ import print_function, division
-import numpy as np
-import tensorflow as tf
-import matplotlib.pyplot as plt
-import logging
-
-
 #############
 # Program Flow
 #
@@ -32,123 +25,66 @@ import logging
 # second number is the tire pressure. We should try to merge all of the folders together into one big CSV
 ###############
 
+from __future__ import print_function, division
+import logging
+import tensorflow as tf
+import matplotlib.pyplot as plt
+from tensorflow.examples.tutorials.mnist import input_data
+
+
 """ Constants """
 DEFAULT_FORMAT = '%(asctime)s: %(levelname)s: %(name)s: %(message)s'
-IRIS_TRAINING = "iris_training.csv"
-IRIS_TEST = "iris_test.csv"
-
+mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
 def main():
-    num_epochs = 100
-    total_series_length = 50000
-    truncated_backprop_length = 15
-    state_size = 4
-    num_classes = 2
-    echo_step = 3
-    batch_size = 5
-    num_batches = total_series_length // batch_size // truncated_backprop_length
+    # Input parameters
+    num_epochs = 100                # epoch is number of times we go through ALL data
+    num_labels = 10                  # number of data labels: over-pressurized, under-pressurized, correct pressure
+    length_of_time = 784           # how many datapoints in a time-series
+    batch_size = 100                # See "Train our model"
 
-    def generateData():
-        x = np.array(np.random.choice(2, total_series_length, p=[0.5, 0.5]))
-        y = np.roll(x, echo_step)
-        y[0:echo_step] = 0
+    # INPUT LAYER
+    x = tf.placeholder(tf.float32, [None, length_of_time])
 
-        x = x.reshape((batch_size, -1))  # The first index changing slowest, subseries as rows
-        y = y.reshape((batch_size, -1))
+    # WEIGHTS AND BIASES
+    W = tf.Variable(tf.zeros([length_of_time, num_labels]))
+    b = tf.Variable(tf.zeros([num_labels]))
 
-        return (x, y)
+    # OUTPUT LAYER
+    y = tf.nn.softmax(tf.matmul(x, W) + b)
 
-    batchX_placeholder = tf.placeholder(tf.float32, [batch_size, truncated_backprop_length])
-    batchY_placeholder = tf.placeholder(tf.int32, [batch_size, truncated_backprop_length])
+    # TRAINING PARAMETERS
+    # Cross-Entropy: http://colah.github.io/posts/2015-09-Visual-Information/
+    # "measuring how inefficient our predictions are for describing the truth."
+    # inefficient method:
+    y_ = tf.placeholder(tf.float32, [None, num_labels])
+    cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y), reduction_indices=[1]))
+    # efficient method:
+    #cross_entropy = tf.nn.softmax_cross_entropy_with_logits(y)
 
-    init_state = tf.placeholder(tf.float32, [batch_size, state_size])
+    # use backpropogation algorithm (tweak this line for different optimizer)
+    train_step = tf.train.GradientDescentOptimizer(0.05).minimize(cross_entropy)
 
-    W = tf.Variable(np.random.rand(state_size + 1, state_size), dtype=tf.float32)
-    b = tf.Variable(np.zeros((1, state_size)), dtype=tf.float32)
+    # RUN SESSION
+    sess = tf.InteractiveSession()              # Launch model
+    tf.global_variables_initializer().run()     # initialize all tf.variables
 
-    W2 = tf.Variable(np.random.rand(state_size, num_classes), dtype=tf.float32)
-    b2 = tf.Variable(np.zeros((1, num_classes)), dtype=tf.float32)
+    # Train our model
+    for _ in range(1000):                       # Run training step 1000 times
+        # Each step of the loop, we get a "batch" of one hundred random data points from our training set.
+        # TODO:  mnist.train needs to be OURDATA.train
+        batch_xs, batch_ys = mnist.train.next_batch(batch_size)        # 100 = batch size, not worth doing entire batch
+        sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
 
-    # Unpack columns
-    inputs_series = tf.unpack(batchX_placeholder, axis=1)
-    labels_series = tf.unpack(batchY_placeholder, axis=1)
+    # EVALUATE OUR MODEL
+    # tf.argmax = returns index of the highest entry in a tensor along some axis.
+    # So here, tf.equal is comparing predicted label to actual label, returns list of bools
+    correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
+    # tf.cast coverts bools to 1 and 0, tf.reduce_mean finds the mean of all values in the list
+    accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+    # TODO: mnist.test needs to be OURDATA.test
+    print(sess.run(accuracy, feed_dict={x: mnist.test.images, y_: mnist.test.labels}))
 
-    # Forward pass
-    current_state = init_state
-    states_series = []
-    for current_input in inputs_series:
-        current_input = tf.reshape(current_input, [batch_size, 1])
-        input_and_state_concatenated = tf.concat(1, [current_input, current_state])  # Increasing number of columns
-
-        next_state = tf.tanh(tf.matmul(input_and_state_concatenated, W) + b)  # Broadcasted addition
-        states_series.append(next_state)
-        current_state = next_state
-
-    logits_series = [tf.matmul(state, W2) + b2 for state in states_series]  # Broadcasted addition
-    predictions_series = [tf.nn.softmax(logits) for logits in logits_series]
-
-    losses = [tf.nn.sparse_softmax_cross_entropy_with_logits(logits, labels) for logits, labels in
-              zip(logits_series, labels_series)]
-    total_loss = tf.reduce_mean(losses)
-
-    train_step = tf.train.AdagradOptimizer(0.3).minimize(total_loss)
-
-    def plot(loss_list, predictions_series, batchX, batchY):
-        plt.subplot(2, 3, 1)
-        plt.cla()
-        plt.plot(loss_list)
-
-        for batch_series_idx in range(5):
-            one_hot_output_series = np.array(predictions_series)[:, batch_series_idx, :]
-            single_output_series = np.array([(1 if out[0] < 0.5 else 0) for out in one_hot_output_series])
-
-            plt.subplot(2, 3, batch_series_idx + 2)
-            plt.cla()
-            plt.axis([0, truncated_backprop_length, 0, 2])
-            left_offset = range(truncated_backprop_length)
-            plt.bar(left_offset, batchX[batch_series_idx, :], width=1, color="blue")
-            plt.bar(left_offset, batchY[batch_series_idx, :] * 0.5, width=1, color="red")
-            plt.bar(left_offset, single_output_series * 0.3, width=1, color="green")
-
-        plt.draw()
-        plt.pause(0.0001)
-
-    with tf.Session() as sess:
-        sess.run(tf.initialize_all_variables())
-        plt.ion()
-        plt.figure()
-        plt.show()
-        loss_list = []
-
-        for epoch_idx in range(num_epochs):
-            x, y = generateData()
-            _current_state = np.zeros((batch_size, state_size))
-
-            print("New data, epoch", epoch_idx)
-
-            for batch_idx in range(num_batches):
-                start_idx = batch_idx * truncated_backprop_length
-                end_idx = start_idx + truncated_backprop_length
-
-                batchX = x[:, start_idx:end_idx]
-                batchY = y[:, start_idx:end_idx]
-
-                _total_loss, _train_step, _current_state, _predictions_series = sess.run(
-                    [total_loss, train_step, current_state, predictions_series],
-                    feed_dict={
-                        batchX_placeholder: batchX,
-                        batchY_placeholder: batchY,
-                        init_state: _current_state
-                    })
-
-                loss_list.append(_total_loss)
-
-                if batch_idx % 100 == 0:
-                    print("Step", batch_idx, "Loss", _total_loss)
-                    plot(loss_list, _predictions_series, batchX, batchY)
-
-    plt.ioff()
-    plt.show()
 
 
 if __name__ == '__main__':
