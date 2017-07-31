@@ -1,13 +1,16 @@
 function [ xDD ] = SimFunc(u)
+% SimFunc is used in QuarterModelMatrix.slx
+% All motions of equation are in matrix form and done here to keep
+% the simulink model clean. GUIs can be painful sometimes.
 
 global m_s m_u c_s k_s k_u g
 
-% To make code readable, reassign Simulink values
-x_s = u(1);         % (m)
-x_s_d = u(2);       % (m/s)
-x_u = u(3);         % (m)
-x_u_d = u(4);       % (m/s)
-y = u(5);           % (m)
+% Reassign Simulink values for readability
+x_s = u(1);         % sprung mass height, m
+x_s_d = u(2);       % sprung mass velocity, m/s
+x_u = u(3);         % unsprung mass height, m
+x_u_d = u(4);       % unsprung mass velocity, m/s
+y = u(5);           % road height (step input), m
 
 % Assign matrix elements
 M11 = m_s;
@@ -60,6 +63,5 @@ xDD = M\A;
 % 
 % xDD = [F_s/m_s;
 %      F_u/m_u];
-% disp(xDD);
 
 end
