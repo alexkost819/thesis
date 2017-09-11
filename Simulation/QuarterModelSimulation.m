@@ -1,4 +1,4 @@
-function [ simout ] = QuarterModelSimulation(psi, save_path)
+function [ simout ] = QuarterModelSimulation(psi, y, save_path, sim_time)
 % QuarterModelSimulation runs a Simulink model based on provided PSI
 % and outputs the relevant data to be used elsewhere
 
@@ -14,21 +14,26 @@ g = 9.81;               % gravity, m/s^2
 %% Vehicle parameters (user-provided)
 m_s_full = 1109;                    % full body mass, kg
 zeta = .25;                         % dampening ratio
-eta = 8;                            % sprung/unsprung mass ratio
+epsilon = 8;                        % sprung/unsprung mass ratio
 alpha = .1;                         % natural frequency ratio
 
 %% Vehicle parameters (calculated)
 m_s = m_s_full / 4;                 % quarter body mass, kg
-m_u = m_s / eta;                    % quarter unsprung mass, kg
+m_air = CalculateTireWeight(psi);   % mass of air in tire, kg
+m_u = (m_s / epsilon) + m_air;      % quarter unsprung mass, kg
 
-%% Calculate stiffness and damping coefficients
+%% Calculate suspension values from ideal conditions (32 psi)
+[ k_s, c_s, omega_s ] = CalculateSuspensionStiffnessDamping(32);
+
+%% Calculate tire stiffness from PSI
 % Unsprung mass refers to all masses that are attached to and not supported by the spring, such as wheel, axle, or brakes.
-[ k_s, c_s, k_u, omega_u, omega_s ] = CalculateStiffnessDamping(psi);
+[ k_u, omega_u ] = CalculateTireStiffness(psi);
 
 %% Check we have all the values we need for the simulation
-debug = 0;
+debug = 1;
 if debug
     fprintf('psi = %f [psi]\n', psi);
+    fprintf('step_size = %f [m]\n', y);
     fprintf('m_s = %f [kg]\n', m_s);
     fprintf('m_u = %f [kg]\n', m_u);
     fprintf('c_s = %f [N/(m/s)]\n', c_s);
@@ -40,8 +45,8 @@ if debug
     fprintf('omega_u = %f [Hz]\n', omega_u);
 end
 
-%% run Simulink simulation for 10 seconds
-sim('QuarterModelMatrix.slx', 1.5);
+%% run Simulink simulation
+sim('QuarterModelMatrix.slx', sim_time);
 
 %% Output plot to verify things are working - they are!
 % time = simout(:,6);
@@ -55,15 +60,25 @@ sim('QuarterModelMatrix.slx', 1.5);
 
 %% Output data to .csv file
 % Identify name and save location
-filename = strcat('Simulation_', num2str(psi), '.csv');
+filename = strcat('Sim_', num2str(psi), 'psi_', num2str(y), 'm.csv');
 fullfilename = fullfile(save_path, filename);
 
+% calculate label value
+if psi < 30
+    label_val = 0;
+elseif psi <= 34
+    label_val = 1;
+elseif psi > 34
+    label_val = 2;
+end
 % Create matrix to output
 time = simout(:,6);
 sprung_acc = acc(:,1);
 unsprung_acc = acc(:,2);
 sprung_height = simout(:,1);
-M = [time sprung_acc unsprung_acc sprung_height];
+label = ones(length(simout(:,6)),1) * label_val;
+
+M = [time sprung_acc unsprung_acc sprung_height label];
 
 % Write CSV file
 csvwrite(fullfilename, M);

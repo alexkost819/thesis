@@ -20,14 +20,23 @@ clear all
 close all
 
 %% Test parameters (user-provided)
-num_sims = 21;              % number of simulations to run
-psi_min = 20;               % minimum psi to simulate
-psi_max = 40;               % maximum psi to simulate
+num_psi = 21;               % number of psis to simulate
+psi_min = 20;               % minimum psi
+psi_max = 40;               % maximum psi
+
+num_steps = 10;             % number of step sizes to simlate
+step_min = .1;               % minimum step size, m
+step_max = 1;               % maximum step size, m
+
+sim_time = 1.75;               % simulation time, s
+
+% path to save data to
 save_path = '/Users/alexkost/Dropbox/Grad Life/thesis/Data/simulation';
 
 %% Test parameters (predefined)
-% Create a range of PSIs using defined values above
-psi_all = linspace(psi_min, psi_max, num_sims+1);
+% Create a range of PSIs and Steps using defined values above
+psi_all = linspace(psi_min, psi_max, num_psi);
+steps_all = linspace(step_min, step_max, num_steps);
 
 % ICs for simulations (cannot be nested in functions)
 % Should consider making this dynamic... but don't know how
@@ -36,23 +45,36 @@ IC = [-1.74412834455962e-12
     -5.70054231468026e-11
     -7.99748963336152e-05];
 
-%% Run simulations
-figure(1)
-hold on;
+%% Run simulations and plot figure
+for i=1:num_steps
+    step_size = steps_all(i);
 
-for i=1:num_sims
-    psi = psi_all(i);
-    simout = QuarterModelSimulation(psi, save_path);
+    figure(i)
+    hold on;
+
+    for j=1:num_psi
+        psi = psi_all(j);
+        simout = QuarterModelSimulation(psi, ...
+                                        step_size, ...
+                                        save_path, ...
+                                        sim_time);
+        
+        time = simout(:,6);
+        z = simout(:,1);
+        str = strcat(num2str(psi_all(j)), ' psi');
+        plot(time, z, 'DisplayName', str);
+    end
     
-    % Output plot to verify things are working - they are!
-    time = simout(:,6);
-    z = simout(:,1);
-    str = strcat(num2str(psi_all(i)), ' psi');
-    plot(time, z, 'DisplayName', str);
+    % create figure with step
+    plot(time, simout(:,5),'--','DisplayName','Step');
+    hold off;
+    title(sprintf('Quarter-Car Motion\nStep size = %g [m]', step_size));
+    xlabel('Time (s)');
+    ylabel('Vehicle height (m)');
+    legend('show');
+    
+    % save figure
+    filename = sprintf('Plot_step_size_%g.png', step_size);
+    fullfilename = fullfile(save_path, filename);
+    print(figure(i),fullfilename,'-dpng','-r300')
 end
-
-hold off;
-title('Quarter-Car motion vs. Time');
-xlabel('Time (s)');
-ylabel('Car height (m)');
-legend('show');
