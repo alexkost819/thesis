@@ -133,7 +133,7 @@ def main():
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())             # initialize all tf.variables
         # Train our model
-        for i in range(20000):                       # Run training step 1000 times
+        for i in range(1000):                       # Run training step 1000 times
             # Each step of the loop, we get a "batch" of one hundred random data points from our training set.
             batch_xs, batch_ys = mnist.train.next_batch(batch_size)        # 100 = batch size, not worth doing entire batch
             # TODO:  mnist.train needs to be OURDATA.train
