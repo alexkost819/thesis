@@ -1,4 +1,4 @@
-function [ simout ] = QuarterModelSimulation(psi, y, save_path, sim_time)
+function [ simout ] = QuarterModelSimulation(psi, y, save_path, snr, sim_time)
 % QuarterModelSimulation runs a Simulink model based on provided PSI
 % and outputs the relevant data to be used elsewhere
 
@@ -40,6 +40,7 @@ if debug
     fprintf('k_s = %f [N/m]\n', k_s);
     fprintf('k_u = %f [N/m]\n', k_u);
     fprintf('g = %f [m/s^2]\n', g);
+    fprintf('snr = %f [dB]\n', snr);
     % And print out the stuff that we don't need anyways
     fprintf('omega_s = %f [Hz]\n', omega_s);
     fprintf('omega_u = %f [Hz]\n', omega_u);
@@ -77,6 +78,13 @@ sprung_acc = acc(:,1);
 unsprung_acc = acc(:,2);
 sprung_height = simout(:,1);
 label = ones(length(simout(:,6)),1) * label_val;
+
+% Add white gaussian noise
+if snr > 0
+    sprung_acc = awgn(sprung_acc, snr);
+    unsprung_acc = awgn(unsprung_acc, snr);
+    sprung_height = awgn(sprung_height, snr);
+end
 
 M = [time sprung_acc unsprung_acc sprung_height label];
 

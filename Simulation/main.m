@@ -25,10 +25,11 @@ psi_min = 20;               % minimum psi
 psi_max = 40;               % maximum psi
 
 num_steps = 10;             % number of step sizes to simlate
-step_min = .1;               % minimum step size, m
+step_min = .1;              % minimum step size, m
 step_max = 1;               % maximum step size, m
 
-sim_time = 1.75;               % simulation time, s
+sim_time = 1.75;            % simulation time, s
+sig_noise_ratio = 10;        % signal-to-noise ratio per sample, dB
 
 % path to save data to
 save_path = '/Users/alexkost/Dropbox/Grad Life/thesis/Data/simulation';
@@ -57,6 +58,7 @@ for i=1:num_steps
         simout = QuarterModelSimulation(psi, ...
                                         step_size, ...
                                         save_path, ...
+                                        sig_noise_ratio, ...
                                         sim_time);
         
         time = simout(:,6);
