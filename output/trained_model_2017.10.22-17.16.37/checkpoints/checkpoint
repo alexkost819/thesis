@@ -1,0 +1,6 @@
+model_checkpoint_path: "/Users/alexkost/Dropbox/Grad Life/thesis/output/trained_model_2017.10.22-17.16.37/checkpoints/model-5850"
+all_model_checkpoint_paths: "/Users/alexkost/Dropbox/Grad Life/thesis/output/trained_model_2017.10.22-17.16.37/checkpoints/model-5810"
+all_model_checkpoint_paths: "/Users/alexkost/Dropbox/Grad Life/thesis/output/trained_model_2017.10.22-17.16.37/checkpoints/model-5820"
+all_model_checkpoint_paths: "/Users/alexkost/Dropbox/Grad Life/thesis/output/trained_model_2017.10.22-17.16.37/checkpoints/model-5830"
+all_model_checkpoint_paths: "/Users/alexkost/Dropbox/Grad Life/thesis/output/trained_model_2017.10.22-17.16.37/checkpoints/model-5840"
+all_model_checkpoint_paths: "/Users/alexkost/Dropbox/Grad Life/thesis/output/trained_model_2017.10.22-17.16.37/checkpoints/model-5850"
