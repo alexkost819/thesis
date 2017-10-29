@@ -3153,3 +3153,1326 @@
 
 2017-10-23 01:48:37,761: INFO: Error reported to Coordinator: <class 'tensorflow.python.framework.errors_impl.CancelledError'>, Enqueue operation was cancelled
 	 [[Node: Input_Batch/input_producer/input_producer_EnqueueMany = QueueEnqueueManyV2[Tcomponents=[DT_STRING], timeout_ms=-1, _device="/job:localhost/replica:0/task:0/cpu:0"](Input_Batch/input_producer, Input_Batch/input_producer/limit_epochs)]]
+2017-10-23 02:23:10,490: INFO: *** NEW RUN ***
+2017-10-23 02:23:10,490: INFO: filename: trained_model_2017.10.23-02.23.10
+2017-10-23 02:23:10,490: INFO: n_epochs: 500
+2017-10-23 02:23:10,491: INFO: n_hidden: 32
+2017-10-23 02:23:10,491: INFO: batch_size: 5
+2017-10-23 02:23:10,491: INFO: n_layers: 3
+2017-10-23 02:23:10,491: INFO: exp_decay_enabled: False
+2017-10-23 02:23:10,491: INFO: static_lr_val: 0.050
+2017-10-23 02:23:10,492: INFO: Reg Type: None
+2017-10-23 02:23:10,492: INFO:   Dropout Prob: 0.50
+2017-10-23 02:23:10,492: INFO:   Beta: 0.010
+
+2017-10-23 02:23:13,972: INFO: The training shall begin.
+2017-10-23 02:23:22,373: INFO: Epoch: 0, Iter: 0, Loss: 6.161, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 02:24:24,854: INFO: Epoch: 0, Iter: 50, Loss: 1.118, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 02:25:33,594: INFO: Epoch: 0, Iter: 100, Loss: 1.080, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 02:26:38,943: INFO: Epoch: 0, Iter: 150, Loss: 1.288, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 02:27:41,514: INFO: Epoch: 0, Iter: 200, Loss: 1.303, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 02:28:42,583: INFO: Epoch: 1, Iter: 250, Loss: 0.817, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 02:29:42,763: INFO: Epoch: 1, Iter: 300, Loss: 0.969, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 02:30:42,839: INFO: Epoch: 1, Iter: 350, Loss: 1.257, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 02:31:43,425: INFO: Epoch: 1, Iter: 400, Loss: 1.221, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 02:32:44,174: INFO: Epoch: 2, Iter: 450, Loss: 0.988, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 02:33:44,743: INFO: Epoch: 2, Iter: 500, Loss: 1.047, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 02:34:45,134: INFO: Epoch: 2, Iter: 550, Loss: 1.121, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 02:35:45,380: INFO: Epoch: 2, Iter: 600, Loss: 1.169, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 02:36:46,053: INFO: Epoch: 3, Iter: 650, Loss: 0.856, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 02:37:46,054: INFO: Epoch: 3, Iter: 700, Loss: 1.290, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 02:38:46,433: INFO: Epoch: 3, Iter: 750, Loss: 1.111, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 02:39:47,043: INFO: Epoch: 3, Iter: 800, Loss: 1.066, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 02:40:47,471: INFO: Epoch: 4, Iter: 850, Loss: 1.158, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 02:41:47,595: INFO: Epoch: 4, Iter: 900, Loss: 1.106, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 02:42:48,232: INFO: Epoch: 4, Iter: 950, Loss: 1.124, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 02:43:48,845: INFO: Epoch: 4, Iter: 1000, Loss: 1.031, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 02:44:49,258: INFO: Epoch: 5, Iter: 1050, Loss: 0.975, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 02:45:49,649: INFO: Epoch: 5, Iter: 1100, Loss: 0.974, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 02:46:50,626: INFO: Epoch: 5, Iter: 1150, Loss: 1.132, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 02:47:51,198: INFO: Epoch: 5, Iter: 1200, Loss: 1.067, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 02:48:52,242: INFO: Epoch: 5, Iter: 1250, Loss: 1.144, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 02:49:52,839: INFO: Epoch: 6, Iter: 1300, Loss: 0.993, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 02:50:53,078: INFO: Epoch: 6, Iter: 1350, Loss: 1.239, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 02:51:53,748: INFO: Epoch: 6, Iter: 1400, Loss: 0.953, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 02:52:54,209: INFO: Epoch: 6, Iter: 1450, Loss: 1.308, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 02:53:54,772: INFO: Epoch: 7, Iter: 1500, Loss: 1.305, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 02:54:55,450: INFO: Epoch: 7, Iter: 1550, Loss: 0.944, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 02:55:55,747: INFO: Epoch: 7, Iter: 1600, Loss: 1.134, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 02:56:56,617: INFO: Epoch: 7, Iter: 1650, Loss: 1.134, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 02:57:57,126: INFO: Epoch: 8, Iter: 1700, Loss: 1.201, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 02:58:57,532: INFO: Epoch: 8, Iter: 1750, Loss: 1.067, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 02:59:58,060: INFO: Epoch: 8, Iter: 1800, Loss: 0.932, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 03:00:58,623: INFO: Epoch: 8, Iter: 1850, Loss: 0.855, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 03:01:59,363: INFO: Epoch: 9, Iter: 1900, Loss: 1.377, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 03:02:59,912: INFO: Epoch: 9, Iter: 1950, Loss: 1.012, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 03:04:00,620: INFO: Epoch: 9, Iter: 2000, Loss: 1.208, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 03:05:00,747: INFO: Epoch: 9, Iter: 2050, Loss: 1.263, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 03:06:01,351: INFO: Epoch: 10, Iter: 2100, Loss: 1.198, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 03:07:02,147: INFO: Epoch: 10, Iter: 2150, Loss: 1.112, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 03:08:02,530: INFO: Epoch: 10, Iter: 2200, Loss: 0.994, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 03:09:03,076: INFO: Epoch: 10, Iter: 2250, Loss: 1.062, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 03:10:03,183: INFO: Epoch: 10, Iter: 2300, Loss: 1.217, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 03:11:03,342: INFO: Epoch: 11, Iter: 2350, Loss: 1.029, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 03:12:03,633: INFO: Epoch: 11, Iter: 2400, Loss: 1.097, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 03:13:04,373: INFO: Epoch: 11, Iter: 2450, Loss: 1.095, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 03:14:05,039: INFO: Epoch: 11, Iter: 2500, Loss: 1.028, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 03:15:05,132: INFO: Epoch: 12, Iter: 2550, Loss: 0.974, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 03:16:05,225: INFO: Epoch: 12, Iter: 2600, Loss: 1.201, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 03:17:05,846: INFO: Epoch: 12, Iter: 2650, Loss: 1.052, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 03:18:06,364: INFO: Epoch: 12, Iter: 2700, Loss: 1.137, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 03:19:06,414: INFO: Epoch: 13, Iter: 2750, Loss: 1.377, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 03:20:07,030: INFO: Epoch: 13, Iter: 2800, Loss: 1.524, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 03:21:07,427: INFO: Epoch: 13, Iter: 2850, Loss: 1.251, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 03:22:07,832: INFO: Epoch: 13, Iter: 2900, Loss: 1.082, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 03:23:08,644: INFO: Epoch: 14, Iter: 2950, Loss: 1.064, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 03:24:08,947: INFO: Epoch: 14, Iter: 3000, Loss: 0.971, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 03:25:09,191: INFO: Epoch: 14, Iter: 3050, Loss: 1.209, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 03:26:09,810: INFO: Epoch: 14, Iter: 3100, Loss: 0.957, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 03:27:10,214: INFO: Epoch: 15, Iter: 3150, Loss: 1.117, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 03:28:10,607: INFO: Epoch: 15, Iter: 3200, Loss: 1.149, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 03:29:11,455: INFO: Epoch: 15, Iter: 3250, Loss: 1.300, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 03:30:11,713: INFO: Epoch: 15, Iter: 3300, Loss: 1.049, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 03:31:12,469: INFO: Epoch: 15, Iter: 3350, Loss: 1.090, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 03:32:12,933: INFO: Epoch: 16, Iter: 3400, Loss: 0.754, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 03:33:13,764: INFO: Epoch: 16, Iter: 3450, Loss: 1.029, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 03:34:14,308: INFO: Epoch: 16, Iter: 3500, Loss: 1.075, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 03:35:14,910: INFO: Epoch: 16, Iter: 3550, Loss: 1.304, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 03:36:14,854: INFO: Epoch: 17, Iter: 3600, Loss: 0.844, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 03:37:15,190: INFO: Epoch: 17, Iter: 3650, Loss: 1.340, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 03:38:15,662: INFO: Epoch: 17, Iter: 3700, Loss: 0.980, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 03:39:16,141: INFO: Epoch: 17, Iter: 3750, Loss: 1.112, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 03:40:16,504: INFO: Epoch: 18, Iter: 3800, Loss: 0.975, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 03:41:17,229: INFO: Epoch: 18, Iter: 3850, Loss: 1.217, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 03:42:18,129: INFO: Epoch: 18, Iter: 3900, Loss: 0.951, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 03:43:18,996: INFO: Epoch: 18, Iter: 3950, Loss: 1.278, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 03:44:19,009: INFO: Epoch: 19, Iter: 4000, Loss: 1.101, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 03:45:19,250: INFO: Epoch: 19, Iter: 4050, Loss: 1.069, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 03:46:19,807: INFO: Epoch: 19, Iter: 4100, Loss: 0.893, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 03:47:20,447: INFO: Epoch: 19, Iter: 4150, Loss: 1.178, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 03:48:21,064: INFO: Epoch: 20, Iter: 4200, Loss: 0.905, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 03:49:21,396: INFO: Epoch: 20, Iter: 4250, Loss: 1.019, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 03:50:22,116: INFO: Epoch: 20, Iter: 4300, Loss: 1.036, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 03:51:22,164: INFO: Epoch: 20, Iter: 4350, Loss: 0.868, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 03:52:22,610: INFO: Epoch: 20, Iter: 4400, Loss: 1.197, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 03:53:23,067: INFO: Epoch: 21, Iter: 4450, Loss: 0.845, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 03:54:23,345: INFO: Epoch: 21, Iter: 4500, Loss: 1.142, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 03:55:23,588: INFO: Epoch: 21, Iter: 4550, Loss: 0.919, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 03:56:23,781: INFO: Epoch: 21, Iter: 4600, Loss: 0.893, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 03:57:24,432: INFO: Epoch: 22, Iter: 4650, Loss: 0.984, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 03:58:25,967: INFO: Epoch: 22, Iter: 4700, Loss: 1.122, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 03:59:26,080: INFO: Epoch: 22, Iter: 4750, Loss: 1.092, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:00:26,862: INFO: Epoch: 22, Iter: 4800, Loss: 0.911, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 04:01:27,194: INFO: Epoch: 23, Iter: 4850, Loss: 1.255, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:02:27,682: INFO: Epoch: 23, Iter: 4900, Loss: 1.157, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:03:28,281: INFO: Epoch: 23, Iter: 4950, Loss: 1.088, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:04:28,769: INFO: Epoch: 23, Iter: 5000, Loss: 1.193, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 04:05:29,406: INFO: Epoch: 24, Iter: 5050, Loss: 0.966, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 04:06:29,894: INFO: Epoch: 24, Iter: 5100, Loss: 0.978, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 04:07:30,572: INFO: Epoch: 24, Iter: 5150, Loss: 1.162, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 04:08:31,270: INFO: Epoch: 24, Iter: 5200, Loss: 1.196, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:09:31,587: INFO: Epoch: 25, Iter: 5250, Loss: 1.327, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:10:31,965: INFO: Epoch: 25, Iter: 5300, Loss: 1.015, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:11:32,564: INFO: Epoch: 25, Iter: 5350, Loss: 0.968, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 04:12:33,252: INFO: Epoch: 25, Iter: 5400, Loss: 0.969, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 04:13:34,231: INFO: Epoch: 25, Iter: 5450, Loss: 1.097, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:14:34,398: INFO: Epoch: 26, Iter: 5500, Loss: 1.022, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 04:15:34,894: INFO: Epoch: 26, Iter: 5550, Loss: 1.010, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:16:35,404: INFO: Epoch: 26, Iter: 5600, Loss: 1.174, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:17:36,184: INFO: Epoch: 26, Iter: 5650, Loss: 0.846, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 04:18:36,711: INFO: Epoch: 27, Iter: 5700, Loss: 1.008, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:19:37,024: INFO: Epoch: 27, Iter: 5750, Loss: 1.138, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:20:37,527: INFO: Epoch: 27, Iter: 5800, Loss: 1.179, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 04:21:38,068: INFO: Epoch: 27, Iter: 5850, Loss: 0.807, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 04:22:38,479: INFO: Epoch: 28, Iter: 5900, Loss: 1.379, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 04:23:38,949: INFO: Epoch: 28, Iter: 5950, Loss: 1.080, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:24:39,388: INFO: Epoch: 28, Iter: 6000, Loss: 1.071, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 04:25:39,413: INFO: Epoch: 28, Iter: 6050, Loss: 1.305, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 04:26:39,708: INFO: Epoch: 29, Iter: 6100, Loss: 0.800, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 04:27:40,207: INFO: Epoch: 29, Iter: 6150, Loss: 1.093, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:28:40,822: INFO: Epoch: 29, Iter: 6200, Loss: 0.957, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 04:29:40,963: INFO: Epoch: 29, Iter: 6250, Loss: 1.339, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 04:30:41,099: INFO: Epoch: 30, Iter: 6300, Loss: 0.996, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 04:31:41,298: INFO: Epoch: 30, Iter: 6350, Loss: 1.123, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:32:41,814: INFO: Epoch: 30, Iter: 6400, Loss: 0.970, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 04:33:42,431: INFO: Epoch: 30, Iter: 6450, Loss: 0.890, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 04:34:43,030: INFO: Epoch: 30, Iter: 6500, Loss: 1.312, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 04:35:43,115: INFO: Epoch: 31, Iter: 6550, Loss: 1.106, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 04:36:43,798: INFO: Epoch: 31, Iter: 6600, Loss: 0.914, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 04:37:44,345: INFO: Epoch: 31, Iter: 6650, Loss: 1.365, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 04:38:45,664: INFO: Epoch: 31, Iter: 6700, Loss: 1.062, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:39:46,370: INFO: Epoch: 32, Iter: 6750, Loss: 1.022, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:40:46,856: INFO: Epoch: 32, Iter: 6800, Loss: 1.146, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 04:41:47,146: INFO: Epoch: 32, Iter: 6850, Loss: 1.111, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:42:47,752: INFO: Epoch: 32, Iter: 6900, Loss: 1.215, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 04:43:48,326: INFO: Epoch: 33, Iter: 6950, Loss: 1.059, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 04:44:48,534: INFO: Epoch: 33, Iter: 7000, Loss: 1.189, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:45:49,116: INFO: Epoch: 33, Iter: 7050, Loss: 1.216, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 04:46:49,972: INFO: Epoch: 33, Iter: 7100, Loss: 1.162, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 04:47:50,133: INFO: Epoch: 34, Iter: 7150, Loss: 1.046, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:48:50,421: INFO: Epoch: 34, Iter: 7200, Loss: 1.468, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 04:49:50,576: INFO: Epoch: 34, Iter: 7250, Loss: 0.981, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 04:50:51,053: INFO: Epoch: 34, Iter: 7300, Loss: 1.103, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:51:51,374: INFO: Epoch: 35, Iter: 7350, Loss: 1.115, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:52:51,789: INFO: Epoch: 35, Iter: 7400, Loss: 1.136, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:53:52,385: INFO: Epoch: 35, Iter: 7450, Loss: 0.997, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 04:54:52,630: INFO: Epoch: 35, Iter: 7500, Loss: 1.152, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 04:55:52,698: INFO: Epoch: 35, Iter: 7550, Loss: 1.227, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:56:53,243: INFO: Epoch: 36, Iter: 7600, Loss: 0.978, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 04:57:53,605: INFO: Epoch: 36, Iter: 7650, Loss: 1.013, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 04:58:54,078: INFO: Epoch: 36, Iter: 7700, Loss: 1.167, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 04:59:54,644: INFO: Epoch: 36, Iter: 7750, Loss: 1.090, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:00:54,925: INFO: Epoch: 37, Iter: 7800, Loss: 1.024, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 05:01:55,054: INFO: Epoch: 37, Iter: 7850, Loss: 0.967, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 05:02:55,396: INFO: Epoch: 37, Iter: 7900, Loss: 1.293, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:03:55,809: INFO: Epoch: 37, Iter: 7950, Loss: 1.045, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 05:04:56,138: INFO: Epoch: 38, Iter: 8000, Loss: 1.133, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 05:05:56,438: INFO: Epoch: 38, Iter: 8050, Loss: 0.990, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 05:06:57,137: INFO: Epoch: 38, Iter: 8100, Loss: 1.383, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 05:07:57,544: INFO: Epoch: 38, Iter: 8150, Loss: 1.012, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 05:08:58,032: INFO: Epoch: 39, Iter: 8200, Loss: 1.222, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 05:09:58,296: INFO: Epoch: 39, Iter: 8250, Loss: 1.158, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:10:58,571: INFO: Epoch: 39, Iter: 8300, Loss: 0.934, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 05:11:58,766: INFO: Epoch: 39, Iter: 8350, Loss: 1.226, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 05:12:59,239: INFO: Epoch: 40, Iter: 8400, Loss: 1.302, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 05:14:00,058: INFO: Epoch: 40, Iter: 8450, Loss: 1.084, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 05:15:00,230: INFO: Epoch: 40, Iter: 8500, Loss: 0.933, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 05:16:00,436: INFO: Epoch: 40, Iter: 8550, Loss: 1.089, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:17:00,861: INFO: Epoch: 40, Iter: 8600, Loss: 1.146, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:18:01,426: INFO: Epoch: 41, Iter: 8650, Loss: 1.121, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 05:19:02,032: INFO: Epoch: 41, Iter: 8700, Loss: 1.112, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 05:20:02,670: INFO: Epoch: 41, Iter: 8750, Loss: 1.206, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 05:21:03,202: INFO: Epoch: 41, Iter: 8800, Loss: 0.961, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 05:22:03,448: INFO: Epoch: 42, Iter: 8850, Loss: 1.083, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:23:03,993: INFO: Epoch: 42, Iter: 8900, Loss: 1.131, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:24:04,600: INFO: Epoch: 42, Iter: 8950, Loss: 0.985, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 05:25:05,136: INFO: Epoch: 42, Iter: 9000, Loss: 0.979, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 05:26:05,517: INFO: Epoch: 43, Iter: 9050, Loss: 1.062, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:27:05,986: INFO: Epoch: 43, Iter: 9100, Loss: 1.221, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 05:28:06,471: INFO: Epoch: 43, Iter: 9150, Loss: 1.065, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:29:06,918: INFO: Epoch: 43, Iter: 9200, Loss: 0.506, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 05:30:07,249: INFO: Epoch: 44, Iter: 9250, Loss: 1.200, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 05:31:07,809: INFO: Epoch: 44, Iter: 9300, Loss: 1.055, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:32:08,159: INFO: Epoch: 44, Iter: 9350, Loss: 0.963, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 05:33:08,432: INFO: Epoch: 44, Iter: 9400, Loss: 0.788, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 05:34:09,049: INFO: Epoch: 45, Iter: 9450, Loss: 0.816, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 05:35:09,404: INFO: Epoch: 45, Iter: 9500, Loss: 1.168, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:36:10,103: INFO: Epoch: 45, Iter: 9550, Loss: 1.119, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:37:10,548: INFO: Epoch: 45, Iter: 9600, Loss: 0.963, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 05:38:11,008: INFO: Epoch: 45, Iter: 9650, Loss: 1.144, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:39:11,068: INFO: Epoch: 46, Iter: 9700, Loss: 1.632, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 05:40:11,552: INFO: Epoch: 46, Iter: 9750, Loss: 0.987, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:41:12,009: INFO: Epoch: 46, Iter: 9800, Loss: 1.162, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 05:42:12,409: INFO: Epoch: 46, Iter: 9850, Loss: 1.090, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 05:43:12,914: INFO: Epoch: 47, Iter: 9900, Loss: 1.468, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 05:44:12,974: INFO: Epoch: 47, Iter: 9950, Loss: 0.800, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 05:45:13,529: INFO: Epoch: 47, Iter: 10000, Loss: 1.103, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:46:13,772: INFO: Epoch: 47, Iter: 10050, Loss: 0.942, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 05:47:14,515: INFO: Epoch: 48, Iter: 10100, Loss: 1.170, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 05:48:14,913: INFO: Epoch: 48, Iter: 10150, Loss: 1.106, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:49:15,366: INFO: Epoch: 48, Iter: 10200, Loss: 0.766, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 05:50:15,587: INFO: Epoch: 48, Iter: 10250, Loss: 1.144, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:51:16,005: INFO: Epoch: 49, Iter: 10300, Loss: 1.101, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:52:16,282: INFO: Epoch: 49, Iter: 10350, Loss: 1.041, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 05:53:16,984: INFO: Epoch: 49, Iter: 10400, Loss: 1.118, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:54:17,320: INFO: Epoch: 49, Iter: 10450, Loss: 1.137, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:55:17,664: INFO: Epoch: 50, Iter: 10500, Loss: 1.077, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:56:18,164: INFO: Epoch: 50, Iter: 10550, Loss: 1.021, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 05:57:18,914: INFO: Epoch: 50, Iter: 10600, Loss: 1.024, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 05:58:19,359: INFO: Epoch: 50, Iter: 10650, Loss: 1.180, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 05:59:19,287: INFO: Epoch: 50, Iter: 10700, Loss: 0.885, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 06:00:19,618: INFO: Epoch: 51, Iter: 10750, Loss: 0.802, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 06:01:19,970: INFO: Epoch: 51, Iter: 10800, Loss: 1.216, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:02:20,293: INFO: Epoch: 51, Iter: 10850, Loss: 1.011, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 06:03:21,478: INFO: Epoch: 51, Iter: 10900, Loss: 1.145, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 06:04:21,760: INFO: Epoch: 52, Iter: 10950, Loss: 0.653, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 06:05:21,981: INFO: Epoch: 52, Iter: 11000, Loss: 0.964, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 06:06:22,465: INFO: Epoch: 52, Iter: 11050, Loss: 1.132, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 06:07:22,775: INFO: Epoch: 52, Iter: 11100, Loss: 1.135, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 06:08:23,407: INFO: Epoch: 53, Iter: 11150, Loss: 0.953, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 06:09:23,484: INFO: Epoch: 53, Iter: 11200, Loss: 1.193, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:10:23,471: INFO: Epoch: 53, Iter: 11250, Loss: 1.132, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:11:23,820: INFO: Epoch: 53, Iter: 11300, Loss: 0.848, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 06:12:24,608: INFO: Epoch: 54, Iter: 11350, Loss: 1.081, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 06:13:24,943: INFO: Epoch: 54, Iter: 11400, Loss: 1.212, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 06:14:25,883: INFO: Epoch: 54, Iter: 11450, Loss: 0.797, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 06:15:26,214: INFO: Epoch: 54, Iter: 11500, Loss: 1.250, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 06:16:26,587: INFO: Epoch: 55, Iter: 11550, Loss: 0.948, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 06:17:27,525: INFO: Epoch: 55, Iter: 11600, Loss: 1.230, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:18:27,984: INFO: Epoch: 55, Iter: 11650, Loss: 1.042, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 06:19:28,496: INFO: Epoch: 55, Iter: 11700, Loss: 1.033, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 06:20:28,738: INFO: Epoch: 55, Iter: 11750, Loss: 0.849, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 06:21:28,649: INFO: Epoch: 56, Iter: 11800, Loss: 1.323, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 06:22:28,980: INFO: Epoch: 56, Iter: 11850, Loss: 1.055, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 06:23:29,622: INFO: Epoch: 56, Iter: 11900, Loss: 1.097, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:24:30,046: INFO: Epoch: 56, Iter: 11950, Loss: 1.155, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 06:25:30,532: INFO: Epoch: 57, Iter: 12000, Loss: 1.085, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:26:30,762: INFO: Epoch: 57, Iter: 12050, Loss: 1.078, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:27:31,280: INFO: Epoch: 57, Iter: 12100, Loss: 1.353, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 06:28:31,683: INFO: Epoch: 57, Iter: 12150, Loss: 1.082, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:29:32,332: INFO: Epoch: 58, Iter: 12200, Loss: 1.142, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 06:30:32,635: INFO: Epoch: 58, Iter: 12250, Loss: 0.929, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 06:31:32,771: INFO: Epoch: 58, Iter: 12300, Loss: 1.261, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 06:32:33,728: INFO: Epoch: 58, Iter: 12350, Loss: 1.083, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:33:34,426: INFO: Epoch: 59, Iter: 12400, Loss: 0.995, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 06:34:34,509: INFO: Epoch: 59, Iter: 12450, Loss: 1.139, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:35:34,868: INFO: Epoch: 59, Iter: 12500, Loss: 1.316, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:36:35,285: INFO: Epoch: 59, Iter: 12550, Loss: 1.344, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 06:37:35,968: INFO: Epoch: 60, Iter: 12600, Loss: 1.285, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 06:38:36,409: INFO: Epoch: 60, Iter: 12650, Loss: 1.075, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:39:36,505: INFO: Epoch: 60, Iter: 12700, Loss: 0.907, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 06:40:36,909: INFO: Epoch: 60, Iter: 12750, Loss: 0.903, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 06:41:37,757: INFO: Epoch: 60, Iter: 12800, Loss: 0.904, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 06:42:38,103: INFO: Epoch: 61, Iter: 12850, Loss: 1.112, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 06:43:38,894: INFO: Epoch: 61, Iter: 12900, Loss: 1.181, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:44:39,329: INFO: Epoch: 61, Iter: 12950, Loss: 1.221, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 06:45:39,609: INFO: Epoch: 61, Iter: 13000, Loss: 1.258, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 06:46:39,845: INFO: Epoch: 62, Iter: 13050, Loss: 0.951, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 06:47:40,530: INFO: Epoch: 62, Iter: 13100, Loss: 1.153, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:48:40,909: INFO: Epoch: 62, Iter: 13150, Loss: 1.052, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 06:49:41,168: INFO: Epoch: 62, Iter: 13200, Loss: 0.955, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 06:50:41,593: INFO: Epoch: 63, Iter: 13250, Loss: 1.399, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 06:51:41,782: INFO: Epoch: 63, Iter: 13300, Loss: 0.970, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 06:52:41,698: INFO: Epoch: 63, Iter: 13350, Loss: 1.081, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:53:42,296: INFO: Epoch: 63, Iter: 13400, Loss: 1.194, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 06:54:42,687: INFO: Epoch: 64, Iter: 13450, Loss: 0.935, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:55:43,209: INFO: Epoch: 64, Iter: 13500, Loss: 1.040, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 06:56:43,887: INFO: Epoch: 64, Iter: 13550, Loss: 1.137, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:57:44,282: INFO: Epoch: 64, Iter: 13600, Loss: 1.155, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:58:45,172: INFO: Epoch: 65, Iter: 13650, Loss: 1.085, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 06:59:46,407: INFO: Epoch: 65, Iter: 13700, Loss: 0.598, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 07:00:46,157: INFO: Epoch: 65, Iter: 13750, Loss: 1.187, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:01:45,978: INFO: Epoch: 65, Iter: 13800, Loss: 1.002, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:02:46,126: INFO: Epoch: 65, Iter: 13850, Loss: 1.047, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:03:46,381: INFO: Epoch: 66, Iter: 13900, Loss: 1.145, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:04:46,378: INFO: Epoch: 66, Iter: 13950, Loss: 0.883, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 07:05:46,470: INFO: Epoch: 66, Iter: 14000, Loss: 0.791, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 07:06:46,529: INFO: Epoch: 66, Iter: 14050, Loss: 1.053, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:07:46,685: INFO: Epoch: 67, Iter: 14100, Loss: 0.850, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 07:08:48,406: INFO: Epoch: 67, Iter: 14150, Loss: 1.005, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:09:48,121: INFO: Epoch: 67, Iter: 14200, Loss: 1.324, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 07:10:48,228: INFO: Epoch: 67, Iter: 14250, Loss: 0.966, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:11:48,007: INFO: Epoch: 68, Iter: 14300, Loss: 1.345, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 07:12:47,882: INFO: Epoch: 68, Iter: 14350, Loss: 1.278, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 07:13:47,865: INFO: Epoch: 68, Iter: 14400, Loss: 1.170, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:14:47,905: INFO: Epoch: 68, Iter: 14450, Loss: 1.127, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:15:47,866: INFO: Epoch: 69, Iter: 14500, Loss: 1.090, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:16:48,106: INFO: Epoch: 69, Iter: 14550, Loss: 1.247, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:17:48,233: INFO: Epoch: 69, Iter: 14600, Loss: 0.961, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:18:48,151: INFO: Epoch: 69, Iter: 14650, Loss: 0.879, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:19:48,083: INFO: Epoch: 70, Iter: 14700, Loss: 0.755, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 07:20:48,113: INFO: Epoch: 70, Iter: 14750, Loss: 1.021, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:21:47,936: INFO: Epoch: 70, Iter: 14800, Loss: 0.846, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:22:47,893: INFO: Epoch: 70, Iter: 14850, Loss: 1.089, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:23:48,404: INFO: Epoch: 70, Iter: 14900, Loss: 1.071, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:24:48,353: INFO: Epoch: 71, Iter: 14950, Loss: 1.239, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 07:25:47,893: INFO: Epoch: 71, Iter: 15000, Loss: 1.110, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:26:48,209: INFO: Epoch: 71, Iter: 15050, Loss: 1.018, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:27:48,020: INFO: Epoch: 71, Iter: 15100, Loss: 1.096, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:28:48,319: INFO: Epoch: 72, Iter: 15150, Loss: 1.071, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:29:48,488: INFO: Epoch: 72, Iter: 15200, Loss: 0.988, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:30:48,598: INFO: Epoch: 72, Iter: 15250, Loss: 0.892, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:31:48,939: INFO: Epoch: 72, Iter: 15300, Loss: 1.030, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:32:49,451: INFO: Epoch: 73, Iter: 15350, Loss: 0.958, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:33:49,993: INFO: Epoch: 73, Iter: 15400, Loss: 0.951, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:34:50,586: INFO: Epoch: 73, Iter: 15450, Loss: 0.786, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 07:35:50,862: INFO: Epoch: 73, Iter: 15500, Loss: 1.255, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 07:36:51,684: INFO: Epoch: 74, Iter: 15550, Loss: 1.147, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 07:37:52,429: INFO: Epoch: 74, Iter: 15600, Loss: 1.119, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 07:38:52,847: INFO: Epoch: 74, Iter: 15650, Loss: 1.151, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:39:53,145: INFO: Epoch: 74, Iter: 15700, Loss: 0.999, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:40:53,779: INFO: Epoch: 75, Iter: 15750, Loss: 1.325, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 07:41:54,070: INFO: Epoch: 75, Iter: 15800, Loss: 1.224, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 07:42:54,921: INFO: Epoch: 75, Iter: 15850, Loss: 0.983, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:43:55,386: INFO: Epoch: 75, Iter: 15900, Loss: 1.220, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 07:44:55,831: INFO: Epoch: 75, Iter: 15950, Loss: 1.127, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:45:56,204: INFO: Epoch: 76, Iter: 16000, Loss: 0.972, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:46:56,787: INFO: Epoch: 76, Iter: 16050, Loss: 1.197, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:47:57,200: INFO: Epoch: 76, Iter: 16100, Loss: 1.120, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 07:48:57,874: INFO: Epoch: 76, Iter: 16150, Loss: 1.041, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:49:58,655: INFO: Epoch: 77, Iter: 16200, Loss: 1.076, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 07:50:58,910: INFO: Epoch: 77, Iter: 16250, Loss: 1.138, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:51:59,586: INFO: Epoch: 77, Iter: 16300, Loss: 1.136, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:53:00,058: INFO: Epoch: 77, Iter: 16350, Loss: 0.853, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 07:54:00,101: INFO: Epoch: 78, Iter: 16400, Loss: 1.002, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:55:00,553: INFO: Epoch: 78, Iter: 16450, Loss: 0.718, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 07:56:00,922: INFO: Epoch: 78, Iter: 16500, Loss: 0.998, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 07:57:01,476: INFO: Epoch: 78, Iter: 16550, Loss: 1.080, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 07:58:02,046: INFO: Epoch: 79, Iter: 16600, Loss: 1.107, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 07:59:02,365: INFO: Epoch: 79, Iter: 16650, Loss: 0.954, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 08:00:02,853: INFO: Epoch: 79, Iter: 16700, Loss: 1.002, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 08:01:03,216: INFO: Epoch: 79, Iter: 16750, Loss: 1.135, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 08:02:03,859: INFO: Epoch: 80, Iter: 16800, Loss: 0.832, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 08:03:04,546: INFO: Epoch: 80, Iter: 16850, Loss: 0.974, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 08:04:05,300: INFO: Epoch: 80, Iter: 16900, Loss: 0.843, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 08:05:05,801: INFO: Epoch: 80, Iter: 16950, Loss: 0.957, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 08:06:06,655: INFO: Epoch: 80, Iter: 17000, Loss: 1.289, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 08:07:07,057: INFO: Epoch: 81, Iter: 17050, Loss: 1.014, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 08:08:08,277: INFO: Epoch: 81, Iter: 17100, Loss: 1.186, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 08:09:08,941: INFO: Epoch: 81, Iter: 17150, Loss: 1.074, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 08:10:09,335: INFO: Epoch: 81, Iter: 17200, Loss: 1.099, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 08:11:09,806: INFO: Epoch: 82, Iter: 17250, Loss: 1.061, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 08:12:10,142: INFO: Epoch: 82, Iter: 17300, Loss: 1.154, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 08:13:10,787: INFO: Epoch: 82, Iter: 17350, Loss: 1.326, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 08:14:11,490: INFO: Epoch: 82, Iter: 17400, Loss: 0.967, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 08:15:11,855: INFO: Epoch: 83, Iter: 17450, Loss: 1.087, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 08:16:12,014: INFO: Epoch: 83, Iter: 17500, Loss: 1.046, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 08:17:12,520: INFO: Epoch: 83, Iter: 17550, Loss: 1.128, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 08:18:12,963: INFO: Epoch: 83, Iter: 17600, Loss: 0.757, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 08:19:13,301: INFO: Epoch: 84, Iter: 17650, Loss: 1.098, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 08:20:13,735: INFO: Epoch: 84, Iter: 17700, Loss: 0.991, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 08:21:13,976: INFO: Epoch: 84, Iter: 17750, Loss: 1.244, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 08:22:14,448: INFO: Epoch: 84, Iter: 17800, Loss: 1.178, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 08:23:15,417: INFO: Epoch: 85, Iter: 17850, Loss: 0.815, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 08:24:15,784: INFO: Epoch: 85, Iter: 17900, Loss: 0.973, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 08:25:16,016: INFO: Epoch: 85, Iter: 17950, Loss: 1.193, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 08:26:16,371: INFO: Epoch: 85, Iter: 18000, Loss: 1.115, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 08:27:16,748: INFO: Epoch: 85, Iter: 18050, Loss: 0.724, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 08:28:17,319: INFO: Epoch: 86, Iter: 18100, Loss: 0.797, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 08:29:17,790: INFO: Epoch: 86, Iter: 18150, Loss: 1.049, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 08:30:17,887: INFO: Epoch: 86, Iter: 18200, Loss: 1.022, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 08:31:18,035: INFO: Epoch: 86, Iter: 18250, Loss: 1.065, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 08:32:18,699: INFO: Epoch: 87, Iter: 18300, Loss: 1.115, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 08:33:19,984: INFO: Epoch: 87, Iter: 18350, Loss: 1.165, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 08:34:20,688: INFO: Epoch: 87, Iter: 18400, Loss: 1.176, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 08:35:20,830: INFO: Epoch: 87, Iter: 18450, Loss: 1.124, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 08:36:21,202: INFO: Epoch: 88, Iter: 18500, Loss: 1.140, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 08:37:22,009: INFO: Epoch: 88, Iter: 18550, Loss: 0.767, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 08:38:22,892: INFO: Epoch: 88, Iter: 18600, Loss: 1.182, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 08:39:23,166: INFO: Epoch: 88, Iter: 18650, Loss: 1.417, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 08:40:23,477: INFO: Epoch: 89, Iter: 18700, Loss: 1.129, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 08:41:23,519: INFO: Epoch: 89, Iter: 18750, Loss: 1.222, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 08:42:23,938: INFO: Epoch: 89, Iter: 18800, Loss: 0.931, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 08:43:24,633: INFO: Epoch: 89, Iter: 18850, Loss: 0.887, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 08:44:24,945: INFO: Epoch: 90, Iter: 18900, Loss: 1.304, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 08:45:25,290: INFO: Epoch: 90, Iter: 18950, Loss: 1.058, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 08:46:25,884: INFO: Epoch: 90, Iter: 19000, Loss: 1.621, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 08:47:26,476: INFO: Epoch: 90, Iter: 19050, Loss: 0.952, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 08:48:27,208: INFO: Epoch: 90, Iter: 19100, Loss: 1.027, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 08:49:27,516: INFO: Epoch: 91, Iter: 19150, Loss: 1.235, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 08:50:28,141: INFO: Epoch: 91, Iter: 19200, Loss: 1.131, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 08:51:28,793: INFO: Epoch: 91, Iter: 19250, Loss: 1.185, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 08:52:29,835: INFO: Epoch: 91, Iter: 19300, Loss: 0.988, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 08:53:30,601: INFO: Epoch: 92, Iter: 19350, Loss: 0.974, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 08:54:30,797: INFO: Epoch: 92, Iter: 19400, Loss: 0.960, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 08:55:31,100: INFO: Epoch: 92, Iter: 19450, Loss: 0.830, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 08:56:31,479: INFO: Epoch: 92, Iter: 19500, Loss: 1.482, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 08:57:32,466: INFO: Epoch: 93, Iter: 19550, Loss: 0.836, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 08:58:33,158: INFO: Epoch: 93, Iter: 19600, Loss: 1.268, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 08:59:33,657: INFO: Epoch: 93, Iter: 19650, Loss: 1.112, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 09:00:34,207: INFO: Epoch: 93, Iter: 19700, Loss: 1.243, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:01:35,668: INFO: Epoch: 94, Iter: 19750, Loss: 1.212, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:02:36,210: INFO: Epoch: 94, Iter: 19800, Loss: 1.151, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:03:37,211: INFO: Epoch: 94, Iter: 19850, Loss: 0.808, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 09:04:37,364: INFO: Epoch: 94, Iter: 19900, Loss: 0.773, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 09:05:37,861: INFO: Epoch: 95, Iter: 19950, Loss: 1.044, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:06:38,176: INFO: Epoch: 95, Iter: 20000, Loss: 1.001, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:07:38,973: INFO: Epoch: 95, Iter: 20050, Loss: 1.097, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:08:39,738: INFO: Epoch: 95, Iter: 20100, Loss: 1.025, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 09:09:40,105: INFO: Epoch: 95, Iter: 20150, Loss: 1.098, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:10:40,736: INFO: Epoch: 96, Iter: 20200, Loss: 1.000, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:11:41,172: INFO: Epoch: 96, Iter: 20250, Loss: 0.853, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 09:12:41,483: INFO: Epoch: 96, Iter: 20300, Loss: 1.008, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:13:41,988: INFO: Epoch: 96, Iter: 20350, Loss: 0.907, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 09:14:42,084: INFO: Epoch: 97, Iter: 20400, Loss: 0.967, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:15:42,427: INFO: Epoch: 97, Iter: 20450, Loss: 1.060, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:16:43,345: INFO: Epoch: 97, Iter: 20500, Loss: 1.192, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 09:17:44,026: INFO: Epoch: 97, Iter: 20550, Loss: 1.158, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:18:44,547: INFO: Epoch: 98, Iter: 20600, Loss: 0.984, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:19:45,123: INFO: Epoch: 98, Iter: 20650, Loss: 0.959, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:20:45,738: INFO: Epoch: 98, Iter: 20700, Loss: 1.111, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:21:50,480: INFO: Epoch: 98, Iter: 20750, Loss: 1.020, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:22:55,867: INFO: Epoch: 99, Iter: 20800, Loss: 0.930, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:23:58,740: INFO: Epoch: 99, Iter: 20850, Loss: 1.175, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 09:24:59,696: INFO: Epoch: 99, Iter: 20900, Loss: 0.959, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:26:00,376: INFO: Epoch: 99, Iter: 20950, Loss: 1.030, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:27:00,966: INFO: Epoch: 100, Iter: 21000, Loss: 1.110, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:28:01,071: INFO: Epoch: 100, Iter: 21050, Loss: 1.031, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:29:01,435: INFO: Epoch: 100, Iter: 21100, Loss: 1.006, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:30:02,050: INFO: Epoch: 100, Iter: 21150, Loss: 1.034, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:31:03,221: INFO: Epoch: 100, Iter: 21200, Loss: 1.122, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:32:03,571: INFO: Epoch: 101, Iter: 21250, Loss: 1.106, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 09:33:04,427: INFO: Epoch: 101, Iter: 21300, Loss: 1.083, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:34:04,868: INFO: Epoch: 101, Iter: 21350, Loss: 1.390, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 09:35:05,356: INFO: Epoch: 101, Iter: 21400, Loss: 0.962, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:36:05,927: INFO: Epoch: 102, Iter: 21450, Loss: 1.187, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 09:37:06,637: INFO: Epoch: 102, Iter: 21500, Loss: 1.072, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:38:06,904: INFO: Epoch: 102, Iter: 21550, Loss: 0.994, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:39:07,073: INFO: Epoch: 102, Iter: 21600, Loss: 0.838, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 09:40:07,288: INFO: Epoch: 103, Iter: 21650, Loss: 1.158, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:41:07,602: INFO: Epoch: 103, Iter: 21700, Loss: 1.119, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:42:08,007: INFO: Epoch: 103, Iter: 21750, Loss: 0.753, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 09:43:09,103: INFO: Epoch: 103, Iter: 21800, Loss: 1.095, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:44:09,141: INFO: Epoch: 104, Iter: 21850, Loss: 1.119, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:45:09,493: INFO: Epoch: 104, Iter: 21900, Loss: 1.165, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:46:09,916: INFO: Epoch: 104, Iter: 21950, Loss: 0.921, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:47:10,514: INFO: Epoch: 104, Iter: 22000, Loss: 0.954, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:48:11,078: INFO: Epoch: 105, Iter: 22050, Loss: 1.145, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:49:11,429: INFO: Epoch: 105, Iter: 22100, Loss: 1.384, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 09:50:11,582: INFO: Epoch: 105, Iter: 22150, Loss: 0.990, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:51:12,124: INFO: Epoch: 105, Iter: 22200, Loss: 1.189, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:52:12,424: INFO: Epoch: 105, Iter: 22250, Loss: 1.124, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 09:53:13,016: INFO: Epoch: 106, Iter: 22300, Loss: 0.986, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:54:13,436: INFO: Epoch: 106, Iter: 22350, Loss: 0.990, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:55:14,098: INFO: Epoch: 106, Iter: 22400, Loss: 0.966, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:56:14,258: INFO: Epoch: 106, Iter: 22450, Loss: 0.918, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:57:15,233: INFO: Epoch: 107, Iter: 22500, Loss: 1.009, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 09:58:15,968: INFO: Epoch: 107, Iter: 22550, Loss: 0.896, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 09:59:16,132: INFO: Epoch: 107, Iter: 22600, Loss: 1.126, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:00:17,209: INFO: Epoch: 107, Iter: 22650, Loss: 0.892, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:01:17,947: INFO: Epoch: 108, Iter: 22700, Loss: 0.846, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 10:02:18,438: INFO: Epoch: 108, Iter: 22750, Loss: 1.358, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 10:03:19,031: INFO: Epoch: 108, Iter: 22800, Loss: 1.177, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 10:04:19,139: INFO: Epoch: 108, Iter: 22850, Loss: 1.072, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:05:19,616: INFO: Epoch: 109, Iter: 22900, Loss: 1.421, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 10:06:20,007: INFO: Epoch: 109, Iter: 22950, Loss: 0.998, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 10:07:20,683: INFO: Epoch: 109, Iter: 23000, Loss: 1.096, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:08:21,274: INFO: Epoch: 109, Iter: 23050, Loss: 1.012, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 10:09:21,635: INFO: Epoch: 110, Iter: 23100, Loss: 1.268, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 10:10:21,820: INFO: Epoch: 110, Iter: 23150, Loss: 1.381, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:11:22,380: INFO: Epoch: 110, Iter: 23200, Loss: 0.948, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:12:22,896: INFO: Epoch: 110, Iter: 23250, Loss: 1.108, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:13:23,553: INFO: Epoch: 110, Iter: 23300, Loss: 1.211, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 10:14:23,733: INFO: Epoch: 111, Iter: 23350, Loss: 0.770, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 10:15:24,186: INFO: Epoch: 111, Iter: 23400, Loss: 0.935, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 10:16:24,540: INFO: Epoch: 111, Iter: 23450, Loss: 0.999, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:17:25,087: INFO: Epoch: 111, Iter: 23500, Loss: 1.011, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 10:18:25,514: INFO: Epoch: 112, Iter: 23550, Loss: 1.254, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 10:19:25,755: INFO: Epoch: 112, Iter: 23600, Loss: 1.175, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 10:20:26,083: INFO: Epoch: 112, Iter: 23650, Loss: 0.736, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 10:21:26,211: INFO: Epoch: 112, Iter: 23700, Loss: 1.297, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 10:22:26,396: INFO: Epoch: 113, Iter: 23750, Loss: 1.053, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 10:23:27,103: INFO: Epoch: 113, Iter: 23800, Loss: 1.060, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 10:24:27,583: INFO: Epoch: 113, Iter: 23850, Loss: 0.810, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 10:25:28,020: INFO: Epoch: 113, Iter: 23900, Loss: 1.214, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:26:28,473: INFO: Epoch: 114, Iter: 23950, Loss: 1.109, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 10:27:28,851: INFO: Epoch: 114, Iter: 24000, Loss: 1.115, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 10:28:29,235: INFO: Epoch: 114, Iter: 24050, Loss: 1.117, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:29:29,274: INFO: Epoch: 114, Iter: 24100, Loss: 1.015, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:30:29,646: INFO: Epoch: 115, Iter: 24150, Loss: 1.303, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 10:31:29,748: INFO: Epoch: 115, Iter: 24200, Loss: 0.914, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 10:32:30,097: INFO: Epoch: 115, Iter: 24250, Loss: 1.148, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:33:30,509: INFO: Epoch: 115, Iter: 24300, Loss: 1.085, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:34:30,929: INFO: Epoch: 115, Iter: 24350, Loss: 1.077, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:35:31,323: INFO: Epoch: 116, Iter: 24400, Loss: 1.356, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 10:36:32,069: INFO: Epoch: 116, Iter: 24450, Loss: 0.957, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 10:37:32,890: INFO: Epoch: 116, Iter: 24500, Loss: 1.140, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:38:33,323: INFO: Epoch: 116, Iter: 24550, Loss: 1.073, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:39:33,590: INFO: Epoch: 117, Iter: 24600, Loss: 1.123, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 10:40:34,000: INFO: Epoch: 117, Iter: 24650, Loss: 1.231, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 10:41:34,380: INFO: Epoch: 117, Iter: 24700, Loss: 1.084, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:42:35,194: INFO: Epoch: 117, Iter: 24750, Loss: 1.026, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 10:43:35,522: INFO: Epoch: 118, Iter: 24800, Loss: 1.062, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:44:36,129: INFO: Epoch: 118, Iter: 24850, Loss: 1.097, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 10:45:36,899: INFO: Epoch: 118, Iter: 24900, Loss: 1.075, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 10:46:37,300: INFO: Epoch: 118, Iter: 24950, Loss: 1.221, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:47:38,093: INFO: Epoch: 119, Iter: 25000, Loss: 1.119, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 10:48:43,077: INFO: Epoch: 119, Iter: 25050, Loss: 0.977, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 10:49:43,684: INFO: Epoch: 119, Iter: 25100, Loss: 0.729, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 10:50:43,707: INFO: Epoch: 119, Iter: 25150, Loss: 1.572, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 10:51:44,200: INFO: Epoch: 120, Iter: 25200, Loss: 1.117, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 10:52:44,666: INFO: Epoch: 120, Iter: 25250, Loss: 1.091, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:53:45,215: INFO: Epoch: 120, Iter: 25300, Loss: 0.984, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 10:54:46,167: INFO: Epoch: 120, Iter: 25350, Loss: 1.178, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:55:46,253: INFO: Epoch: 120, Iter: 25400, Loss: 0.865, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 10:56:46,723: INFO: Epoch: 121, Iter: 25450, Loss: 0.998, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 10:57:47,002: INFO: Epoch: 121, Iter: 25500, Loss: 1.206, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 10:58:47,424: INFO: Epoch: 121, Iter: 25550, Loss: 0.947, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 10:59:47,885: INFO: Epoch: 121, Iter: 25600, Loss: 0.819, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 11:00:48,056: INFO: Epoch: 122, Iter: 25650, Loss: 0.927, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 11:01:48,112: INFO: Epoch: 122, Iter: 25700, Loss: 1.227, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:02:49,627: INFO: Epoch: 122, Iter: 25750, Loss: 1.245, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:03:50,172: INFO: Epoch: 122, Iter: 25800, Loss: 1.193, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 11:04:50,474: INFO: Epoch: 123, Iter: 25850, Loss: 1.226, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:05:50,813: INFO: Epoch: 123, Iter: 25900, Loss: 1.022, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 11:06:51,558: INFO: Epoch: 123, Iter: 25950, Loss: 0.741, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 11:07:52,009: INFO: Epoch: 123, Iter: 26000, Loss: 1.150, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 11:08:52,401: INFO: Epoch: 124, Iter: 26050, Loss: 1.231, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:09:52,544: INFO: Epoch: 124, Iter: 26100, Loss: 1.081, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 11:10:53,105: INFO: Epoch: 124, Iter: 26150, Loss: 0.870, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 11:11:53,335: INFO: Epoch: 124, Iter: 26200, Loss: 0.933, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 11:12:54,163: INFO: Epoch: 125, Iter: 26250, Loss: 1.023, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 11:13:54,533: INFO: Epoch: 125, Iter: 26300, Loss: 1.001, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 11:14:55,033: INFO: Epoch: 125, Iter: 26350, Loss: 0.909, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 11:15:55,291: INFO: Epoch: 125, Iter: 26400, Loss: 1.202, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:16:55,759: INFO: Epoch: 125, Iter: 26450, Loss: 1.224, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:17:56,516: INFO: Epoch: 126, Iter: 26500, Loss: 0.992, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 11:18:56,607: INFO: Epoch: 126, Iter: 26550, Loss: 1.136, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:19:56,997: INFO: Epoch: 126, Iter: 26600, Loss: 0.955, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 11:20:57,128: INFO: Epoch: 126, Iter: 26650, Loss: 1.108, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 11:21:57,383: INFO: Epoch: 127, Iter: 26700, Loss: 0.975, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 11:22:57,794: INFO: Epoch: 127, Iter: 26750, Loss: 1.251, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 11:23:58,139: INFO: Epoch: 127, Iter: 26800, Loss: 1.096, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:24:58,641: INFO: Epoch: 127, Iter: 26850, Loss: 1.255, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:25:58,319: INFO: Epoch: 128, Iter: 26900, Loss: 1.268, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:26:59,164: INFO: Epoch: 128, Iter: 26950, Loss: 1.229, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:27:59,769: INFO: Epoch: 128, Iter: 27000, Loss: 1.116, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 11:29:00,202: INFO: Epoch: 128, Iter: 27050, Loss: 0.846, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 11:30:00,843: INFO: Epoch: 129, Iter: 27100, Loss: 0.890, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 11:31:01,407: INFO: Epoch: 129, Iter: 27150, Loss: 1.570, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 11:32:01,548: INFO: Epoch: 129, Iter: 27200, Loss: 1.158, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 11:33:02,613: INFO: Epoch: 129, Iter: 27250, Loss: 1.298, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:34:02,970: INFO: Epoch: 130, Iter: 27300, Loss: 1.081, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 11:35:03,418: INFO: Epoch: 130, Iter: 27350, Loss: 0.970, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 11:36:03,612: INFO: Epoch: 130, Iter: 27400, Loss: 0.554, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 11:37:04,344: INFO: Epoch: 130, Iter: 27450, Loss: 0.808, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 11:38:04,924: INFO: Epoch: 130, Iter: 27500, Loss: 0.996, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 11:39:05,352: INFO: Epoch: 131, Iter: 27550, Loss: 1.556, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:40:05,575: INFO: Epoch: 131, Iter: 27600, Loss: 1.026, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 11:41:05,847: INFO: Epoch: 131, Iter: 27650, Loss: 1.149, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:42:06,560: INFO: Epoch: 131, Iter: 27700, Loss: 1.053, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 11:43:07,331: INFO: Epoch: 132, Iter: 27750, Loss: 0.970, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 11:44:07,790: INFO: Epoch: 132, Iter: 27800, Loss: 0.700, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 11:45:07,974: INFO: Epoch: 132, Iter: 27850, Loss: 1.325, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:46:08,345: INFO: Epoch: 132, Iter: 27900, Loss: 1.206, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:47:08,851: INFO: Epoch: 133, Iter: 27950, Loss: 1.039, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 11:48:09,497: INFO: Epoch: 133, Iter: 28000, Loss: 1.176, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:49:09,649: INFO: Epoch: 133, Iter: 28050, Loss: 1.148, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 11:50:09,630: INFO: Epoch: 133, Iter: 28100, Loss: 0.825, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 11:51:09,860: INFO: Epoch: 134, Iter: 28150, Loss: 0.942, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 11:52:10,601: INFO: Epoch: 134, Iter: 28200, Loss: 1.175, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:53:11,387: INFO: Epoch: 134, Iter: 28250, Loss: 0.843, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 11:54:11,670: INFO: Epoch: 134, Iter: 28300, Loss: 1.132, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:55:12,194: INFO: Epoch: 135, Iter: 28350, Loss: 1.074, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 11:56:12,013: INFO: Epoch: 135, Iter: 28400, Loss: 1.077, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 11:57:12,811: INFO: Epoch: 135, Iter: 28450, Loss: 1.377, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 11:58:13,092: INFO: Epoch: 135, Iter: 28500, Loss: 0.877, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 11:59:13,190: INFO: Epoch: 135, Iter: 28550, Loss: 1.067, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:00:13,513: INFO: Epoch: 136, Iter: 28600, Loss: 1.007, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:01:16,096: INFO: Epoch: 136, Iter: 28650, Loss: 1.262, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 12:02:16,341: INFO: Epoch: 136, Iter: 28700, Loss: 1.080, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:03:17,113: INFO: Epoch: 136, Iter: 28750, Loss: 1.075, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:04:17,724: INFO: Epoch: 137, Iter: 28800, Loss: 0.986, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:05:18,166: INFO: Epoch: 137, Iter: 28850, Loss: 1.180, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:06:18,449: INFO: Epoch: 137, Iter: 28900, Loss: 1.259, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 12:07:18,645: INFO: Epoch: 137, Iter: 28950, Loss: 1.241, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 12:08:19,352: INFO: Epoch: 138, Iter: 29000, Loss: 0.887, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 12:09:23,766: INFO: Epoch: 138, Iter: 29050, Loss: 0.687, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 12:10:24,241: INFO: Epoch: 138, Iter: 29100, Loss: 0.795, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 12:11:24,806: INFO: Epoch: 138, Iter: 29150, Loss: 1.123, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 12:12:25,409: INFO: Epoch: 139, Iter: 29200, Loss: 1.012, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:13:26,240: INFO: Epoch: 139, Iter: 29250, Loss: 0.962, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:14:26,539: INFO: Epoch: 139, Iter: 29300, Loss: 0.994, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:15:26,824: INFO: Epoch: 139, Iter: 29350, Loss: 0.833, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 12:16:27,162: INFO: Epoch: 140, Iter: 29400, Loss: 1.310, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 12:17:27,718: INFO: Epoch: 140, Iter: 29450, Loss: 1.094, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:18:27,908: INFO: Epoch: 140, Iter: 29500, Loss: 1.007, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:19:28,374: INFO: Epoch: 140, Iter: 29550, Loss: 1.217, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:20:28,511: INFO: Epoch: 140, Iter: 29600, Loss: 1.100, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:21:28,791: INFO: Epoch: 141, Iter: 29650, Loss: 1.094, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 12:22:29,283: INFO: Epoch: 141, Iter: 29700, Loss: 1.078, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:23:29,679: INFO: Epoch: 141, Iter: 29750, Loss: 1.062, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:24:30,252: INFO: Epoch: 141, Iter: 29800, Loss: 0.908, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 12:25:30,671: INFO: Epoch: 142, Iter: 29850, Loss: 1.004, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:26:31,139: INFO: Epoch: 142, Iter: 29900, Loss: 1.146, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:27:31,514: INFO: Epoch: 142, Iter: 29950, Loss: 0.827, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 12:28:32,231: INFO: Epoch: 142, Iter: 30000, Loss: 1.172, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:29:33,686: INFO: Epoch: 143, Iter: 30050, Loss: 1.103, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:30:33,982: INFO: Epoch: 143, Iter: 30100, Loss: 1.095, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:31:34,249: INFO: Epoch: 143, Iter: 30150, Loss: 0.869, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:32:34,513: INFO: Epoch: 143, Iter: 30200, Loss: 0.931, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:33:35,401: INFO: Epoch: 144, Iter: 30250, Loss: 0.971, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:34:35,679: INFO: Epoch: 144, Iter: 30300, Loss: 0.951, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:35:36,078: INFO: Epoch: 144, Iter: 30350, Loss: 1.171, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:36:36,384: INFO: Epoch: 144, Iter: 30400, Loss: 1.138, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 12:37:37,207: INFO: Epoch: 145, Iter: 30450, Loss: 1.068, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 12:38:37,714: INFO: Epoch: 145, Iter: 30500, Loss: 0.955, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:39:38,012: INFO: Epoch: 145, Iter: 30550, Loss: 1.202, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:40:38,212: INFO: Epoch: 145, Iter: 30600, Loss: 1.191, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:41:38,464: INFO: Epoch: 145, Iter: 30650, Loss: 0.942, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 12:42:39,133: INFO: Epoch: 146, Iter: 30700, Loss: 1.063, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:43:39,929: INFO: Epoch: 146, Iter: 30750, Loss: 1.116, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:44:40,417: INFO: Epoch: 146, Iter: 30800, Loss: 1.121, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:45:41,011: INFO: Epoch: 146, Iter: 30850, Loss: 1.107, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 12:46:41,552: INFO: Epoch: 147, Iter: 30900, Loss: 0.917, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 12:47:42,179: INFO: Epoch: 147, Iter: 30950, Loss: 0.984, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:48:42,783: INFO: Epoch: 147, Iter: 31000, Loss: 1.406, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 12:49:43,390: INFO: Epoch: 147, Iter: 31050, Loss: 0.969, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:50:43,335: INFO: Epoch: 148, Iter: 31100, Loss: 1.125, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:51:43,875: INFO: Epoch: 148, Iter: 31150, Loss: 1.074, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:52:44,120: INFO: Epoch: 148, Iter: 31200, Loss: 1.130, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 12:53:44,646: INFO: Epoch: 148, Iter: 31250, Loss: 1.021, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 12:54:45,028: INFO: Epoch: 149, Iter: 31300, Loss: 0.951, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:55:45,246: INFO: Epoch: 149, Iter: 31350, Loss: 0.896, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:56:45,734: INFO: Epoch: 149, Iter: 31400, Loss: 1.103, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 12:57:46,221: INFO: Epoch: 149, Iter: 31450, Loss: 0.980, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:58:46,540: INFO: Epoch: 150, Iter: 31500, Loss: 1.018, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 12:59:47,236: INFO: Epoch: 150, Iter: 31550, Loss: 1.028, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:00:47,458: INFO: Epoch: 150, Iter: 31600, Loss: 0.953, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:01:47,649: INFO: Epoch: 150, Iter: 31650, Loss: 1.131, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:02:48,108: INFO: Epoch: 150, Iter: 31700, Loss: 1.012, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:03:48,955: INFO: Epoch: 151, Iter: 31750, Loss: 1.133, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 13:04:49,050: INFO: Epoch: 151, Iter: 31800, Loss: 0.975, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:05:49,469: INFO: Epoch: 151, Iter: 31850, Loss: 0.951, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:06:50,201: INFO: Epoch: 151, Iter: 31900, Loss: 1.107, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:07:50,371: INFO: Epoch: 152, Iter: 31950, Loss: 1.142, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:08:51,144: INFO: Epoch: 152, Iter: 32000, Loss: 1.066, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:09:51,484: INFO: Epoch: 152, Iter: 32050, Loss: 1.115, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:10:52,624: INFO: Epoch: 152, Iter: 32100, Loss: 1.448, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 13:11:52,932: INFO: Epoch: 153, Iter: 32150, Loss: 1.097, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:12:54,358: INFO: Epoch: 153, Iter: 32200, Loss: 1.246, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 13:13:55,118: INFO: Epoch: 153, Iter: 32250, Loss: 1.103, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 13:14:55,666: INFO: Epoch: 153, Iter: 32300, Loss: 0.897, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:15:56,251: INFO: Epoch: 154, Iter: 32350, Loss: 0.896, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:16:56,985: INFO: Epoch: 154, Iter: 32400, Loss: 1.133, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:17:57,645: INFO: Epoch: 154, Iter: 32450, Loss: 0.962, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:18:58,285: INFO: Epoch: 154, Iter: 32500, Loss: 1.000, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:19:58,776: INFO: Epoch: 155, Iter: 32550, Loss: 1.059, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:20:59,142: INFO: Epoch: 155, Iter: 32600, Loss: 1.118, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:21:59,520: INFO: Epoch: 155, Iter: 32650, Loss: 1.137, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 13:23:00,214: INFO: Epoch: 155, Iter: 32700, Loss: 0.853, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 13:24:00,768: INFO: Epoch: 155, Iter: 32750, Loss: 1.048, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:25:01,352: INFO: Epoch: 156, Iter: 32800, Loss: 1.186, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 13:26:02,019: INFO: Epoch: 156, Iter: 32850, Loss: 0.973, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:27:02,633: INFO: Epoch: 156, Iter: 32900, Loss: 0.781, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 13:28:03,345: INFO: Epoch: 156, Iter: 32950, Loss: 1.190, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:29:03,532: INFO: Epoch: 157, Iter: 33000, Loss: 1.150, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:30:04,290: INFO: Epoch: 157, Iter: 33050, Loss: 1.201, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 13:31:04,498: INFO: Epoch: 157, Iter: 33100, Loss: 1.024, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:32:04,706: INFO: Epoch: 157, Iter: 33150, Loss: 1.034, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:33:05,165: INFO: Epoch: 158, Iter: 33200, Loss: 1.082, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:34:05,672: INFO: Epoch: 158, Iter: 33250, Loss: 0.804, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 13:35:05,947: INFO: Epoch: 158, Iter: 33300, Loss: 1.108, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:36:06,291: INFO: Epoch: 158, Iter: 33350, Loss: 1.339, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 13:37:06,790: INFO: Epoch: 159, Iter: 33400, Loss: 1.074, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:38:07,405: INFO: Epoch: 159, Iter: 33450, Loss: 1.106, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:39:07,466: INFO: Epoch: 159, Iter: 33500, Loss: 1.132, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:40:07,875: INFO: Epoch: 159, Iter: 33550, Loss: 1.252, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 13:41:08,227: INFO: Epoch: 160, Iter: 33600, Loss: 1.049, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:42:08,308: INFO: Epoch: 160, Iter: 33650, Loss: 0.993, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:43:09,209: INFO: Epoch: 160, Iter: 33700, Loss: 1.426, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 13:44:09,639: INFO: Epoch: 160, Iter: 33750, Loss: 0.977, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:45:09,953: INFO: Epoch: 160, Iter: 33800, Loss: 1.055, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:46:10,360: INFO: Epoch: 161, Iter: 33850, Loss: 0.856, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 13:47:11,047: INFO: Epoch: 161, Iter: 33900, Loss: 1.367, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 13:48:11,828: INFO: Epoch: 161, Iter: 33950, Loss: 1.155, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:49:11,885: INFO: Epoch: 161, Iter: 34000, Loss: 1.118, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:50:12,114: INFO: Epoch: 162, Iter: 34050, Loss: 1.097, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:51:12,491: INFO: Epoch: 162, Iter: 34100, Loss: 1.167, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:52:12,945: INFO: Epoch: 162, Iter: 34150, Loss: 1.104, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:53:16,916: INFO: Epoch: 162, Iter: 34200, Loss: 0.993, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:54:18,347: INFO: Epoch: 163, Iter: 34250, Loss: 1.166, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 13:55:18,791: INFO: Epoch: 163, Iter: 34300, Loss: 1.075, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 13:56:18,931: INFO: Epoch: 163, Iter: 34350, Loss: 0.792, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 13:57:19,759: INFO: Epoch: 163, Iter: 34400, Loss: 1.203, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 13:58:20,238: INFO: Epoch: 164, Iter: 34450, Loss: 1.233, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 13:59:20,651: INFO: Epoch: 164, Iter: 34500, Loss: 1.034, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:00:21,236: INFO: Epoch: 164, Iter: 34550, Loss: 1.010, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:01:21,616: INFO: Epoch: 164, Iter: 34600, Loss: 0.970, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:02:21,819: INFO: Epoch: 165, Iter: 34650, Loss: 0.878, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 14:03:23,013: INFO: Epoch: 165, Iter: 34700, Loss: 1.085, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:04:24,033: INFO: Epoch: 165, Iter: 34750, Loss: 1.214, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:05:24,153: INFO: Epoch: 165, Iter: 34800, Loss: 1.234, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 14:06:24,487: INFO: Epoch: 165, Iter: 34850, Loss: 1.187, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 14:07:24,810: INFO: Epoch: 166, Iter: 34900, Loss: 0.896, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 14:08:25,728: INFO: Epoch: 166, Iter: 34950, Loss: 0.977, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:09:26,518: INFO: Epoch: 166, Iter: 35000, Loss: 1.227, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 14:10:26,371: INFO: Epoch: 166, Iter: 35050, Loss: 1.116, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:11:26,626: INFO: Epoch: 167, Iter: 35100, Loss: 1.299, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 14:12:27,326: INFO: Epoch: 167, Iter: 35150, Loss: 1.114, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:13:27,950: INFO: Epoch: 167, Iter: 35200, Loss: 1.003, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:14:28,445: INFO: Epoch: 167, Iter: 35250, Loss: 1.003, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:15:28,856: INFO: Epoch: 168, Iter: 35300, Loss: 0.767, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 14:16:29,134: INFO: Epoch: 168, Iter: 35350, Loss: 1.200, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:17:30,003: INFO: Epoch: 168, Iter: 35400, Loss: 1.371, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 14:18:30,333: INFO: Epoch: 168, Iter: 35450, Loss: 1.162, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:19:30,697: INFO: Epoch: 169, Iter: 35500, Loss: 0.969, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:20:30,980: INFO: Epoch: 169, Iter: 35550, Loss: 1.113, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:21:31,548: INFO: Epoch: 169, Iter: 35600, Loss: 0.825, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 14:22:31,995: INFO: Epoch: 169, Iter: 35650, Loss: 0.995, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:23:32,176: INFO: Epoch: 170, Iter: 35700, Loss: 0.900, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 14:24:32,391: INFO: Epoch: 170, Iter: 35750, Loss: 1.289, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:25:32,452: INFO: Epoch: 170, Iter: 35800, Loss: 1.142, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:26:32,807: INFO: Epoch: 170, Iter: 35850, Loss: 0.987, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:27:33,517: INFO: Epoch: 170, Iter: 35900, Loss: 1.010, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:28:34,185: INFO: Epoch: 171, Iter: 35950, Loss: 0.973, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:29:34,632: INFO: Epoch: 171, Iter: 36000, Loss: 0.981, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:30:34,786: INFO: Epoch: 171, Iter: 36050, Loss: 1.072, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:31:35,143: INFO: Epoch: 171, Iter: 36100, Loss: 0.861, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 14:32:35,437: INFO: Epoch: 172, Iter: 36150, Loss: 1.109, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:33:35,704: INFO: Epoch: 172, Iter: 36200, Loss: 1.225, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:34:36,134: INFO: Epoch: 172, Iter: 36250, Loss: 1.217, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:35:36,396: INFO: Epoch: 172, Iter: 36300, Loss: 1.040, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:36:36,780: INFO: Epoch: 173, Iter: 36350, Loss: 1.011, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:37:37,261: INFO: Epoch: 173, Iter: 36400, Loss: 1.358, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 14:38:37,889: INFO: Epoch: 173, Iter: 36450, Loss: 1.002, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:39:38,359: INFO: Epoch: 173, Iter: 36500, Loss: 1.457, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 14:40:38,727: INFO: Epoch: 174, Iter: 36550, Loss: 1.052, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:41:39,026: INFO: Epoch: 174, Iter: 36600, Loss: 0.973, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:42:39,723: INFO: Epoch: 174, Iter: 36650, Loss: 0.903, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:43:40,447: INFO: Epoch: 174, Iter: 36700, Loss: 1.113, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:44:40,759: INFO: Epoch: 175, Iter: 36750, Loss: 1.137, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:45:41,170: INFO: Epoch: 175, Iter: 36800, Loss: 1.082, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:46:41,336: INFO: Epoch: 175, Iter: 36850, Loss: 0.902, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 14:47:41,998: INFO: Epoch: 175, Iter: 36900, Loss: 1.255, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 14:48:42,648: INFO: Epoch: 175, Iter: 36950, Loss: 1.008, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:49:42,965: INFO: Epoch: 176, Iter: 37000, Loss: 0.974, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 14:50:43,387: INFO: Epoch: 176, Iter: 37050, Loss: 1.158, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 14:51:43,954: INFO: Epoch: 176, Iter: 37100, Loss: 1.130, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 14:52:44,266: INFO: Epoch: 176, Iter: 37150, Loss: 1.153, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 14:53:45,064: INFO: Epoch: 177, Iter: 37200, Loss: 1.189, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:54:45,776: INFO: Epoch: 177, Iter: 37250, Loss: 0.983, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:55:47,465: INFO: Epoch: 177, Iter: 37300, Loss: 1.070, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:56:47,944: INFO: Epoch: 177, Iter: 37350, Loss: 1.342, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 14:57:48,259: INFO: Epoch: 178, Iter: 37400, Loss: 1.280, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 14:58:50,079: INFO: Epoch: 178, Iter: 37450, Loss: 0.969, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 14:59:50,460: INFO: Epoch: 178, Iter: 37500, Loss: 1.404, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 15:00:50,876: INFO: Epoch: 178, Iter: 37550, Loss: 1.143, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 15:01:50,940: INFO: Epoch: 179, Iter: 37600, Loss: 1.024, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:02:51,683: INFO: Epoch: 179, Iter: 37650, Loss: 1.097, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:03:52,276: INFO: Epoch: 179, Iter: 37700, Loss: 1.070, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:04:52,554: INFO: Epoch: 179, Iter: 37750, Loss: 1.246, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 15:05:53,021: INFO: Epoch: 180, Iter: 37800, Loss: 1.078, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:06:53,834: INFO: Epoch: 180, Iter: 37850, Loss: 0.982, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:07:54,387: INFO: Epoch: 180, Iter: 37900, Loss: 0.962, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 15:08:54,826: INFO: Epoch: 180, Iter: 37950, Loss: 1.066, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 15:09:54,988: INFO: Epoch: 180, Iter: 38000, Loss: 1.241, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 15:10:55,483: INFO: Epoch: 181, Iter: 38050, Loss: 1.113, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 15:11:55,460: INFO: Epoch: 181, Iter: 38100, Loss: 0.877, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 15:12:56,180: INFO: Epoch: 181, Iter: 38150, Loss: 1.285, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 15:13:56,731: INFO: Epoch: 181, Iter: 38200, Loss: 1.350, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:14:57,182: INFO: Epoch: 182, Iter: 38250, Loss: 1.114, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 15:15:57,704: INFO: Epoch: 182, Iter: 38300, Loss: 0.933, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 15:16:58,246: INFO: Epoch: 182, Iter: 38350, Loss: 1.167, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:17:59,033: INFO: Epoch: 182, Iter: 38400, Loss: 1.048, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 15:18:59,523: INFO: Epoch: 183, Iter: 38450, Loss: 1.115, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:19:59,942: INFO: Epoch: 183, Iter: 38500, Loss: 1.078, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:21:00,591: INFO: Epoch: 183, Iter: 38550, Loss: 1.414, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 15:22:00,910: INFO: Epoch: 183, Iter: 38600, Loss: 1.177, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:23:01,343: INFO: Epoch: 184, Iter: 38650, Loss: 1.058, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:24:01,749: INFO: Epoch: 184, Iter: 38700, Loss: 0.868, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 15:25:02,080: INFO: Epoch: 184, Iter: 38750, Loss: 1.146, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:26:02,096: INFO: Epoch: 184, Iter: 38800, Loss: 0.980, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 15:27:02,773: INFO: Epoch: 185, Iter: 38850, Loss: 0.944, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 15:28:03,147: INFO: Epoch: 185, Iter: 38900, Loss: 0.783, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 15:29:03,594: INFO: Epoch: 185, Iter: 38950, Loss: 0.986, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 15:30:03,641: INFO: Epoch: 185, Iter: 39000, Loss: 1.074, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 15:31:03,965: INFO: Epoch: 185, Iter: 39050, Loss: 0.974, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 15:32:04,345: INFO: Epoch: 186, Iter: 39100, Loss: 1.125, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:33:04,793: INFO: Epoch: 186, Iter: 39150, Loss: 1.007, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 15:34:05,198: INFO: Epoch: 186, Iter: 39200, Loss: 0.807, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 15:35:05,850: INFO: Epoch: 186, Iter: 39250, Loss: 1.217, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 15:36:06,449: INFO: Epoch: 187, Iter: 39300, Loss: 1.054, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 15:37:06,981: INFO: Epoch: 187, Iter: 39350, Loss: 0.682, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 15:38:07,521: INFO: Epoch: 187, Iter: 39400, Loss: 0.919, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 15:39:08,167: INFO: Epoch: 187, Iter: 39450, Loss: 1.106, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:40:08,564: INFO: Epoch: 188, Iter: 39500, Loss: 1.130, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:41:09,117: INFO: Epoch: 188, Iter: 39550, Loss: 0.982, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 15:42:09,857: INFO: Epoch: 188, Iter: 39600, Loss: 1.082, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:43:10,662: INFO: Epoch: 188, Iter: 39650, Loss: 1.030, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 15:44:10,854: INFO: Epoch: 189, Iter: 39700, Loss: 1.133, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 15:45:11,327: INFO: Epoch: 189, Iter: 39750, Loss: 0.820, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 15:46:11,447: INFO: Epoch: 189, Iter: 39800, Loss: 0.708, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 15:47:11,979: INFO: Epoch: 189, Iter: 39850, Loss: 1.140, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:48:12,609: INFO: Epoch: 190, Iter: 39900, Loss: 0.948, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:49:13,081: INFO: Epoch: 190, Iter: 39950, Loss: 1.203, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 15:50:13,259: INFO: Epoch: 190, Iter: 40000, Loss: 0.726, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 15:51:13,773: INFO: Epoch: 190, Iter: 40050, Loss: 1.211, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 15:52:14,297: INFO: Epoch: 190, Iter: 40100, Loss: 1.140, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 15:53:14,980: INFO: Epoch: 191, Iter: 40150, Loss: 1.123, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 15:54:15,258: INFO: Epoch: 191, Iter: 40200, Loss: 1.257, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:55:15,721: INFO: Epoch: 191, Iter: 40250, Loss: 1.129, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:56:15,875: INFO: Epoch: 191, Iter: 40300, Loss: 1.179, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 15:57:16,535: INFO: Epoch: 192, Iter: 40350, Loss: 1.111, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 15:58:17,177: INFO: Epoch: 192, Iter: 40400, Loss: 0.783, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 15:59:17,837: INFO: Epoch: 192, Iter: 40450, Loss: 1.376, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 16:00:18,177: INFO: Epoch: 192, Iter: 40500, Loss: 1.180, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 16:01:18,607: INFO: Epoch: 193, Iter: 40550, Loss: 0.999, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 16:02:19,056: INFO: Epoch: 193, Iter: 40600, Loss: 0.977, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 16:03:19,707: INFO: Epoch: 193, Iter: 40650, Loss: 1.005, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 16:04:20,863: INFO: Epoch: 193, Iter: 40700, Loss: 0.741, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 16:05:20,730: INFO: Epoch: 194, Iter: 40750, Loss: 1.078, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 16:06:20,877: INFO: Epoch: 194, Iter: 40800, Loss: 1.036, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 16:07:21,207: INFO: Epoch: 194, Iter: 40850, Loss: 0.918, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 16:08:21,827: INFO: Epoch: 194, Iter: 40900, Loss: 1.174, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 16:09:22,130: INFO: Epoch: 195, Iter: 40950, Loss: 1.320, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 16:10:22,331: INFO: Epoch: 195, Iter: 41000, Loss: 0.955, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 16:11:22,558: INFO: Epoch: 195, Iter: 41050, Loss: 1.204, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 16:12:22,492: INFO: Epoch: 195, Iter: 41100, Loss: 0.992, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 16:13:23,017: INFO: Epoch: 195, Iter: 41150, Loss: 0.994, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 16:14:23,598: INFO: Epoch: 196, Iter: 41200, Loss: 1.132, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 16:15:24,334: INFO: Epoch: 196, Iter: 41250, Loss: 0.828, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 16:16:24,633: INFO: Epoch: 196, Iter: 41300, Loss: 0.718, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 16:17:25,122: INFO: Epoch: 196, Iter: 41350, Loss: 1.206, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 16:18:25,693: INFO: Epoch: 197, Iter: 41400, Loss: 1.161, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 16:19:25,850: INFO: Epoch: 197, Iter: 41450, Loss: 1.029, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 16:20:26,393: INFO: Epoch: 197, Iter: 41500, Loss: 1.329, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 16:21:26,549: INFO: Epoch: 197, Iter: 41550, Loss: 0.731, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 16:22:27,099: INFO: Epoch: 198, Iter: 41600, Loss: 0.859, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 16:23:27,943: INFO: Epoch: 198, Iter: 41650, Loss: 0.965, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 16:24:28,069: INFO: Epoch: 198, Iter: 41700, Loss: 0.969, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 16:25:28,223: INFO: Epoch: 198, Iter: 41750, Loss: 1.068, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 16:26:28,866: INFO: Epoch: 199, Iter: 41800, Loss: 1.171, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 16:27:29,166: INFO: Epoch: 199, Iter: 41850, Loss: 1.116, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 16:28:29,730: INFO: Epoch: 199, Iter: 41900, Loss: 1.054, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 16:29:29,943: INFO: Epoch: 199, Iter: 41950, Loss: 0.751, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 16:30:29,950: INFO: Epoch: 200, Iter: 42000, Loss: 1.026, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 16:31:30,307: INFO: Epoch: 200, Iter: 42050, Loss: 1.093, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 16:32:30,546: INFO: Epoch: 200, Iter: 42100, Loss: 1.129, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 16:33:31,168: INFO: Epoch: 200, Iter: 42150, Loss: 1.110, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 16:34:31,409: INFO: Epoch: 200, Iter: 42200, Loss: 1.083, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 16:35:31,514: INFO: Epoch: 201, Iter: 42250, Loss: 1.153, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 16:36:32,637: INFO: Epoch: 201, Iter: 42300, Loss: 0.999, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 16:37:33,189: INFO: Epoch: 201, Iter: 42350, Loss: 1.264, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 16:38:33,619: INFO: Epoch: 201, Iter: 42400, Loss: 1.253, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 16:39:33,837: INFO: Epoch: 202, Iter: 42450, Loss: 0.977, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 16:40:34,035: INFO: Epoch: 202, Iter: 42500, Loss: 0.897, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 16:41:34,061: INFO: Epoch: 202, Iter: 42550, Loss: 1.053, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 16:42:34,761: INFO: Epoch: 202, Iter: 42600, Loss: 0.799, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 16:43:35,248: INFO: Epoch: 203, Iter: 42650, Loss: 1.089, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 16:44:35,510: INFO: Epoch: 203, Iter: 42700, Loss: 0.958, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 16:45:35,715: INFO: Epoch: 203, Iter: 42750, Loss: 0.928, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 16:46:36,040: INFO: Epoch: 203, Iter: 42800, Loss: 1.262, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 16:47:36,664: INFO: Epoch: 204, Iter: 42850, Loss: 1.101, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 16:48:37,489: INFO: Epoch: 204, Iter: 42900, Loss: 0.954, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 16:49:37,738: INFO: Epoch: 204, Iter: 42950, Loss: 1.072, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 16:50:38,100: INFO: Epoch: 204, Iter: 43000, Loss: 0.908, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 16:51:38,234: INFO: Epoch: 205, Iter: 43050, Loss: 0.990, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 16:52:38,652: INFO: Epoch: 205, Iter: 43100, Loss: 1.018, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 16:53:39,529: INFO: Epoch: 205, Iter: 43150, Loss: 1.231, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 16:54:39,476: INFO: Epoch: 205, Iter: 43200, Loss: 1.140, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 16:55:39,342: INFO: Epoch: 205, Iter: 43250, Loss: 1.309, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 16:56:40,330: INFO: Epoch: 206, Iter: 43300, Loss: 1.318, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 16:57:41,114: INFO: Epoch: 206, Iter: 43350, Loss: 1.147, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 16:58:41,997: INFO: Epoch: 206, Iter: 43400, Loss: 0.920, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 16:59:42,261: INFO: Epoch: 206, Iter: 43450, Loss: 0.758, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 17:00:43,016: INFO: Epoch: 207, Iter: 43500, Loss: 0.962, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:01:43,085: INFO: Epoch: 207, Iter: 43550, Loss: 1.065, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 17:02:43,182: INFO: Epoch: 207, Iter: 43600, Loss: 1.078, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 17:03:43,947: INFO: Epoch: 207, Iter: 43650, Loss: 0.793, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 17:04:44,648: INFO: Epoch: 208, Iter: 43700, Loss: 0.864, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 17:05:45,095: INFO: Epoch: 208, Iter: 43750, Loss: 1.237, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 17:06:45,684: INFO: Epoch: 208, Iter: 43800, Loss: 0.913, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 17:07:45,925: INFO: Epoch: 208, Iter: 43850, Loss: 0.847, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:08:46,525: INFO: Epoch: 209, Iter: 43900, Loss: 1.337, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 17:09:46,847: INFO: Epoch: 209, Iter: 43950, Loss: 1.013, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:10:47,179: INFO: Epoch: 209, Iter: 44000, Loss: 0.917, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:11:47,660: INFO: Epoch: 209, Iter: 44050, Loss: 1.453, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 17:12:48,447: INFO: Epoch: 210, Iter: 44100, Loss: 0.972, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 17:13:49,206: INFO: Epoch: 210, Iter: 44150, Loss: 1.062, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 17:14:49,960: INFO: Epoch: 210, Iter: 44200, Loss: 0.968, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:15:50,406: INFO: Epoch: 210, Iter: 44250, Loss: 0.991, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:16:50,309: INFO: Epoch: 210, Iter: 44300, Loss: 1.296, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 17:17:51,055: INFO: Epoch: 211, Iter: 44350, Loss: 1.046, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 17:18:51,423: INFO: Epoch: 211, Iter: 44400, Loss: 1.055, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:19:51,506: INFO: Epoch: 211, Iter: 44450, Loss: 1.051, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:20:51,615: INFO: Epoch: 211, Iter: 44500, Loss: 1.484, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 17:21:51,998: INFO: Epoch: 212, Iter: 44550, Loss: 1.145, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 17:22:52,140: INFO: Epoch: 212, Iter: 44600, Loss: 0.884, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 17:23:52,574: INFO: Epoch: 212, Iter: 44650, Loss: 1.285, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 17:24:52,663: INFO: Epoch: 212, Iter: 44700, Loss: 1.270, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 17:25:53,270: INFO: Epoch: 213, Iter: 44750, Loss: 1.092, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 17:26:53,934: INFO: Epoch: 213, Iter: 44800, Loss: 0.829, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 17:27:54,613: INFO: Epoch: 213, Iter: 44850, Loss: 0.966, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:28:55,045: INFO: Epoch: 213, Iter: 44900, Loss: 0.808, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 17:29:55,554: INFO: Epoch: 214, Iter: 44950, Loss: 1.032, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:30:55,894: INFO: Epoch: 214, Iter: 45000, Loss: 0.983, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:31:55,953: INFO: Epoch: 214, Iter: 45050, Loss: 0.925, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 17:32:56,709: INFO: Epoch: 214, Iter: 45100, Loss: 1.082, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:33:57,108: INFO: Epoch: 215, Iter: 45150, Loss: 0.797, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 17:34:57,676: INFO: Epoch: 215, Iter: 45200, Loss: 0.698, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 17:35:57,446: INFO: Epoch: 215, Iter: 45250, Loss: 1.247, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 17:36:58,108: INFO: Epoch: 215, Iter: 45300, Loss: 1.227, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 17:37:58,977: INFO: Epoch: 215, Iter: 45350, Loss: 1.231, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 17:38:59,323: INFO: Epoch: 216, Iter: 45400, Loss: 1.020, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:39:59,619: INFO: Epoch: 216, Iter: 45450, Loss: 1.243, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 17:40:59,960: INFO: Epoch: 216, Iter: 45500, Loss: 1.175, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 17:42:00,364: INFO: Epoch: 216, Iter: 45550, Loss: 0.995, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:43:00,848: INFO: Epoch: 217, Iter: 45600, Loss: 0.974, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:44:01,868: INFO: Epoch: 217, Iter: 45650, Loss: 0.954, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:45:02,094: INFO: Epoch: 217, Iter: 45700, Loss: 1.171, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 17:46:02,615: INFO: Epoch: 217, Iter: 45750, Loss: 0.995, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:47:03,164: INFO: Epoch: 218, Iter: 45800, Loss: 1.204, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 17:48:03,769: INFO: Epoch: 218, Iter: 45850, Loss: 1.060, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 17:49:04,126: INFO: Epoch: 218, Iter: 45900, Loss: 0.955, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:50:04,330: INFO: Epoch: 218, Iter: 45950, Loss: 1.097, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 17:51:04,433: INFO: Epoch: 219, Iter: 46000, Loss: 0.998, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:52:04,659: INFO: Epoch: 219, Iter: 46050, Loss: 1.064, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 17:53:05,015: INFO: Epoch: 219, Iter: 46100, Loss: 1.204, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 17:54:05,480: INFO: Epoch: 219, Iter: 46150, Loss: 1.241, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 17:55:05,827: INFO: Epoch: 220, Iter: 46200, Loss: 1.119, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 17:56:06,112: INFO: Epoch: 220, Iter: 46250, Loss: 1.027, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:57:06,607: INFO: Epoch: 220, Iter: 46300, Loss: 0.954, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:58:07,297: INFO: Epoch: 220, Iter: 46350, Loss: 1.040, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 17:59:07,691: INFO: Epoch: 220, Iter: 46400, Loss: 1.117, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 18:00:08,162: INFO: Epoch: 221, Iter: 46450, Loss: 0.988, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 18:01:08,367: INFO: Epoch: 221, Iter: 46500, Loss: 1.181, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 18:02:08,831: INFO: Epoch: 221, Iter: 46550, Loss: 0.848, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 18:03:09,301: INFO: Epoch: 221, Iter: 46600, Loss: 1.089, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 18:04:09,466: INFO: Epoch: 222, Iter: 46650, Loss: 1.091, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 18:05:09,607: INFO: Epoch: 222, Iter: 46700, Loss: 1.304, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 18:06:10,107: INFO: Epoch: 222, Iter: 46750, Loss: 1.062, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 18:07:12,600: INFO: Epoch: 222, Iter: 46800, Loss: 1.112, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 18:08:13,150: INFO: Epoch: 223, Iter: 46850, Loss: 1.126, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 18:09:13,512: INFO: Epoch: 223, Iter: 46900, Loss: 1.098, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 18:10:13,682: INFO: Epoch: 223, Iter: 46950, Loss: 0.922, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 18:11:14,204: INFO: Epoch: 223, Iter: 47000, Loss: 1.145, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 18:12:15,377: INFO: Epoch: 224, Iter: 47050, Loss: 1.134, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 18:13:16,184: INFO: Epoch: 224, Iter: 47100, Loss: 0.957, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 18:14:16,585: INFO: Epoch: 224, Iter: 47150, Loss: 1.094, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 18:15:17,419: INFO: Epoch: 224, Iter: 47200, Loss: 0.982, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 18:16:17,497: INFO: Epoch: 225, Iter: 47250, Loss: 1.209, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 18:17:17,867: INFO: Epoch: 225, Iter: 47300, Loss: 1.230, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 18:18:17,977: INFO: Epoch: 225, Iter: 47350, Loss: 1.435, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 18:19:18,005: INFO: Epoch: 225, Iter: 47400, Loss: 0.996, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 18:20:18,193: INFO: Epoch: 225, Iter: 47450, Loss: 1.252, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 18:21:17,925: INFO: Epoch: 226, Iter: 47500, Loss: 0.928, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 18:22:18,137: INFO: Epoch: 226, Iter: 47550, Loss: 1.191, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 18:23:18,182: INFO: Epoch: 226, Iter: 47600, Loss: 1.156, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 18:24:18,031: INFO: Epoch: 226, Iter: 47650, Loss: 1.248, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 18:25:18,350: INFO: Epoch: 227, Iter: 47700, Loss: 0.776, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 18:26:18,150: INFO: Epoch: 227, Iter: 47750, Loss: 1.245, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 18:27:18,335: INFO: Epoch: 227, Iter: 47800, Loss: 0.961, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 18:28:18,377: INFO: Epoch: 227, Iter: 47850, Loss: 1.213, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 18:29:18,205: INFO: Epoch: 228, Iter: 47900, Loss: 1.236, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 18:30:18,400: INFO: Epoch: 228, Iter: 47950, Loss: 0.965, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 18:31:18,670: INFO: Epoch: 228, Iter: 48000, Loss: 1.142, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 18:32:19,078: INFO: Epoch: 228, Iter: 48050, Loss: 0.955, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 18:33:18,928: INFO: Epoch: 229, Iter: 48100, Loss: 1.053, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 18:34:19,761: INFO: Epoch: 229, Iter: 48150, Loss: 1.159, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 18:35:19,955: INFO: Epoch: 229, Iter: 48200, Loss: 0.953, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 18:36:19,984: INFO: Epoch: 229, Iter: 48250, Loss: 0.715, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 18:37:20,454: INFO: Epoch: 230, Iter: 48300, Loss: 0.855, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 18:38:21,116: INFO: Epoch: 230, Iter: 48350, Loss: 0.933, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 18:39:21,089: INFO: Epoch: 230, Iter: 48400, Loss: 1.074, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 18:40:21,322: INFO: Epoch: 230, Iter: 48450, Loss: 1.127, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 18:41:21,368: INFO: Epoch: 230, Iter: 48500, Loss: 1.228, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 18:42:21,778: INFO: Epoch: 231, Iter: 48550, Loss: 1.075, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 18:43:22,278: INFO: Epoch: 231, Iter: 48600, Loss: 1.452, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 18:44:22,740: INFO: Epoch: 231, Iter: 48650, Loss: 1.119, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 18:45:22,760: INFO: Epoch: 231, Iter: 48700, Loss: 0.986, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 18:46:23,013: INFO: Epoch: 232, Iter: 48750, Loss: 0.954, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 18:47:23,710: INFO: Epoch: 232, Iter: 48800, Loss: 0.586, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 18:48:24,462: INFO: Epoch: 232, Iter: 48850, Loss: 1.134, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 18:49:24,962: INFO: Epoch: 232, Iter: 48900, Loss: 1.017, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 18:50:25,391: INFO: Epoch: 233, Iter: 48950, Loss: 0.975, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 18:51:25,989: INFO: Epoch: 233, Iter: 49000, Loss: 1.273, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 18:52:26,387: INFO: Epoch: 233, Iter: 49050, Loss: 1.515, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 18:53:26,978: INFO: Epoch: 233, Iter: 49100, Loss: 0.919, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 18:54:27,766: INFO: Epoch: 234, Iter: 49150, Loss: 1.031, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 18:55:27,895: INFO: Epoch: 234, Iter: 49200, Loss: 1.122, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 18:56:28,324: INFO: Epoch: 234, Iter: 49250, Loss: 0.978, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 18:57:29,118: INFO: Epoch: 234, Iter: 49300, Loss: 1.437, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 18:58:29,675: INFO: Epoch: 235, Iter: 49350, Loss: 1.007, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 18:59:29,626: INFO: Epoch: 235, Iter: 49400, Loss: 1.057, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 19:00:30,540: INFO: Epoch: 235, Iter: 49450, Loss: 0.969, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:01:31,081: INFO: Epoch: 235, Iter: 49500, Loss: 1.556, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 19:02:31,407: INFO: Epoch: 235, Iter: 49550, Loss: 0.973, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:03:32,255: INFO: Epoch: 236, Iter: 49600, Loss: 0.916, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 19:04:32,304: INFO: Epoch: 236, Iter: 49650, Loss: 1.222, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 19:05:32,716: INFO: Epoch: 236, Iter: 49700, Loss: 0.963, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:06:33,097: INFO: Epoch: 236, Iter: 49750, Loss: 1.069, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 19:07:37,084: INFO: Epoch: 237, Iter: 49800, Loss: 1.005, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:08:38,833: INFO: Epoch: 237, Iter: 49850, Loss: 1.146, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 19:09:40,009: INFO: Epoch: 237, Iter: 49900, Loss: 1.121, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 19:10:41,407: INFO: Epoch: 237, Iter: 49950, Loss: 0.898, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:11:42,597: INFO: Epoch: 238, Iter: 50000, Loss: 0.813, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:12:44,023: INFO: Epoch: 238, Iter: 50050, Loss: 1.157, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 19:13:45,948: INFO: Epoch: 238, Iter: 50100, Loss: 1.277, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 19:14:47,145: INFO: Epoch: 238, Iter: 50150, Loss: 0.875, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 19:15:48,381: INFO: Epoch: 239, Iter: 50200, Loss: 1.038, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:16:50,183: INFO: Epoch: 239, Iter: 50250, Loss: 1.028, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 19:17:52,403: INFO: Epoch: 239, Iter: 50300, Loss: 1.077, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:18:54,474: INFO: Epoch: 239, Iter: 50350, Loss: 0.837, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 19:19:55,450: INFO: Epoch: 240, Iter: 50400, Loss: 1.244, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 19:20:56,976: INFO: Epoch: 240, Iter: 50450, Loss: 1.289, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 19:21:58,206: INFO: Epoch: 240, Iter: 50500, Loss: 1.285, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 19:22:59,535: INFO: Epoch: 240, Iter: 50550, Loss: 1.105, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 19:24:00,899: INFO: Epoch: 240, Iter: 50600, Loss: 1.000, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 19:25:02,349: INFO: Epoch: 241, Iter: 50650, Loss: 1.144, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 19:26:03,626: INFO: Epoch: 241, Iter: 50700, Loss: 1.383, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 19:27:04,822: INFO: Epoch: 241, Iter: 50750, Loss: 1.059, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:28:06,291: INFO: Epoch: 241, Iter: 50800, Loss: 1.219, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 19:29:07,435: INFO: Epoch: 242, Iter: 50850, Loss: 1.117, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 19:30:08,757: INFO: Epoch: 242, Iter: 50900, Loss: 1.252, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-23 19:31:10,440: INFO: Epoch: 242, Iter: 50950, Loss: 1.110, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 19:32:11,591: INFO: Epoch: 242, Iter: 51000, Loss: 0.957, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:33:12,919: INFO: Epoch: 243, Iter: 51050, Loss: 1.105, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 19:34:14,620: INFO: Epoch: 243, Iter: 51100, Loss: 1.021, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:35:16,197: INFO: Epoch: 243, Iter: 51150, Loss: 1.099, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 19:36:17,649: INFO: Epoch: 243, Iter: 51200, Loss: 1.013, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:37:19,273: INFO: Epoch: 244, Iter: 51250, Loss: 1.271, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 19:38:20,850: INFO: Epoch: 244, Iter: 51300, Loss: 1.101, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 19:39:22,383: INFO: Epoch: 244, Iter: 51350, Loss: 1.091, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 19:40:23,710: INFO: Epoch: 244, Iter: 51400, Loss: 0.965, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:41:25,197: INFO: Epoch: 245, Iter: 51450, Loss: 0.964, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:42:26,632: INFO: Epoch: 245, Iter: 51500, Loss: 1.065, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 19:43:28,320: INFO: Epoch: 245, Iter: 51550, Loss: 1.094, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 19:44:29,479: INFO: Epoch: 245, Iter: 51600, Loss: 0.989, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:45:30,499: INFO: Epoch: 245, Iter: 51650, Loss: 0.777, Accuracy: 1.000, Learning Rate: 0.050
+2017-10-23 19:46:31,836: INFO: Epoch: 246, Iter: 51700, Loss: 0.814, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 19:47:33,113: INFO: Epoch: 246, Iter: 51750, Loss: 0.837, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:48:34,847: INFO: Epoch: 246, Iter: 51800, Loss: 1.102, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 19:49:36,010: INFO: Epoch: 246, Iter: 51850, Loss: 1.010, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 19:50:37,000: INFO: Epoch: 247, Iter: 51900, Loss: 0.963, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:51:38,353: INFO: Epoch: 247, Iter: 51950, Loss: 1.124, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 19:52:39,656: INFO: Epoch: 247, Iter: 52000, Loss: 0.996, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:53:40,977: INFO: Epoch: 247, Iter: 52050, Loss: 1.263, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 19:54:41,884: INFO: Epoch: 248, Iter: 52100, Loss: 1.197, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 19:55:42,969: INFO: Epoch: 248, Iter: 52150, Loss: 1.181, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 19:56:44,301: INFO: Epoch: 248, Iter: 52200, Loss: 0.980, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:57:45,744: INFO: Epoch: 248, Iter: 52250, Loss: 0.851, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-23 19:58:47,326: INFO: Epoch: 249, Iter: 52300, Loss: 1.015, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 19:59:48,681: INFO: Epoch: 249, Iter: 52350, Loss: 1.117, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-23 20:00:50,460: INFO: Epoch: 249, Iter: 52400, Loss: 1.112, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-23 20:01:51,810: INFO: Epoch: 249, Iter: 52450, Loss: 1.245, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-23 20:02:44,730: INFO: Cycled through epochs 500 times
+2017-10-23 20:02:44,730: INFO: The training is done.
+
+2017-10-28 15:36:21,109: INFO: *** NEW RUN ***
+2017-10-28 15:36:21,110: INFO: filename: trained_model_2017.10.28-15.36.20
+2017-10-28 15:36:21,111: INFO: n_epochs: 500
+2017-10-28 15:36:21,111: INFO: n_hidden: 32
+2017-10-28 15:36:21,111: INFO: batch_size: 5
+2017-10-28 15:36:21,111: INFO: n_layers: 3
+2017-10-28 15:36:21,111: INFO: exp_decay_enabled: False
+2017-10-28 15:36:21,112: INFO: static_lr_val: 0.050
+2017-10-28 15:36:21,112: INFO: Reg Type: None
+2017-10-28 15:36:21,112: INFO:   Dropout Prob: 0.50
+2017-10-28 15:36:21,112: INFO:   Beta: 0.010
+
+2017-10-28 15:36:24,631: INFO: The training shall begin.
+2017-10-28 15:36:33,135: INFO: Epoch: 0, Iter: 0, Loss: 5.990, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 15:37:35,668: INFO: Epoch: 0, Iter: 50, Loss: 1.005, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 15:38:39,265: INFO: Epoch: 0, Iter: 100, Loss: 1.256, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 15:39:51,498: INFO: Epoch: 0, Iter: 150, Loss: 0.973, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 15:40:55,562: INFO: Epoch: 0, Iter: 200, Loss: 0.826, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-28 15:42:01,082: INFO: Epoch: 1, Iter: 250, Loss: 1.132, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 15:42:18,594: INFO: Keyboard Interrupt? Gracefully quitting
+2017-10-28 15:42:18,594: INFO: The training is done.
+
+2017-10-28 16:09:08,857: INFO: *** NEW RUN ***
+2017-10-28 16:09:08,858: INFO: filename: trained_model_2017.10.28-16.09.08
+2017-10-28 16:09:08,858: INFO: n_epochs: 500
+2017-10-28 16:09:08,858: INFO: n_hidden: 32
+2017-10-28 16:09:08,858: INFO: batch_size: 5
+2017-10-28 16:09:08,859: INFO: n_layers: 3
+2017-10-28 16:09:08,859: INFO: exp_decay_enabled: False
+2017-10-28 16:09:08,859: INFO: static_lr_val: 0.050
+2017-10-28 16:09:08,859: INFO: Reg Type: None
+2017-10-28 16:09:08,859: INFO:   Dropout Prob: 0.50
+2017-10-28 16:09:08,859: INFO:   Beta: 0.010
+
+2017-10-28 16:09:12,172: INFO: The training shall begin.
+2017-10-28 16:09:20,452: INFO: Epoch: 0, Iter: 0, Loss: 1.607, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 16:09:34,338: INFO: Keyboard Interrupt? Gracefully quitting
+2017-10-28 16:09:34,339: INFO: The training is done.
+
+2017-10-28 16:09:41,558: INFO: In read Batch
+2017-10-28 16:09:44,342: INFO: *** NEW RUN ***
+2017-10-28 16:09:44,342: INFO: filename: trained_model_2017.10.28-16.09.44
+2017-10-28 16:09:44,342: INFO: n_epochs: 500
+2017-10-28 16:09:44,343: INFO: n_hidden: 32
+2017-10-28 16:09:44,343: INFO: batch_size: 5
+2017-10-28 16:09:44,343: INFO: n_layers: 3
+2017-10-28 16:09:44,343: INFO: exp_decay_enabled: False
+2017-10-28 16:09:44,343: INFO: static_lr_val: 0.050
+2017-10-28 16:09:44,343: INFO: Reg Type: None
+2017-10-28 16:09:44,343: INFO:   Dropout Prob: 0.50
+2017-10-28 16:09:44,344: INFO:   Beta: 0.010
+
+2017-10-28 16:09:47,636: INFO: The training shall begin.
+2017-10-28 16:09:55,810: INFO: Epoch: 0, Iter: 0, Loss: 1.343, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-28 16:10:31,712: INFO: Keyboard Interrupt? Gracefully quitting
+2017-10-28 16:10:31,712: INFO: The training is done.
+
+2017-10-28 16:11:58,848: INFO: *** NEW RUN ***
+2017-10-28 16:11:58,849: INFO: filename: trained_model_2017.10.28-16.11.58
+2017-10-28 16:11:58,849: INFO: n_epochs: 500
+2017-10-28 16:11:58,850: INFO: n_hidden: 32
+2017-10-28 16:11:58,850: INFO: batch_size: 5
+2017-10-28 16:11:58,850: INFO: n_layers: 3
+2017-10-28 16:11:58,850: INFO: exp_decay_enabled: False
+2017-10-28 16:11:58,850: INFO: static_lr_val: 0.050
+2017-10-28 16:11:58,851: INFO: Reg Type: None
+2017-10-28 16:11:58,851: INFO:   Dropout Prob: 0.50
+2017-10-28 16:11:58,851: INFO:   Beta: 0.010
+
+2017-10-28 16:12:02,169: INFO: The training shall begin.
+2017-10-28 16:12:10,409: INFO: Epoch: 0, Iter: 0, Loss: 3.920, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 16:12:33,999: INFO: Keyboard Interrupt? Gracefully quitting
+2017-10-28 16:12:33,999: INFO: The training is done.
+
+2017-10-28 16:14:44,530: INFO: *** NEW RUN ***
+2017-10-28 16:14:44,531: INFO: filename: trained_model_2017.10.28-16.14.44
+2017-10-28 16:14:44,532: INFO: n_epochs: 500
+2017-10-28 16:14:44,532: INFO: n_hidden: 32
+2017-10-28 16:14:44,532: INFO: batch_size: 5
+2017-10-28 16:14:44,532: INFO: n_layers: 3
+2017-10-28 16:14:44,532: INFO: exp_decay_enabled: False
+2017-10-28 16:14:44,532: INFO: static_lr_val: 0.050
+2017-10-28 16:14:44,533: INFO: Reg Type: None
+2017-10-28 16:14:44,533: INFO:   Dropout Prob: 0.50
+2017-10-28 16:14:44,533: INFO:   Beta: 0.010
+
+2017-10-28 16:14:47,844: INFO: The training shall begin.
+2017-10-28 16:14:52,600: INFO: The training is done.
+
+2017-10-28 16:16:51,116: INFO: *** NEW RUN ***
+2017-10-28 16:16:51,117: INFO: filename: trained_model_2017.10.28-16.16.50
+2017-10-28 16:16:51,118: INFO: n_epochs: 500
+2017-10-28 16:16:51,118: INFO: n_hidden: 32
+2017-10-28 16:16:51,118: INFO: batch_size: 5
+2017-10-28 16:16:51,118: INFO: n_layers: 3
+2017-10-28 16:16:51,118: INFO: exp_decay_enabled: False
+2017-10-28 16:16:51,118: INFO: static_lr_val: 0.050
+2017-10-28 16:16:51,119: INFO: Reg Type: None
+2017-10-28 16:16:51,119: INFO:   Dropout Prob: 0.50
+2017-10-28 16:16:51,119: INFO:   Beta: 0.010
+
+2017-10-28 16:16:54,418: INFO: The training shall begin.
+2017-10-28 16:17:02,864: INFO: Epoch: 0, Iter: 0, Loss: 2.692, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 16:17:44,431: INFO: Keyboard Interrupt? Gracefully quitting
+2017-10-28 16:17:44,432: INFO: The training is done.
+
+2017-10-28 16:21:00,057: INFO: *** NEW RUN ***
+2017-10-28 16:21:00,057: INFO: filename: trained_model_2017.10.28-16.20.59
+2017-10-28 16:21:00,058: INFO: n_epochs: 1
+2017-10-28 16:21:00,058: INFO: n_hidden: 32
+2017-10-28 16:21:00,058: INFO: batch_size: 5
+2017-10-28 16:21:00,058: INFO: n_layers: 3
+2017-10-28 16:21:00,058: INFO: exp_decay_enabled: False
+2017-10-28 16:21:00,058: INFO: static_lr_val: 0.050
+2017-10-28 16:21:00,059: INFO: Reg Type: None
+2017-10-28 16:21:00,059: INFO:   Dropout Prob: 0.50
+2017-10-28 16:21:00,059: INFO:   Beta: 0.010
+
+2017-10-28 16:21:03,479: INFO: The training shall begin.
+2017-10-28 16:21:12,340: INFO: Epoch: 0, Iter: 0, Loss: 4.996, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 16:22:15,449: INFO: Epoch: 0, Iter: 50, Loss: 1.009, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 16:23:18,914: INFO: Epoch: 0, Iter: 100, Loss: 0.991, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 16:23:19,924: INFO: Cycled through epochs 1 times
+2017-10-28 16:23:19,924: INFO: The training is done.
+
+2017-10-28 16:59:49,523: INFO: *** NEW RUN ***
+2017-10-28 16:59:49,524: INFO: filename: trained_model_2017.10.28-16.59.49
+2017-10-28 16:59:49,525: INFO: n_epochs: 1
+2017-10-28 16:59:49,525: INFO: n_hidden: 32
+2017-10-28 16:59:49,525: INFO: batch_size: 5
+2017-10-28 16:59:49,525: INFO: n_layers: 3
+2017-10-28 16:59:49,525: INFO: exp_decay_enabled: False
+2017-10-28 16:59:49,526: INFO: static_lr_val: 0.050
+2017-10-28 16:59:49,526: INFO: Reg Type: None
+2017-10-28 16:59:49,526: INFO:   Dropout Prob: 0.50
+2017-10-28 16:59:49,526: INFO:   Beta: 0.010
+
+2017-10-28 16:59:52,809: INFO: The training shall begin.
+2017-10-28 17:00:01,146: INFO: Epoch: 0, Iter: 0, Loss: 2.880, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-28 17:00:10,438: INFO: Epoch: 0, Iter: 5, Loss: 0.491, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-28 17:00:20,826: INFO: Epoch: 0, Iter: 10, Loss: 1.516, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 17:00:29,960: INFO: Epoch: 0, Iter: 15, Loss: 1.194, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-28 17:00:38,960: INFO: Epoch: 0, Iter: 20, Loss: 1.968, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:00:48,011: INFO: Epoch: 0, Iter: 25, Loss: 1.715, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 17:00:57,104: INFO: Epoch: 0, Iter: 30, Loss: 0.912, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:01:06,097: INFO: Epoch: 0, Iter: 35, Loss: 0.644, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-28 17:01:15,047: INFO: Epoch: 0, Iter: 40, Loss: 1.845, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-28 17:01:24,190: INFO: Epoch: 0, Iter: 45, Loss: 1.213, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:01:33,320: INFO: Epoch: 0, Iter: 50, Loss: 1.364, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-28 17:01:42,549: INFO: Epoch: 0, Iter: 55, Loss: 1.171, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:01:52,050: INFO: Epoch: 0, Iter: 60, Loss: 0.886, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 17:02:01,292: INFO: Epoch: 0, Iter: 65, Loss: 1.012, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:02:10,424: INFO: Epoch: 0, Iter: 70, Loss: 1.038, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:02:19,549: INFO: Epoch: 0, Iter: 75, Loss: 1.129, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:02:28,816: INFO: Epoch: 0, Iter: 80, Loss: 0.934, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:02:37,850: INFO: Epoch: 0, Iter: 85, Loss: 1.084, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 17:02:46,950: INFO: Epoch: 0, Iter: 90, Loss: 1.105, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 17:02:56,402: INFO: Epoch: 0, Iter: 95, Loss: 0.810, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-28 17:03:05,632: INFO: Epoch: 0, Iter: 100, Loss: 0.970, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:03:06,700: INFO: Cycled through epochs 1 times
+2017-10-28 17:03:06,701: INFO: The training is done.
+
+2017-10-28 17:06:39,920: INFO: *** NEW RUN ***
+2017-10-28 17:06:39,920: INFO: filename: trained_model_2017.10.28-17.06.39
+2017-10-28 17:06:39,921: INFO: n_epochs: 1
+2017-10-28 17:06:39,921: INFO: n_hidden: 32
+2017-10-28 17:06:39,921: INFO: batch_size: 5
+2017-10-28 17:06:39,921: INFO: n_layers: 3
+2017-10-28 17:06:39,921: INFO: exp_decay_enabled: False
+2017-10-28 17:06:39,921: INFO: static_lr_val: 0.050
+2017-10-28 17:06:39,922: INFO: Reg Type: None
+2017-10-28 17:06:39,922: INFO:   Dropout Prob: 0.50
+2017-10-28 17:06:39,922: INFO:   Beta: 0.010
+
+2017-10-28 17:06:43,237: INFO: The training shall begin.
+2017-10-28 17:06:43,238: INFO: The training is done.
+
+2017-10-28 17:07:03,262: INFO: *** NEW RUN ***
+2017-10-28 17:07:03,263: INFO: filename: trained_model_2017.10.28-17.07.03
+2017-10-28 17:07:03,263: INFO: n_epochs: 1
+2017-10-28 17:07:03,264: INFO: n_hidden: 32
+2017-10-28 17:07:03,264: INFO: batch_size: 5
+2017-10-28 17:07:03,264: INFO: n_layers: 3
+2017-10-28 17:07:03,264: INFO: exp_decay_enabled: False
+2017-10-28 17:07:03,264: INFO: static_lr_val: 0.050
+2017-10-28 17:07:03,264: INFO: Reg Type: None
+2017-10-28 17:07:03,265: INFO:   Dropout Prob: 0.50
+2017-10-28 17:07:03,265: INFO:   Beta: 0.010
+
+2017-10-28 17:07:06,571: INFO: The training shall begin.
+2017-10-28 17:07:15,390: INFO: Epoch: 0, Iter: 0, Loss: 11.754, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 17:07:24,790: INFO: Epoch: 0, Iter: 5, Loss: 1.704, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 17:07:34,670: INFO: Epoch: 0, Iter: 10, Loss: 1.200, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 17:07:43,874: INFO: Epoch: 0, Iter: 15, Loss: 2.328, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-28 17:07:53,033: INFO: Epoch: 0, Iter: 20, Loss: 1.537, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:08:02,350: INFO: Epoch: 0, Iter: 25, Loss: 2.866, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-28 17:08:11,625: INFO: Epoch: 0, Iter: 30, Loss: 0.838, Accuracy: 0.800, Learning Rate: 0.050
+2017-10-28 17:08:20,749: INFO: Epoch: 0, Iter: 35, Loss: 1.146, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:08:30,161: INFO: Epoch: 0, Iter: 40, Loss: 1.521, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-28 17:08:39,434: INFO: Epoch: 0, Iter: 45, Loss: 1.409, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:08:47,646: INFO: Cycled through epochs 1 times
+2017-10-28 17:08:47,647: INFO: The training is done.
+
+2017-10-28 17:12:41,871: INFO: *** NEW RUN ***
+2017-10-28 17:12:41,872: INFO: filename: trained_model_2017.10.28-17.12.41
+2017-10-28 17:12:41,873: INFO: n_epochs: 1
+2017-10-28 17:12:41,873: INFO: n_hidden: 32
+2017-10-28 17:12:41,873: INFO: batch_size: 5
+2017-10-28 17:12:41,873: INFO: n_layers: 3
+2017-10-28 17:12:41,874: INFO: exp_decay_enabled: False
+2017-10-28 17:12:41,874: INFO: static_lr_val: 0.050
+2017-10-28 17:12:41,874: INFO: Reg Type: None
+2017-10-28 17:12:41,874: INFO:   Dropout Prob: 0.50
+2017-10-28 17:12:41,874: INFO:   Beta: 0.010
+
+2017-10-28 17:12:45,161: INFO: The training shall begin.
+2017-10-28 17:12:51,660: INFO: Epoch: 0, Iter: 0, Loss: 1.186, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-28 17:12:58,922: INFO: Epoch: 0, Iter: 5, Loss: 5.576, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-28 17:13:06,814: INFO: Epoch: 0, Iter: 10, Loss: 1.121, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 17:13:13,975: INFO: Epoch: 0, Iter: 15, Loss: 1.093, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:13:21,006: INFO: Epoch: 0, Iter: 20, Loss: 1.034, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:13:28,273: INFO: Epoch: 0, Iter: 25, Loss: 0.855, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:13:35,700: INFO: Epoch: 0, Iter: 30, Loss: 1.452, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 17:13:42,856: INFO: Epoch: 0, Iter: 35, Loss: 1.222, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-28 17:13:50,044: INFO: Epoch: 0, Iter: 40, Loss: 1.345, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:13:57,290: INFO: Epoch: 0, Iter: 45, Loss: 1.910, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 17:14:04,671: INFO: Epoch: 0, Iter: 50, Loss: 1.261, Accuracy: 0.200, Learning Rate: 0.050
+2017-10-28 17:14:11,838: INFO: Epoch: 0, Iter: 55, Loss: 1.491, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 17:14:18,909: INFO: Epoch: 0, Iter: 60, Loss: 1.405, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 17:14:26,021: INFO: Epoch: 0, Iter: 65, Loss: 0.865, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:14:33,501: INFO: Epoch: 0, Iter: 70, Loss: 0.945, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:14:40,858: INFO: Epoch: 0, Iter: 75, Loss: 0.965, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:14:48,819: INFO: Epoch: 0, Iter: 80, Loss: 1.149, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 17:14:57,270: INFO: Epoch: 0, Iter: 85, Loss: 1.427, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-28 17:15:05,746: INFO: Epoch: 0, Iter: 90, Loss: 0.932, Accuracy: 0.600, Learning Rate: 0.050
+2017-10-28 17:15:14,450: INFO: Epoch: 0, Iter: 95, Loss: 1.172, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 17:15:22,350: INFO: Epoch: 0, Iter: 100, Loss: 1.264, Accuracy: 0.400, Learning Rate: 0.050
+2017-10-28 17:15:23,750: INFO: Cycled through epochs 1 times
+2017-10-28 17:15:23,750: INFO: The training is done.
+
+2017-10-28 17:17:56,347: INFO: *** NEW RUN ***
+2017-10-28 17:17:56,349: INFO: filename: trained_model_2017.10.28-17.17.56
+2017-10-28 17:17:56,349: INFO: n_epochs: 1
+2017-10-28 17:17:56,350: INFO: n_hidden: 32
+2017-10-28 17:17:56,350: INFO: batch_size: 5
+2017-10-28 17:17:56,350: INFO: n_layers: 3
+2017-10-28 17:17:56,350: INFO: exp_decay_enabled: False
+2017-10-28 17:17:56,350: INFO: static_lr_val: 0.050
+2017-10-28 17:17:56,351: INFO: Reg Type: None
+2017-10-28 17:17:56,351: INFO:   Dropout Prob: 0.50
+2017-10-28 17:17:56,351: INFO:   Beta: 0.010
+
+2017-10-28 17:17:59,693: INFO: The training shall begin.
+2017-10-28 17:18:06,012: INFO: Epoch: 0, Iter: 0, Loss: 2.156, Accuracy: 0.000, Learning Rate: 0.050
+2017-10-28 17:18:20,382: INFO: Cycled through epochs 1 times
+2017-10-28 17:18:20,382: INFO: The training is done.
+

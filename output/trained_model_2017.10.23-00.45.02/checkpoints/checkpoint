@@ -1,6 +1,0 @@
-model_checkpoint_path: "/Users/alexkost/Dropbox/Grad Life/thesis/output/trained_model_2017.10.23-00.45.02/checkpoints/model-40"
-all_model_checkpoint_paths: "/Users/alexkost/Dropbox/Grad Life/thesis/output/trained_model_2017.10.23-00.45.02/checkpoints/model-0"
-all_model_checkpoint_paths: "/Users/alexkost/Dropbox/Grad Life/thesis/output/trained_model_2017.10.23-00.45.02/checkpoints/model-10"
-all_model_checkpoint_paths: "/Users/alexkost/Dropbox/Grad Life/thesis/output/trained_model_2017.10.23-00.45.02/checkpoints/model-20"
-all_model_checkpoint_paths: "/Users/alexkost/Dropbox/Grad Life/thesis/output/trained_model_2017.10.23-00.45.02/checkpoints/model-30"
-all_model_checkpoint_paths: "/Users/alexkost/Dropbox/Grad Life/thesis/output/trained_model_2017.10.23-00.45.02/checkpoints/model-40"
