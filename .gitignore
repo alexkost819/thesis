@@ -3,5 +3,5 @@
 *.png
 .idea/
 /output/trained_model_*
-
+*.textClipping
 
