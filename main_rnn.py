@@ -1,7 +1,6 @@
 """Created on 24 June 2017.
 @author: Alex Kost
 @description: Main python code file for Applying RNN as a TPMS
-
 """
 
 import logging
@@ -30,7 +29,7 @@ class LSTMModel(object):
     def __init__(self):
         """Constructor."""
         # VARYING ACROSS TESTS
-        self.n_epochs = 1                 # number of times we go through all data
+        self.n_epochs = 250                 # number of times we go through all data
         self.n_hidden = 32                  # number of features per hidden layer in LSTM
         self.batch_size = 5                 # number of examples in a single batch
         self.n_layers = 3                   # number of hidden layers in model
@@ -95,8 +94,6 @@ class LSTMModel(object):
             reader = tf.TextLineReader(skip_header_lines=0,
                                        name='TextLineReader')
 
-            features, labels = [], []
-
             # identify record_defaults used for decode_csv
             # default values and types if value is missing
             record_defaults = [[0.0] for _ in range(self.CSV_N_COLUMNS)]
@@ -117,14 +114,15 @@ class LSTMModel(object):
                 ex_labels = tf.one_hot(content[-1][0], self.n_classes)
 
                 # Append each tensor to the list
-                features.append(ex_features)
-                labels.append(ex_labels)
+                batch_features, batch_labels = [], []
+                batch_features.append(ex_features)
+                batch_labels.append(ex_labels)
 
             # Step 2: Stack lists of N-rank tensors to N+1 rank tensors
-            features = tf.stack(features)
-            labels = tf.stack(labels)
+            batch_features = tf.stack(features)
+            batch_labels = tf.stack(labels)
 
-        return features, labels
+        return batch_features, batch_labels
 
         # BEFORE TRANSPOSE, Columns and Rows are reversed
         # BEFORE: [batch_size x input size] (vertical x horizontal dims)
@@ -160,7 +158,6 @@ class LSTMModel(object):
                 cell = self._setup_lstm_cell()
 
             outputs, _ = tf.nn.dynamic_rnn(cell, x, dtype=tf.float32)
-
 
             # We transpose the output to switch batch size with sequence size.
             # http://monik.in/a-noobs-guide-to-implementing-rnn-lstm-using-tensorflow/
@@ -255,7 +252,6 @@ class LSTMModel(object):
 
             self.logger.info("The training shall begin.")
             try:
-                # while step < 2:
                 while not coord.should_stop():
                     self.logger.debug('Step %d', step)
                     _, acc, loss, rate, summary = sess.run([optimizer,
@@ -272,15 +268,12 @@ class LSTMModel(object):
                                          .format(epoch, iteration, loss, acc, rate))
 
                     writer.add_summary(summary, step)
-
                     step += 1
-
             except tf.errors.OutOfRangeError:
                 self.logger.info('Cycled through epochs %d times', self.n_epochs)
             except KeyboardInterrupt:
                 self.logger.info('Keyboard Interrupt? Gracefully quitting')
             finally:
-                # Conclude training
                 self.logger.info("The training is done.\n")
                 coord.request_stop()
                 coord.join(threads)
@@ -317,9 +310,8 @@ class LSTMModel(object):
         normalized_columns = []
         for i in range(self.n_features):
             raw_column = content[i + 1]
-            raw_max = tf.reduce_max(tf.abs(raw_column))
-            normalized_columns.append(tf.div(raw_column, raw_max))
-        ex_features = tf.stack(normalized_columns)
+            norm_column = tf.norm(raw_column)
+        ex_features = tf.stack(norm_column)
 
         return ex_features
 
@@ -350,6 +342,7 @@ class LSTMModel(object):
         self.logger.info('n_hidden: %d', self.n_hidden)
         self.logger.info('batch_size: %d', self.batch_size)
         self.logger.info('n_layers: %d', self.n_layers)
+        self.logger.info('Normalization: %r', self.normalize)
         self.logger.info('exp_decay_enabled: %r', self.exp_decay_enabled)
         if self.exp_decay_enabled:
             self.logger.info('  exp_lr_starter_val: %.3f', self.exp_lr_starter_val)
