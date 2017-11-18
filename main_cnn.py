@@ -13,18 +13,16 @@ import tensorflow as tf
 DEFAULT_FORMAT = '%(asctime)s: %(levelname)s: %(message)s'
 LOGFILE_NAME = 'main_rnn.log'
 
-class LSTMModel(object):
+
+class CNNModel(object):
     '''
     ALLRNNStuff is a class of all the methods we use in the original script
     TODO: Break this up between data manipulation and training the model
     '''
     # Constants
     SIM_DATA_PATH = 'Data/simulation'
-    SEQUENCE_LENGTH = int(1.75 / .001) + 1      # sec/sec
+    SEQUENCE_LENGTH = int((1.75-.45) / .001) + 1      # sec/sec
     CSV_N_COLUMNS = 5
-    LABEL_UNDER = 0
-    LABEL_NOM = 1
-    LABEL_OVER = 2
 
     def __init__(self):
         """Constructor."""
@@ -74,15 +72,18 @@ class LSTMModel(object):
 
         return filenames
 
+    @staticmethod
+    def combine_csv_files(filenames):
+        """Combine all CSVs into one big file."""
+        output_filepath = os.path.abspath(os.path.join(SIM_DATA_PATH, 'combined.csv'))
+        with open(output_filepath, 'a') as output_file:
+            for filepath in filenames:
+                with open(filepath, 'r') as read_file:
+                    for line in read_file:
+                        output_filepath.write(line)
+
     def create_filename_queue(self, filenames):
-        """Ceate filename queue out of CSV files.
-
-        Args:
-            filenames (list of strings): list of filenames
-
-        Returns:
-            filename_queue: TF queue object
-        """
+        """Ceate filename queue out of CSV files."""
         filename_queue = tf.train.string_input_producer(
             string_tensor=filenames,
             num_epochs=self.n_epochs,
@@ -94,42 +95,32 @@ class LSTMModel(object):
         """Read CSV data and pack into tensors."""
         with tf.name_scope("Read_Batch"):
             # Step 1: Read CSV data
-            reader = tf.TextLineReader(skip_header_lines=0,
-                                       name='TextLineReader')
+            reader = tf.TextLineReader(name='TextLineReader')
 
             # identify record_defaults used for decode_csv
             # default values and types if value is missing
             record_defaults = [[0.0] for _ in range(self.CSV_N_COLUMNS)]
-            record_defaults[-1] = [0]
+            record_defaults[0] = [0]
 
-            batch_features, batch_labels = [], []
-            for _ in range(self.batch_size):
-                _, csv_row = reader.read_up_to(filename_queue, self.SEQUENCE_LENGTH)
-                # content = [time, sprung_accel, unsprung_accel, sprung_height, label]
-                content = tf.decode_csv(records=csv_row,
-                                        record_defaults=record_defaults,
-                                        name='decode_csv')
+            # read lines
+            _, value = reader.read(filename_queue, self.SEQUENCE_LENGTH)
+            content = tf.decode_csv(records=value,
+                                    record_defaults=record_defaults,
+                                    name='decode_csv')
 
-                # Parse content
-                ex_features = tf.stack(content[1:self.n_features+1])
-                ex_labels = tf.one_hot(content[-1][0], self.n_classes)
+            label = content[0]
+            time_series = tf.stack(content[1:])
 
-                if self.normalize:
-                    ex_features = tf.norm(ex_features, axis=0)
+            # shuffle the data to generate BATCH_SIZE sample pairs
+            #   capacity = max num elements in the queue
+            #   min_after_deqeue = min num elements in queue after dequeue;
+            #                      used to ensure samples are sufficiently mixed
+            data_batch, label_batch = tf.train.shuffle_batch([time_series, label],
+                                                             batch_size=self.batch_size,
+                                                             capacity=len(self.filenames),
+                                                             min_after_dequeue=10*self.batch_size)
 
-                # Append each tensor to the list
-                batch_features.append(ex_features)
-                batch_labels.append(ex_labels)
-
-            # Step 2: Stack lists of N-rank tensors to N+1 rank tensors
-            batch_features = tf.stack(batch_features)
-            batch_labels = tf.stack(batch_labels)
-
-        return batch_features, batch_labels
-
-        # BEFORE TRANSPOSE, Columns and Rows are reversed
-        # BEFORE: [batch_size x input size] (vertical x horizontal dims)
-        # we want it this: [batch_size, SEQUENCE_LENGTH, n_features])
+            return data_batch, label_batch
 
     @staticmethod
     def reset_model():
@@ -149,42 +140,122 @@ class LSTMModel(object):
             x, y = self.read_batch_from_queue(filename_queue)
             x = tf.transpose(x, [0, 2, 1])
 
-        # MODEL
-        with tf.name_scope("Model"):
-            # add stacked layers if more than one layer
-            if self.n_layers > 1:
-                cell = tf.contrib.rnn.MultiRNNCell([self._setup_lstm_cell() for _ in range(self.n_layers)],
-                                                   state_is_tuple=True)
-            else:
-                cell = self._setup_lstm_cell()
+            # Usually, the first column contains the target labels
+            data_train = np.loadtxt(datadir + '_TRAIN', delimiter=',')
+            data_test_val = np.loadtxt(datadir + '_TEST', delimiter=',')
+            data_test, data_val = np.split(data_test_val, 2)
+            # Usually, the first column contains the target labels
+            X_train = data_train[:, 1:]
+            X_val = data_val[:, 1:]
+            X_test = data_test[:, 1:]|
+            N = X_train.shape[0]            # number of examples
+            Ntest = X_test.shape[0]
+            D = X_train.shape[1]            # number of dimensions
+            y_train = data_train[:, 0]      # all rows, column 0. so for us, all rows, column 5
+            y_val = data_val[:, 0]
+            y_test = data_test[:, 0]
+            self.logger.info('We have %s observations with %s dimensions', N, D)
+            # Organize the classes
+            self.n_classes = len(np.unique(y_train))
+            base = np.min(y_train)  #Check if data is 0-based
+            if base != 0:
+                y_train -= base
+                y_val -= base
+                y_test -= base
 
-            sequence_lengths = []
-            for _ in range(self.batch_size):
-                sequence_lengths.append(self.SEQUENCE_LENGTH)
+        """Hyperparameters"""
+        num_filt_1 = 16         # Number of filters in first conv layer
+        num_filt_2 = 14         # Number of filters in second conv layer
+        num_fc_1 = 40           # Number of neurons in fully connected layer
+        self.dropout_prob = 1.0  # Dropout rate in the fully connected layer
+        initializer = tf.contrib.layers.xavier_initializer()
+        bn_train = tf.placeholder(tf.bool)          # Boolean value to guide batchnorm
+                                                    # Set false when evaluating, set true when training
 
-            outputs, _ = tf.nn.dynamic_rnn(cell=cell,
-                                           inputs=x,
-                                           sequence_length=sequence_lengths,
-                                           dtype=tf.float32)
+        # Define functions for initializing variables and standard layers
+        # For now, this seems superfluous, but in extending the code
+        # to many more layers, this will keep our code read-able
 
-            # We transpose the output to switch batch size with sequence size.
-            # http://monik.in/a-noobs-guide-to-implementing-rnn-lstm-using-tensorflow/
-            outputs = tf.transpose(outputs, [1, 0, 2])
+        def bias_variable(shape, name):
+            initial = tf.constant(0.1, shape=shape)
+            return tf.Variable(initial, name=name)
+
+        def conv2d(x, W):
+            return tf.nn.conv2d(x, W,
+                                strides=[1, 1, 1, 1],
+                                padding='SAME')
+
+        def max_pool_2x2(x):
+            return tf.nn.max_pool(x,
+                                  ksize=[1, 2, 2, 1],
+                                  strides=[1, 2, 2, 1],
+                                  padding='SAME')
+
+        with tf.name_scope("Reshaping_data"):
+            x_image = tf.reshape(x, [-1, D, 1, 1])
+
+
+        # CNN MODEL NOW
+        """Build the graph"""
+        # ewma is the decay for which we update the moving average of the
+        # mean and variance in the batch-norm layers
+        with tf.name_scope("Conv1"):
+            W_conv1 = tf.get_variable("Conv_Layer_1",
+                                      shape=[5, 1, 1, num_filt_1],
+                                      initializer=initializer)
+            b_conv1 = bias_variable([num_filt_1], 'bias_for_Conv_Layer_1')
+            a_conv1 = conv2d(x_image, W_conv1) + b_conv1
+
+        with tf.name_scope('Batch_norm_conv1'):
+            a_conv1 = tf.contrib.layers.batch_norm(a_conv1,
+                                                   is_training=bn_train,
+                                                   updates_collections=None)
+            h_conv1 = tf.nn.relu(a_conv1)
+
+        with tf.name_scope("Conv2"):
+            W_conv2 = tf.get_variable("Conv_Layer_2",
+                                      shape=[4, 1, num_filt_1, num_filt_2],
+                                      initializer=initializer)
+            b_conv2 = bias_variable([num_filt_2], 'bias_for_Conv_Layer_2')
+            a_conv2 = conv2d(h_conv1, W_conv2) + b_conv2
+
+        with tf.name_scope('Batch_norm_conv2'):
+            a_conv2 = tf.contrib.layers.batch_norm(a_conv2,
+                                                   is_training=bn_train,
+                                                   updates_collections=None)
+            h_conv2 = tf.nn.relu(a_conv2)
+
+        with tf.name_scope("Fully_Connected1"):
+            W_fc1 = tf.get_variable("Fully_Connected_layer_1",
+                                    shape=[D*num_filt_2, num_fc_1],
+                                    initializer=initializer)
+            b_fc1 = bias_variable([num_fc_1], 'bias_for_Fully_Connected_Layer_1')
+            h_conv3_flat = tf.reshape(h_conv2, [-1, D*num_filt_2])
+            h_fc1 = tf.nn.relu(tf.matmul(h_conv3_flat, W_fc1) + b_fc1)
+
+        with tf.name_scope("Fully_Connected2"):
+            h_fc1_drop = tf.nn.dropout(h_fc1, self.dropout_prob)
+            W_fc2 = tf.get_variable("W_fc2",
+                                    shape=[num_fc_1, self.n_classes],
+                                    initializer=initializer)
+            b_fc2 = tf.Variable(tf.constant(0.1,
+                                            shape=[self.n_classes]),
+                                            name='b_fc2')
+            h_fc2 = tf.matmul(h_fc1_drop, W_fc2) + b_fc2
 
         with tf.name_scope("Softmax"):
-            # put the outputs into a classifier
-            # weights = tf.Variable(shape=tf.random_normal([self.n_hidden, self.n_classes]), name='weights')
-            # https://www.tensorflow.org/api_docs/python/tf/truncated_normal_initializer
-            weights = tf.get_variable('weights', [self.n_hidden, self.n_classes],
-                                      initializer=tf.truncated_normal_initializer())
-            biases = tf.get_variable('biases', [self.n_classes])
-            pred = tf.nn.xw_plus_b(outputs[-1], weights, biases)     # LOGITS
+        #    regularizers = (tf.nn.l2_loss(W_conv1) + tf.nn.l2_loss(b_conv1) +
+        #                  tf.nn.l2_loss(W_conv2) + tf.nn.l2_loss(b_conv2) +
+        #                  tf.nn.l2_loss(W_conv3) + tf.nn.l2_loss(b_conv3) +
+        #                  tf.nn.l2_loss(W_fc1) + tf.nn.l2_loss(b_fc1) +
+        #                  tf.nn.l2_loss(W_fc2) + tf.nn.l2_loss(b_fc2))
+
 
             # Cross-Entropy: "measuring how inefficient our predictions are for describing the truth"
             # http://colah.github.io/posts/2015-09-Visual-Information/
             # https://stackoverflow.com/questions/41689451/valueerror-no-gradients-provided-for-any-variable
             # Use sparse Softmax because we have mutually exclusive classes
-            cross_entropy = tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=pred)
+            cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=h_fc2, labels=y)
 
             # Reduce Mean: Computes the mean of elements across dimensions of a tensor.
             # https://www.tensorflow.org/api_docs/python/tf/reduce_mean
@@ -385,7 +456,7 @@ class LSTMModel(object):
 
 def main():
     """Sup Main."""
-    A = LSTMModel()
+    A = CNNModel()
     A.train_model()
     A.reset_model()
 
