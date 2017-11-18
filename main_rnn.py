@@ -5,13 +5,13 @@
 
 import logging
 import os
+import progressbar
 import time
 import tensorflow as tf
 
 # Constants
 DEFAULT_FORMAT = '%(asctime)s: %(levelname)s: %(message)s'
 LOGFILE_NAME = 'main_rnn.log'
-
 
 class LSTMModel(object):
     '''
@@ -29,10 +29,15 @@ class LSTMModel(object):
     def __init__(self):
         """Constructor."""
         # VARYING ACROSS TESTS
-        self.n_epochs = 250                 # number of times we go through all data
-        self.n_hidden = 32                  # number of features per hidden layer in LSTM
-        self.batch_size = 5                 # number of examples in a single batch
-        self.n_layers = 3                   # number of hidden layers in model
+        self.n_epochs = 20                   # number of times we go through all data
+        self.n_hidden = 40                  # number of features per hidden layer in LSTM
+        self.batch_size = 10                # number of examples in a single batch
+        self.n_layers = 5                   # number of hidden layers in model
+
+        # INPUT PIPELINE
+        self.filenames = self.create_filename_list(self.SIM_DATA_PATH)
+        self.ex_per_epoch = len(self.filenames)
+        self.train_length = self.n_epochs * self.ex_per_epoch
 
         # LEARNING RATE
         # Exponential Decay Parameters
@@ -45,18 +50,16 @@ class LSTMModel(object):
 
         # REGULARIZATION TO AVOID OVERFITTING
         # http://uksim.info/isms2016/CD/data/0665a174.pdf - Use Dropout when n_hidden is large
-        self.reg_type = None                # 'L2 Loss' or 'Dropout'
+        self.reg_type = 'Dropout'                # 'L2 Loss' or 'Dropout'
         self.dropout_prob = 0.5             # dropout probability
         self.beta = 0.01                    # Regularization beta variable
 
         # CONSTANT
         self.n_features = 3                 # sprung_accel, unsprung_accel, sprung_height
         self.n_classes = 3                  # classifications: under, nominal, over pressure
-        self.display_step = 10              # Every _ steps, save to tensorboard and display info
         self.shuffle = True                 # True if we want filenames to be shuffled, false if we don't
         self.logger = logging.getLogger(__name__)   # get the logger!
-        self.ex_per_epoch = 0               # initializing to 0
-        self.normalize = True               # True = normalized features, false = raw
+        self.normalize = False              # True = normalized features, false = raw
 
     @staticmethod
     def create_filename_list(data_dir):
@@ -99,6 +102,7 @@ class LSTMModel(object):
             record_defaults = [[0.0] for _ in range(self.CSV_N_COLUMNS)]
             record_defaults[-1] = [0]
 
+            batch_features, batch_labels = [], []
             for _ in range(self.batch_size):
                 _, csv_row = reader.read_up_to(filename_queue, self.SEQUENCE_LENGTH)
                 # content = [time, sprung_accel, unsprung_accel, sprung_height, label]
@@ -107,20 +111,19 @@ class LSTMModel(object):
                                         name='decode_csv')
 
                 # Parse content
-                if self.normalize:
-                    ex_features = self._normalize_features(content)
-                else:
-                    ex_features = tf.stack(content[1:self.n_features+1])
+                ex_features = tf.stack(content[1:self.n_features+1])
                 ex_labels = tf.one_hot(content[-1][0], self.n_classes)
 
+                if self.normalize:
+                    ex_features = tf.norm(ex_features, axis=0)
+
                 # Append each tensor to the list
-                batch_features, batch_labels = [], []
                 batch_features.append(ex_features)
                 batch_labels.append(ex_labels)
 
             # Step 2: Stack lists of N-rank tensors to N+1 rank tensors
-            batch_features = tf.stack(features)
-            batch_labels = tf.stack(labels)
+            batch_features = tf.stack(batch_features)
+            batch_labels = tf.stack(batch_labels)
 
         return batch_features, batch_labels
 
@@ -136,9 +139,7 @@ class LSTMModel(object):
     def train_model(self):
         """Train the model."""
         with tf.name_scope("Input_Batch"):
-            filenames = self.create_filename_list(self.SIM_DATA_PATH)
-            self.ex_per_epoch = len(filenames)
-            filename_queue = self.create_filename_queue(filenames)
+            filename_queue = self.create_filename_queue(self.filenames)
 
             # FEATURES AND LABELS
             # For dynamic_rnn, must have input be in certain shape
@@ -157,12 +158,20 @@ class LSTMModel(object):
             else:
                 cell = self._setup_lstm_cell()
 
-            outputs, _ = tf.nn.dynamic_rnn(cell, x, dtype=tf.float32)
+            sequence_lengths = []
+            for _ in range(self.batch_size):
+                sequence_lengths.append(self.SEQUENCE_LENGTH)
+
+            outputs, _ = tf.nn.dynamic_rnn(cell=cell,
+                                           inputs=x,
+                                           sequence_length=sequence_lengths,
+                                           dtype=tf.float32)
 
             # We transpose the output to switch batch size with sequence size.
             # http://monik.in/a-noobs-guide-to-implementing-rnn-lstm-using-tensorflow/
             outputs = tf.transpose(outputs, [1, 0, 2])
 
+        with tf.name_scope("Softmax"):
             # put the outputs into a classifier
             # weights = tf.Variable(shape=tf.random_normal([self.n_hidden, self.n_classes]), name='weights')
             # https://www.tensorflow.org/api_docs/python/tf/truncated_normal_initializer
@@ -170,16 +179,15 @@ class LSTMModel(object):
                                       initializer=tf.truncated_normal_initializer())
             biases = tf.get_variable('biases', [self.n_classes])
             pred = tf.nn.xw_plus_b(outputs[-1], weights, biases)     # LOGITS
-            # pred = tf.layers.dense(outputs[-1], n_classes)
 
-        # TRAINING PARAMETERS
-        with tf.name_scope("Training"):
             # Cross-Entropy: "measuring how inefficient our predictions are for describing the truth"
             # http://colah.github.io/posts/2015-09-Visual-Information/
             # https://stackoverflow.com/questions/41689451/valueerror-no-gradients-provided-for-any-variable
+            # Use sparse Softmax because we have mutually exclusive classes
             cross_entropy = tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=pred)
 
             # Reduce Mean: Computes the mean of elements across dimensions of a tensor.
+            # https://www.tensorflow.org/api_docs/python/tf/reduce_mean
             cost = tf.reduce_mean(cross_entropy, name='total')
 
             # http://www.ritchieng.com/machine-learning/deep-learning/tensorflow/regularization/
@@ -189,6 +197,17 @@ class LSTMModel(object):
                 regularizer = tf.nn.l2_loss(weights)
                 cost = tf.reduce_mean(cost + self.beta * regularizer)
 
+        # EVALUATE OUR MODEL
+        # tf.argmax = returns index of the highest entry in a tensor along some axis.
+        # So here, tf.equal is comparing predicted label to actual label, returns list of bools
+        with tf.name_scope("Evaluating"):
+            with tf.name_scope('correct_prediction'):
+                correct_pred = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
+            with tf.name_scope('accuracy'):
+                # tf.cast coverts bools to 1 and 0, tf.reduce_mean finds the mean of all values in the list
+                accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
+
+        with tf.name_scope("Optimizing"):
             if self.exp_decay_enabled:
                 global_step = tf.get_variable('global_step', shape=(), initializer=tf.zeros_initializer(), trainable=False)
                 learning_rate = tf.train.exponential_decay(learning_rate=self.exp_lr_starter_val,
@@ -205,16 +224,6 @@ class LSTMModel(object):
             else:
                 learning_rate = tf.constant(self.static_lr_val)
                 optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost)
-
-        # EVALUATE OUR MODEL
-        # tf.argmax = returns index of the highest entry in a tensor along some axis.
-        # So here, tf.equal is comparing predicted label to actual label, returns list of bools
-        with tf.name_scope("Evaluating"):
-            with tf.name_scope('correct_prediction'):
-                correct_pred = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
-            with tf.name_scope('accuracy'):
-                # tf.cast coverts bools to 1 and 0, tf.reduce_mean finds the mean of all values in the list
-                accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
         """ Step 2: Set up Tensorboard """
         timestamp = str(time.strftime("%Y.%m.%d-%H.%M.%S"))
@@ -242,6 +251,7 @@ class LSTMModel(object):
         """ Step 3: Train the RNN """
         with tf.Session() as sess:
             # Initialization
+            bar = progressbar.ProgressBar(max_value=self.train_length)
             sess.run(tf.global_variables_initializer())
             sess.run(tf.local_variables_initializer())
             coord = tf.train.Coordinator()
@@ -252,28 +262,35 @@ class LSTMModel(object):
 
             self.logger.info("The training shall begin.")
             try:
-                while not coord.should_stop():
-                    self.logger.debug('Step %d', step)
+                bar.start()
+                bar.update(0)
+                while not coord.should_stop():     # only stops when n_epochs = 1...
+                # while step <= self.train_length / self.batch_size:
+                    # Train
                     _, acc, loss, rate, summary = sess.run([optimizer,
                                                             accuracy,
                                                             cost,
                                                             learning_rate,
                                                             summary_op])
 
-                    if step % self.display_step == 0:
+                    # Display results every epoch
+                    iteration = step * self.batch_size
+                    if iteration % self.ex_per_epoch == 0:
                         saver.save(sess, checkpoint_prefix, global_step=step)
-                        iteration = step * self.batch_size
                         epoch = iteration / self.ex_per_epoch
-                        self.logger.info('Epoch: {}, Iter: {}, Loss: {:.3f}, Accuracy: {:.3f}, Learning Rate: {:.3f}'
-                                         .format(epoch, iteration, loss, acc, rate))
+                        self.logger.info('Epoch: {}, Loss: {:.3f}, Accuracy: {:.3f}, Learning Rate: {:.3f}'
+                                         .format(epoch, loss, acc, rate))
 
                     writer.add_summary(summary, step)
+                    bar.update(iteration)
                     step += 1
             except tf.errors.OutOfRangeError:
                 self.logger.info('Cycled through epochs %d times', self.n_epochs)
             except KeyboardInterrupt:
                 self.logger.info('Keyboard Interrupt? Gracefully quitting')
             finally:
+                step -= 1
+                bar.finish()
                 self.logger.info("The training is done.\n")
                 coord.request_stop()
                 coord.join(threads)
@@ -307,6 +324,17 @@ class LSTMModel(object):
         return df_train, df_val, df_test
 
     def _normalize_features(self, content):
+        """Normalize Features normalizes each column one at a time.
+        Can probably replace with tf.norm(axis=1), but not sure.d
+
+        Args:
+            content (TYPE): Description
+
+        Returns:
+            TYPE: Description
+        """
+        # http://www.faqs.org/faqs/ai-faq/neural-nets/part2/
+        # See "Should I normalize/standardize/rescale the data?"
         normalized_columns = []
         for i in range(self.n_features):
             raw_column = content[i + 1]
