@@ -5,34 +5,39 @@
 % Main file for quarter model simulation procedure.
 %
 % Arguments (see 'Test Parameters' section):
-%   num_sims = number of simulations to run
+%   num_psis = num of psis to simulate
 %   psi_min = minimum PSI to simulate
 %   psi_max = maximum PSI to simulate
+%   num_steps = num of step sizes to simulate
+%   step_min = minimum step size to simulate
+%   step_max = maximum step size to simulate
+%   sim_tim = how long to run the simulation
+%   snr = signal-to-noise ratio per sample, dB
 %   save_path = path to save the simulation data
 %
-% Simulation data will output as CSVs and be organized by column:
-%   [ time sprung_acc unsprung_acc sprung_height ]
-%
+% Simulation data will output as plots and CSVs
 
-%% Reset workspace
+%% Reset workspace and hide figures
 clc
 clear all
 close all
+set(0, 'DefaultFigureVisible', 'off');
+set(0, 'DefaultFigureWindowStyle', 'docked');
 
 %% Test parameters (user-provided)
-num_psi = 21;               % number of psis to simulate
+num_psi = 41;               % number of psis to simulate
 psi_min = 20;               % minimum psi
 psi_max = 40;               % maximum psi
 
-num_steps = 10;             % number of step sizes to simlate
+num_steps = 39;             % number of step sizes to simulate
 step_min = .1;              % minimum step size, m
-step_max = 1;               % maximum step size, m
+step_max = 2;               % maximum step size, m
 
-sim_time = 1.75;            % simulation time, s
-sig_noise_ratio = 10;        % signal-to-noise ratio per sample, dB
+sim_time = 1.5;            % simulation time, s
+snr = 0;                   % signal-to-noise ratio per sample, dB
 
 % path to save data to
-save_path = '/Users/alexkost/Dropbox/Grad Life/thesis/Data/simulation';
+save_path = '/Users/alexkost/Dropbox/Grad Life/thesis/Data/simulation - new format';
 
 %% Test parameters (predefined)
 % Create a range of PSIs and Steps using defined values above
@@ -46,35 +51,78 @@ IC = [-1.74412834455962e-12
     -5.70054231468026e-11
     -7.99748963336152e-05];
 
-%% Run simulations and plot figure
+%% Run simulations and get outputs (CSVs and plots)
 for i=1:num_steps
     step_size = steps_all(i);
-
-    figure(i)
+    figure
     hold on;
-
     for j=1:num_psi
+        % run simulation
         psi = psi_all(j);
         simout = QuarterModelSimulation(psi, ...
                                         step_size, ...
-                                        save_path, ...
-                                        sig_noise_ratio, ...
                                         sim_time);
+
+        % Add white gaussian noise if snr > 0
+        if snr > 0
+            for k=1:size(simout, 2)
+                simout(:,k) = awgn(simout(:, k), snr);
+            end
+        end
+                       
+        % interpret simulation outputs
+        sprung_pos = simout(:,1);
+        %sprung_vel = simout(:,2);
+        sprung_acc = simout(:,7);
+        %unsprung_pos = simout(:,3);
+        %unsprung_vel = simout(:,4);
+        unsprung_acc = simout(:,8);
+        step = simout(:,5);    % constant every run
+        time = simout(:,6);    % constant every run
+
+        % Plot individual run
+        str = strcat(num2str(psi, '%.1f'), ' psi');
+        plot(time, sprung_pos, 'DisplayName', str);
         
-        time = simout(:,6);
-        z = simout(:,1);
-        str = strcat(num2str(psi_all(j)), ' psi');
-        plot(time, z, 'DisplayName', str);
+        % calculate label value
+        if psi < 30
+            label_val = 0;
+        elseif psi <= 34
+            label_val = 1;
+        elseif psi > 34
+            label_val = 2;
+        end
+        label_val_column = zeros(2,1);
+        label_val_column(1,1) = label_val;
+
+        % Output to CSV
+        filename = strcat('Sim_', ...
+                          num2str(psi, '%.1f'), 'psi_', ...
+                          num2str(step_size, '%.2f'), 'm.csv');
+        fullfilename = fullfile(save_path, filename);
+
+        % Original format. Not good for tensorflow
+        %label = ones(length(simout(:,6)),1) * label_val;
+        %M = [time sprung_acc unsprung_acc sprung_height label];
+        %csvwrite(fullfilename, M);
+
+        % Modifications done for Tensorflow
+        %    use acceleration data only (2 features)
+        %    transpose so each row is independent example
+        %    remove first .45 seconds of data
+        acc_transposed = [sprung_acc unsprung_acc]';
+        M = acc_transposed(:,(.45/.001):end);
+        csvwrite(fullfilename, horzcat(label_val_column, M));
     end
-    
+
     % create figure with step
-    plot(time, simout(:,5),'--','DisplayName','Step');
+    plot(time, step,'--','DisplayName','Step');
     hold off;
     title(sprintf('Quarter-Car Motion\nStep size = %g [m]', step_size));
     xlabel('Time (s)');
     ylabel('Vehicle height (m)');
     legend('show');
-    
+
     % save figure
     filename = sprintf('Plot_step_size_%g.png', step_size);
     fullfilename = fullfile(save_path, filename);
