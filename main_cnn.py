@@ -29,7 +29,7 @@ class CNNModel(object):
     def __init__(self):
         """Constructor."""
         # VARYING ACROSS TESTS
-        self.n_epochs = 50                          # number of times we go through all data
+        self.n_epochs = 10                          # number of times we go through all data
         self.batch_size = 10                        # number of examples in a single batch
         self.num_filt_1 = 16                        # number of filters in first conv layer
         self.num_filt_2 = 14                        # number of filters in second conv layer
@@ -46,7 +46,7 @@ class CNNModel(object):
 
         # REGULARIZATION TO AVOID OVERFITTING
         # http://uksim.info/isms2016/CD/data/0665a174.pdf - Use Dropout when n_hidden is large
-        self.dropout_prob = 1.0                     # Dropout rate in the fully connected layer
+        self.dropout_prob = 0.5                    # Dropout rate in the fully connected layer
 
         # CONSTANT
         self.n_features = 1                         # sprung_accel
@@ -66,28 +66,35 @@ class CNNModel(object):
         self.cost = None
         self.accuracy = None
         self.optimizer = None
-        self.trainable = None
+        self.trainable = tf.placeholder(tf.bool)     # Boolean value to guide batchnorm
+                                                     # Set false when evaluating, set true when training
 
     def preprocess_data(self):
         """Simulation data is organized by label. This method mixes and splits up the data."""
-        filelists = []
         train_files = []
         val_files = []
         test_files = []
         for i in range(self.n_classes):
             modified_data_path = os.path.join(self.SIM_DATA_PATH, str(i))
-            filelists.append(self._create_filename_list(modified_data_path))
+            class_files = self._create_filename_list(modified_data_path)
 
             # get files for each thing
-            result = self._split_datafiles(filelists[i])    # train_set, val_set, test_set
+            result = self._split_datafiles(class_files)    # train_set, val_set, test_set
             train_files.extend(result[0])
             val_files.extend(result[1])
             test_files.extend(result[2])
 
+        # Shuffle data
+        np.random.shuffle(train_files)
+        np.random.shuffle(val_files)
+        np.random.shuffle(test_files)
+
+        # Report sizes
         self.logger.info('Train set size: %d', len(train_files))
         self.logger.info('Validation set size: %d', len(val_files))
         self.logger.info('Test set size: %d', len(test_files))
 
+        # Assign member variables
         self.ex_per_epoch = len(train_files)
         self.training_data = self._load_data(train_files)   # features, labels
         self.val_data = self._load_data(val_files)          # features, labels
@@ -100,7 +107,11 @@ class CNNModel(object):
         labels = self.training_data[1]
 
         start_idx = batch_idx * self.batch_size
-        end_idx = start_idx + self.batch_size
+        end_idx = start_idx + self.batch_size - 1
+
+        # Error handling for if sliding window goes beyond data list length
+        if end_idx > self.ex_per_epoch:
+            end_idx -= (end_idx % self.ex_per_epoch)
 
         if self.n_features > 1:
             x_batch = features[:, start_idx:end_idx]
@@ -117,18 +128,9 @@ class CNNModel(object):
             self.x = tf.placeholder(tf.float32, shape=[None, self.SEQUENCE_LENGTH], name='input_data')
             self.y = tf.placeholder(tf.int64, shape=[None], name='input_labels')
 
-            D = self.SEQUENCE_LENGTH
-
-        """Hyperparameters"""
-
-        initializer = tf.contrib.layers.xavier_initializer()
-        self.trainable = tf.placeholder(tf.bool)          # Boolean value to guide batchnorm
-                                                         # Set false when evaluating, set true when training
-
         # Define functions for initializing variables and standard layers
         # For now, this seems superfluous, but in extending the code
         # to many more layers, this will keep our code read-able
-
         def bias_variable(shape, name):
             initial = tf.constant(0.1, shape=shape)
             return tf.Variable(initial, name=name)
@@ -146,7 +148,7 @@ class CNNModel(object):
 
 
         with tf.name_scope("Reshaping_data"):
-            x_image = tf.reshape(self.x, [-1, D, 1, 1])
+            x_image = tf.reshape(self.x, [-1, self.SEQUENCE_LENGTH, 1, 1])
 
         self.logger.debug('Input dims: {}'.format(x_image.get_shape()))
 
@@ -157,7 +159,7 @@ class CNNModel(object):
         with tf.name_scope("Conv1"):
             w_conv1 = tf.get_variable("Conv_Layer_1",
                                       shape=[5, 1, 1, self.num_filt_1],
-                                      initializer=initializer)
+                                      initializer=tf.contrib.layers.xavier_initializer())
             b_conv1 = bias_variable([self.num_filt_1], 'bias_for_Conv_Layer_1')
             a_conv1 = conv2d(x_image, w_conv1) + b_conv1
 
@@ -172,7 +174,7 @@ class CNNModel(object):
         with tf.name_scope("Conv2"):
             w_conv2 = tf.get_variable("Conv_Layer_2",
                                       shape=[4, 1, self.num_filt_1, self.num_filt_2],
-                                      initializer=initializer)
+                                      initializer=tf.contrib.layers.xavier_initializer())
             b_conv2 = bias_variable([self.num_filt_2], 'bias_for_Conv_Layer_2')
             a_conv2 = conv2d(h_conv1, w_conv2) + b_conv2
 
@@ -186,10 +188,10 @@ class CNNModel(object):
 
         with tf.name_scope("Fully_Connected1"):
             w_fc1 = tf.get_variable("Fully_Connected_layer_1",
-                                    shape=[D * self.num_filt_2, self.num_fc_1],
-                                    initializer=initializer)
+                                    shape=[self.SEQUENCE_LENGTH * self.num_filt_2, self.num_fc_1],
+                                    initializer=tf.contrib.layers.xavier_initializer())
             b_fc1 = bias_variable([self.num_fc_1], 'bias_for_Fully_Connected_Layer_1')
-            h_conv3_flat = tf.reshape(h_conv2, [-1, D * self.num_filt_2])
+            h_conv3_flat = tf.reshape(h_conv2, [-1, self.SEQUENCE_LENGTH * self.num_filt_2])
             h_fc1 = tf.nn.relu(tf.matmul(h_conv3_flat, w_fc1) + b_fc1)
 
         self.logger.debug('FCon1 output dims: %s', (h_fc1.get_shape(),))
@@ -198,25 +200,25 @@ class CNNModel(object):
             h_fc1_drop = tf.nn.dropout(h_fc1, self.dropout_prob)
             w_fc2 = tf.get_variable("w_fc2",
                                     shape=[self.num_fc_1, self.n_classes],
-                                    initializer=initializer)
+                                    initializer=tf.contrib.layers.xavier_initializer())
             b_fc2 = tf.Variable(tf.constant(0.1,
                                             shape=[self.n_classes]),
                                             name='b_fc2')
-            pred = tf.matmul(h_fc1_drop, w_fc2) + b_fc2
-            tf.summary.histogram('pred', pred)
+            self.pred = tf.matmul(h_fc1_drop, w_fc2) + b_fc2
+            tf.summary.histogram('pred', self.pred)
 
-        self.logger.debug('FCon2 output dims: %s', (pred.get_shape(),))
+        self.logger.debug('FCon2 output dims: %s', (self.pred.get_shape(),))
 
         with tf.name_scope("Softmax"):
             # Cross-Entropy: "measuring how inefficient our predictions are for describing the truth"
             # http://colah.github.io/posts/2015-09-Visual-Information/
             # https://stackoverflow.com/questions/41689451/valueerror-no-gradients-provided-for-any-variable
             # Use sparse Softmax because we have mutually exclusive classes
-            cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=pred, labels=self.y)
+            cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=self.pred, labels=self.y)
 
             # Reduce Mean: Computes the mean of elements across dimensions of a tensor.
             # https://www.tensorflow.org/api_docs/python/tf/reduce_mean
-            self.cost = tf.reduce_mean(cross_entropy, name='total')
+            self.cost = tf.reduce_mean(cross_entropy, name='cost')
             tf.summary.scalar('cross_entropy_loss', self.cost)
 
         # EVALUATE OUR MODEL
@@ -224,7 +226,7 @@ class CNNModel(object):
         # So here, tf.equal is comparing predicted label to actual label, returns list of bools
         with tf.name_scope("Evaluating"):
             with tf.name_scope('correct_prediction'):
-                correct_pred = tf.equal(tf.argmax(pred, 1), tf.argmax(self.y))
+                correct_pred = tf.equal(tf.argmax(self.pred, 1), tf.argmax(self.y))
             with tf.name_scope('accuracy'):
                 # tf.cast coverts bools to 1 and 0, tf.reduce_mean finds the mean of all values in the list
                 self.accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
@@ -278,7 +280,7 @@ class CNNModel(object):
             batch_idx = 0
             step = 0  # should correspond with global_step
             bar.start()
-            bar.update(step)
+            bar.update(step * self.batch_size)
             cost_ma = 0.0
             acc_ma = 0.0
 
@@ -287,11 +289,9 @@ class CNNModel(object):
             # Training loop
             try:
                 acc_test_before = self.evaluate_model_on_test_data(sess)
-
                 while step <= self.train_length / self.batch_size:
                     x_batch, y_batch = self.generate_batch(batch_idx)
-                    iteration = step * self.batch_size
-                    if iteration % self.ex_per_epoch == 0:
+                    if step % (self.ex_per_epoch / self.batch_size) == 0:
                         # reset stuff for batch identifying
                         batch_idx = 0
 
@@ -322,10 +322,12 @@ class CNNModel(object):
                             acc_ma = 0.8 * acc_ma + 0.2 * acc_train
 
                         # Write information to TensorBoard
-                        self.logger.info('Training/Validation costs at step %d: %5.3f /  %5.3f (%5.3f)',
-                                         step, cost_train, cost_val, cost_ma)
-                        self.logger.info('Training/Validation accuracy at step %d: %5.3f /  %5.3f (%5.3f)',
-                                         step, acc_train, acc_val, acc_ma)
+                        epochs_elapsed = step * self.batch_size / self.ex_per_epoch
+                        self.logger.info('%d epochs elapsed.', epochs_elapsed)
+                        self.logger.info('Training / Validation costs: %5.3f / %5.3f (%5.3f)',
+                                         cost_train, cost_val, cost_ma)
+                        self.logger.info('Training / Validation accuracy: %5.3f / %5.3f (%5.3f)',
+                                         acc_train, acc_val, acc_ma)
                         saver.save(sess, checkpoint_prefix, global_step=step)
                         writer.flush()  # makes sure Python writes the summaries to the logfile
                         writer.add_summary(summary, step)
@@ -333,9 +335,11 @@ class CNNModel(object):
                     # Training step.
                     sess.run(self.optimizer, feed_dict={self.x: x_batch,
                                                         self.y: y_batch,
-                                                        self.trainable: False})
-                    # Update progress bar and iterate step
-                    bar.update(iteration)
+                                                        self.trainable: True})
+
+                    # Update progress bar and iterate step/batch_idx
+                    bar.update(step * self.batch_size)
+                    batch_idx += 1
                     step += 1
             except KeyboardInterrupt:
                 self.logger.info('Keyboard Interrupt? Gracefully quitting')
@@ -398,8 +402,6 @@ class CNNModel(object):
         """
         val_length = int(len(data) * val_size)
         test_length = int(len(data) * test_size)
-
-        np.random.shuffle(data)
 
         val_set = data[:val_length]
         test_set = data[val_length:val_length + test_length]
