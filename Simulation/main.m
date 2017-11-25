@@ -25,9 +25,9 @@ set(0, 'DefaultFigureVisible', 'off');
 set(0, 'DefaultFigureWindowStyle', 'docked');
 
 %% Test parameters (user-provided)
-num_psi = 41;               % number of psis to simulate
-psi_min = 20;               % minimum psi
-psi_max = 40;               % maximum psi
+num_psi = 27;               % number of psis to simulate
+psi_min = 25.5;               % minimum psi
+psi_max = 38.5;               % maximum psi
 
 num_steps = 39;             % number of step sizes to simulate
 step_min = .1;              % minimum step size, m
@@ -36,9 +36,8 @@ step_max = 2;               % maximum step size, m
 sim_time = 1.5;            % simulation time, s
 snr = 0;                   % signal-to-noise ratio per sample, dB
 
-% path to save data to
-save_path = '/Users/alexkost/Dropbox/Grad Life/thesis/Data/simulation - new format';
-
+% save data path
+save_path = '/Users/alexkost/Dropbox/Grad Life/thesis/Data/simulation_rnn/';
 %% Test parameters (predefined)
 % Create a range of PSIs and Steps using defined values above
 psi_all = linspace(psi_min, psi_max, num_psi);
@@ -92,14 +91,12 @@ for i=1:num_steps
         elseif psi > 34
             label_val = 2;
         end
-        label_val_column = zeros(2,1);
-        label_val_column(1,1) = label_val;
 
         % Output to CSV
         filename = strcat('Sim_', ...
                           num2str(psi, '%.1f'), 'psi_', ...
                           num2str(step_size, '%.2f'), 'm.csv');
-        fullfilename = fullfile(save_path, filename);
+        fullfilename = fullfile(save_path, num2str(label_val), filename);
 
         % Original format. Not good for tensorflow
         %label = ones(length(simout(:,6)),1) * label_val;
@@ -107,11 +104,12 @@ for i=1:num_steps
         %csvwrite(fullfilename, M);
 
         % Modifications done for Tensorflow
-        %    use acceleration data only (2 features)
+        %    use sprung acceleration data only (1 feature)
         %    transpose so each row is independent example
         %    remove first .45 seconds of data
-        acc_transposed = [sprung_acc unsprung_acc]';
+        acc_transposed = [sprung_acc]';
         M = acc_transposed(:,(.45/.001):end);
+        label_val_column = ones(size(M, 1),1) * label_val;
         csvwrite(fullfilename, horzcat(label_val_column, M));
     end
 
