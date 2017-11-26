@@ -29,8 +29,8 @@ class CNNModel(object):
     def __init__(self):
         """Constructor."""
         # VARYING ACROSS TESTS
-        self.n_epochs = 10                          # number of times we go through all data
-        self.batch_size = 10                        # number of examples in a single batch
+        self.n_epochs = 300                          # number of times we go through all data
+        self.batch_size = 32                        # number of examples in a single batch
         self.num_filt_1 = 16                        # number of filters in first conv layer
         self.num_filt_2 = 14                        # number of filters in second conv layer
         self.num_fc_1 = 40                          # number of neurons in fully connected layer
@@ -38,15 +38,15 @@ class CNNModel(object):
         # LEARNING RATE
         # Exponential Decay Parameters
         # https://www.tensorflow.org/versions/r0.12/api_docs/python/train/decaying_the_learning_rate
-        self.static_lr_val = 0.05
+        self.static_lr_val = 0.00005
         self.exp_decay_enabled = False              # enable/disable exponentially decaying learning rate
-        self.exp_lr_starter_val = 0.5
-        self.exp_lr_decay_steps = 50
+        self.exp_lr_starter_val = 0.05
+        self.exp_lr_decay_steps = 633
         self.exp_lr_decay_rate = 0.96
 
         # REGULARIZATION TO AVOID OVERFITTING
         # http://uksim.info/isms2016/CD/data/0665a174.pdf - Use Dropout when n_hidden is large
-        self.dropout_prob = 0.5                    # Dropout rate in the fully connected layer
+        self.dropout_prob = 0.5                     # probability that each element is kept.
 
         # CONSTANT
         self.n_features = 1                         # sprung_accel
@@ -66,8 +66,29 @@ class CNNModel(object):
         self.cost = None
         self.accuracy = None
         self.optimizer = None
-        self.trainable = tf.placeholder(tf.bool)     # Boolean value to guide batchnorm
+        self.trainable = tf.placeholder(tf.bool, name='trainable')     # Boolean value to guide batchnorm
                                                      # Set false when evaluating, set true when training
+
+    def preprocess_all_data(self):
+        all_files = self._create_filename_list(self.SIM_DATA_PATH)
+        np.random.shuffle(all_files)
+
+        train_val_test_files = self._split_datafiles(all_files)    # train_set, val_set, test_set
+        train_files = train_val_test_files[0]
+        val_files = train_val_test_files[1]
+        test_files = train_val_test_files[2]
+
+        # Report sizes
+        self.logger.info('Train set size: %d', len(train_files))
+        self.logger.info('Validation set size: %d', len(val_files))
+        self.logger.info('Test set size: %d', len(test_files))
+
+        # Assign member variables
+        self.ex_per_epoch = len(train_files)
+        self.training_data = self._load_data(train_files)   # features, labels
+        self.val_data = self._load_data(val_files)          # features, labels
+        self.test_data = self._load_data(test_files)        # features, labels
+        self.train_length = self.n_epochs * self.ex_per_epoch
 
     def preprocess_data(self):
         """Simulation data is organized by label. This method mixes and splits up the data."""
@@ -124,33 +145,11 @@ class CNNModel(object):
 
     def build_model(self):
         """ Build the CNN Model """
-        with tf.name_scope("Input_Batch"):
-            self.x = tf.placeholder(tf.float32, shape=[None, self.SEQUENCE_LENGTH], name='input_data')
-            self.y = tf.placeholder(tf.int64, shape=[None], name='input_labels')
-
-        # Define functions for initializing variables and standard layers
-        # For now, this seems superfluous, but in extending the code
-        # to many more layers, this will keep our code read-able
-        def bias_variable(shape, name):
-            initial = tf.constant(0.1, shape=shape)
-            return tf.Variable(initial, name=name)
-
-        def conv2d(x, W):
-            return tf.nn.conv2d(x, W,
-                                strides=[1, 1, 1, 1],
-                                padding='SAME')
-
-        def max_pool_2x2(x):
-            return tf.nn.max_pool(x,
-                                  ksize=[1, 2, 2, 1],
-                                  strides=[1, 2, 2, 1],
-                                  padding='SAME')
-
+        self.x = tf.placeholder(tf.float32, shape=[None, self.SEQUENCE_LENGTH], name='input_data')
+        self.y = tf.placeholder(tf.int64, shape=[None], name='input_labels')
 
         with tf.name_scope("Reshaping_data"):
             x_image = tf.reshape(self.x, [-1, self.SEQUENCE_LENGTH, 1, 1])
-
-        self.logger.debug('Input dims: {}'.format(x_image.get_shape()))
 
         # CNN MODEL NOW
         """Build the graph"""
@@ -160,10 +159,8 @@ class CNNModel(object):
             w_conv1 = tf.get_variable("Conv_Layer_1",
                                       shape=[5, 1, 1, self.num_filt_1],
                                       initializer=tf.contrib.layers.xavier_initializer())
-            b_conv1 = bias_variable([self.num_filt_1], 'bias_for_Conv_Layer_1')
-            a_conv1 = conv2d(x_image, w_conv1) + b_conv1
-
-        self.logger.debug('Conv1 output dims: %s', (a_conv1.get_shape(),))
+            b_conv1 = self._bias_variable([self.num_filt_1], 'bias_for_Conv_Layer_1')
+            a_conv1 = self._conv2d(x_image, w_conv1) + b_conv1
 
         with tf.name_scope('Batch_norm_conv1'):
             a_conv1 = tf.contrib.layers.batch_norm(a_conv1,
@@ -175,10 +172,8 @@ class CNNModel(object):
             w_conv2 = tf.get_variable("Conv_Layer_2",
                                       shape=[4, 1, self.num_filt_1, self.num_filt_2],
                                       initializer=tf.contrib.layers.xavier_initializer())
-            b_conv2 = bias_variable([self.num_filt_2], 'bias_for_Conv_Layer_2')
-            a_conv2 = conv2d(h_conv1, w_conv2) + b_conv2
-
-        self.logger.debug('Conv2 output dims: %s', (a_conv2.get_shape(),))
+            b_conv2 = self._bias_variable([self.num_filt_2], 'bias_for_Conv_Layer_2')
+            a_conv2 = self._conv2d(h_conv1, w_conv2) + b_conv2
 
         with tf.name_scope('Batch_norm_conv2'):
             a_conv2 = tf.contrib.layers.batch_norm(a_conv2,
@@ -190,11 +185,9 @@ class CNNModel(object):
             w_fc1 = tf.get_variable("Fully_Connected_layer_1",
                                     shape=[self.SEQUENCE_LENGTH * self.num_filt_2, self.num_fc_1],
                                     initializer=tf.contrib.layers.xavier_initializer())
-            b_fc1 = bias_variable([self.num_fc_1], 'bias_for_Fully_Connected_Layer_1')
+            b_fc1 = self._bias_variable([self.num_fc_1], 'bias_for_Fully_Connected_Layer_1')
             h_conv3_flat = tf.reshape(h_conv2, [-1, self.SEQUENCE_LENGTH * self.num_filt_2])
             h_fc1 = tf.nn.relu(tf.matmul(h_conv3_flat, w_fc1) + b_fc1)
-
-        self.logger.debug('FCon1 output dims: %s', (h_fc1.get_shape(),))
 
         with tf.name_scope("Fully_Connected2"):
             h_fc1_drop = tf.nn.dropout(h_fc1, self.dropout_prob)
@@ -207,8 +200,6 @@ class CNNModel(object):
             self.pred = tf.matmul(h_fc1_drop, w_fc2) + b_fc2
             tf.summary.histogram('pred', self.pred)
 
-        self.logger.debug('FCon2 output dims: %s', (self.pred.get_shape(),))
-
         with tf.name_scope("Softmax"):
             # Cross-Entropy: "measuring how inefficient our predictions are for describing the truth"
             # http://colah.github.io/posts/2015-09-Visual-Information/
@@ -219,22 +210,26 @@ class CNNModel(object):
             # Reduce Mean: Computes the mean of elements across dimensions of a tensor.
             # https://www.tensorflow.org/api_docs/python/tf/reduce_mean
             self.cost = tf.reduce_mean(cross_entropy, name='cost')
+            self.cost_again = tf.reduce_sum(cross_entropy, name='cost_again')
             tf.summary.scalar('cross_entropy_loss', self.cost)
 
         # EVALUATE OUR MODEL
         # tf.argmax = returns index of the highest entry in a tensor along some axis.
+        # So if we are one hot encoding the prediction, argmax returns the largest softmax'd val's index
+        # (which corresponds with class)
         # So here, tf.equal is comparing predicted label to actual label, returns list of bools
         with tf.name_scope("Evaluating"):
-            with tf.name_scope('correct_prediction'):
-                correct_pred = tf.equal(tf.argmax(self.pred, 1), tf.argmax(self.y))
-            with tf.name_scope('accuracy'):
+                correct_pred = tf.equal(tf.argmax(self.pred, 1), self.y)
                 # tf.cast coverts bools to 1 and 0, tf.reduce_mean finds the mean of all values in the list
                 self.accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
                 tf.summary.scalar('accuracy', self.accuracy)
 
         with tf.name_scope("Optimizing"):
             if self.exp_decay_enabled:
-                global_step = tf.get_variable('global_step', shape=(), initializer=tf.zeros_initializer(), trainable=False)
+                global_step = tf.get_variable('global_step',
+                                              shape=(),
+                                              initializer=tf.zeros_initializer(),
+                                              trainable=False)
                 learning_rate = tf.train.exponential_decay(learning_rate=self.exp_lr_starter_val,
                                                            global_step=global_step,
                                                            decay_steps=self.exp_lr_decay_steps,
@@ -244,7 +239,8 @@ class CNNModel(object):
 
                 # Passing global_step to minimize() will increment it at each step.
                 self.optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate,
-                                                   name='train').minimize(self.cost, global_step=global_step)
+                                                        name='train').minimize(self.cost,
+                                                                               global_step=global_step)
 
             else:
                 learning_rate = tf.constant(self.static_lr_val)
@@ -257,7 +253,7 @@ class CNNModel(object):
 
         """ Step 2: Set up Tensorboard """
         timestamp = str(time.strftime("%Y.%m.%d-%H.%M.%S"))
-        out_dir = os.path.abspath(os.path.join(os.path.curdir, "output"))
+        out_dir = os.path.abspath(os.path.join(os.path.curdir, "output_cnn"))
         run_dir = os.path.abspath(os.path.join(out_dir, "trained_model_" + timestamp))
         # run_dir = os.path.abspath(os.path.join(out_dir, "trained_model"))
         checkpoint_dir = os.path.abspath(os.path.join(run_dir, "checkpoints"))
@@ -281,8 +277,6 @@ class CNNModel(object):
             step = 0  # should correspond with global_step
             bar.start()
             bar.update(step * self.batch_size)
-            cost_ma = 0.0
-            acc_ma = 0.0
 
             self.logger.info("The training shall begin.")
 
@@ -304,59 +298,49 @@ class CNNModel(object):
                         acc_train = result[1]
 
                         # Check validation performance
-                        result = sess.run([self.cost, self.accuracy, summary_op],
+                        result = sess.run([self.cost, self.accuracy],
                                           feed_dict={self.x: self.val_data[0],
                                                      self.y: self.val_data[1],
                                                      self.trainable: False})
                         cost_val = result[0]
                         acc_val = result[1]
-                        summary = result[2]
-
-                        # Check costs of training and validation models
-                        if step == 0:
-                            cost_ma = cost_train
-                            acc_ma = acc_train
-                            acc_test_before = acc_val
-                        else:
-                            cost_ma = 0.8 * cost_ma + 0.2 * cost_train
-                            acc_ma = 0.8 * acc_ma + 0.2 * acc_train
 
                         # Write information to TensorBoard
-                        epochs_elapsed = step * self.batch_size / self.ex_per_epoch
-                        self.logger.info('%d epochs elapsed.', epochs_elapsed)
-                        self.logger.info('Training / Validation costs: %5.3f / %5.3f (%5.3f)',
-                                         cost_train, cost_val, cost_ma)
-                        self.logger.info('Training / Validation accuracy: %5.3f / %5.3f (%5.3f)',
-                                         acc_train, acc_val, acc_ma)
+                        self.logger.info('%d epochs elapsed.', step * self.batch_size / self.ex_per_epoch)
+                        self.logger.info('COST:     Train: %5.3f / Val: %5.3f', cost_train, cost_val)
+                        self.logger.info('ACCURACY: Train: %5.3f / Val: %5.3f', acc_train, acc_val)
                         saver.save(sess, checkpoint_prefix, global_step=step)
-                        writer.flush()  # makes sure Python writes the summaries to the logfile
-                        writer.add_summary(summary, step)
 
                     # Training step.
-                    sess.run(self.optimizer, feed_dict={self.x: x_batch,
-                                                        self.y: y_batch,
-                                                        self.trainable: True})
+                    _, summary = sess.run([self.optimizer, summary_op],
+                                          feed_dict={self.x: x_batch,
+                                                     self.y: y_batch,
+                                                     self.trainable: True})
 
                     # Update progress bar and iterate step/batch_idx
+                    writer.add_summary(summary, step)
                     bar.update(step * self.batch_size)
                     batch_idx += 1
                     step += 1
             except KeyboardInterrupt:
-                self.logger.info('Keyboard Interrupt? Gracefully quitting')
+                self.logger.info('Keyboard Interrupt? Gracefully quitting.')
             finally:
                 step -= 1
                 bar.finish()
                 acc_test_after = self.evaluate_model_on_test_data(sess)
                 self.logger.info("The training is done.")
-                self.logger.info('Test accuracy before training: %.3f', acc_test_before)
+                self.logger.info('Test accuracy before training: %.3f.', acc_test_before)
                 self.logger.info('Test accuracy after training: %.3f.', acc_test_after)
                 writer.close()
 
     def evaluate_model_on_test_data(self, sess):
-        """Evaluate the model on the test data
+        """Evaluate the model on the test data.
+
+        Args:
+            sess (tf.Session object): active session object
 
         Returns:
-            TYPE: Description
+            float: the accuracy on the test dataset.
         """
         acc = sess.run(self.accuracy, feed_dict={self.x: self.test_data[0],
                                                  self.y: self.test_data[1],
@@ -371,8 +355,33 @@ class CNNModel(object):
 
     ''' Helper Functions '''
     @staticmethod
+    def _bias_variable(shape, name):
+        initial = tf.constant(0.1, shape=shape)
+        return tf.Variable(initial, name=name)
+
+    @staticmethod
+    def _conv2d(x, W):
+        return tf.nn.conv2d(x, W,
+                            strides=[1, 1, 1, 1],
+                            padding='SAME')
+
+    @staticmethod
+    def _max_pool_2x2(x):
+        return tf.nn.max_pool(x,
+                              ksize=[1, 2, 2, 1],
+                              strides=[1, 2, 2, 1],
+                              padding='SAME')
+
+    @staticmethod
     def _create_filename_list(data_dir):
-        """Identify the list of CSV files based on a given data_dir."""
+        """Identify the list of CSV files based on a given data_dir.
+
+        Args:
+            data_dir (string): local path to where the data is saved.
+
+        Returns:
+            list of strings: a list of CSV files found in the data directory
+        """
         filenames = []
         for root, _, files in os.walk(data_dir):
             for filename in files:
@@ -410,6 +419,7 @@ class CNNModel(object):
         return train_set, val_set, test_set
 
     def _load_data(self, filenames):
+        # Get features and labels from dataset
         features, labels = [], []
         for example_file in filenames:
             example_data = np.loadtxt(example_file, delimiter=',')
@@ -423,6 +433,7 @@ class CNNModel(object):
             features.append(ex_feature)
             labels.append(ex_label)
 
+        # stack features
         features = np.vstack(features)
 
         return features, labels

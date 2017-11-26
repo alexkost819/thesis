@@ -227,7 +227,7 @@ class LSTMModel(object):
 
         """ Step 2: Set up Tensorboard """
         timestamp = str(time.strftime("%Y.%m.%d-%H.%M.%S"))
-        out_dir = os.path.abspath(os.path.join(os.path.curdir, "output"))
+        out_dir = os.path.abspath(os.path.join(os.path.curdir, "output_rnn"))
         run_dir = os.path.abspath(os.path.join(out_dir, "trained_model_" + timestamp))
         # run_dir = os.path.abspath(os.path.join(out_dir, "trained_model"))
         checkpoint_dir = os.path.abspath(os.path.join(run_dir, "checkpoints"))
