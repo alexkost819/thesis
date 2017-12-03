@@ -1,7 +1,12 @@
+# Artifacts of using Mac
 *.DS_Store
-*.csv
-*.png
-.idea/
-/output/trained_model_*
 *.textClipping
+.idea/
 
+# Folders we want to ignore
+/Data
+/Old
+/output*
+
+# Logs we want to ignore
+*.log
