@@ -170,7 +170,7 @@ class CNNModel(object):
 
         self.logger.debug('Input dims: {}'.format(x_image.get_shape()))
 
-        with tf.variable_scope("Conv1"):
+        with tf.variable_scope("ConvBatch1"):
             conv1 = tf.contrib.layers.conv2d(inputs=x_image,
                                              num_outputs=self.num_filt_1,
                                              kernel_size=[5, 1],
@@ -179,7 +179,7 @@ class CNNModel(object):
                                                                 'updates_collections': None})
             self.logger.debug('Conv1 output dims: {}'.format(conv1.get_shape()))
 
-        with tf.variable_scope("Conv2"):
+        with tf.variable_scope("ConvBatch2"):
             conv2 = tf.contrib.layers.conv2d(inputs=conv1,
                                              num_outputs=self.num_filt_2,
                                              kernel_size=[4, 1],
@@ -435,11 +435,11 @@ class CNNModel(object):
         self.logger.info('batch_size: %d', self.batch_size)
         self.logger.info('exp_decay_enabled: %r', self.exp_decay_enabled)
         if self.exp_decay_enabled:
-            self.logger.info('  exp_lr_starter_val: %.3f', self.exp_lr_starter_val)
-            self.logger.info('  exp_lr_decay_steps: %.3f', self.exp_lr_decay_steps)
-            self.logger.info('  exp_lr_decay_rate: %.3f', self.exp_lr_decay_rate)
+            self.logger.info('  exp_lr_starter_val: %f', self.exp_lr_starter_val)
+            self.logger.info('  exp_lr_decay_steps: %d', self.exp_lr_decay_steps)
+            self.logger.info('  exp_lr_decay_rate: %.2f', self.exp_lr_decay_rate)
         else:
-            self.logger.info('static_lr_val: %.5f', self.static_lr_val)
+            self.logger.info('static_lr_val: %f', self.static_lr_val)
         self.logger.info('Dropout Prob: %.2f', self.dropout_prob)
 
 
@@ -461,7 +461,7 @@ if __name__ == '__main__':
     fh.setLevel(logging.DEBUG)
     # create console handler with a higher log level
     ch = logging.StreamHandler()
-    ch.setLevel(logging.DEBUG)
+    ch.setLevel(logging.INFO)
     # create formatter and add it to the handlers
     formatter = logging.Formatter(DEFAULT_FORMAT)
     fh.setFormatter(formatter)
