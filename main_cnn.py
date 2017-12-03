@@ -1,6 +1,15 @@
 """Created on 24 June 2017.
 @author: Alex Kost
-@description: Main python code file for Applying RNN as a TPMS
+@description: Main python code file for Applying CNN as a TPMS.
+
+Attributes:
+    DEFAULT_FORMAT (str): Logging format
+    LOGFILE_NAME (str): Logging file name
+    SIM_DATA_PATH (str): Local simulation data output folder path
+    SIM_LENGTH_FIX (int): bias to datapoint length due to slicing ops in Matlab, datapoints
+    SIM_LENGTH_SEQ (int): simulation length, datapoints
+    SIM_LENGTH_TIME (float): simulation time, sec
+    SIM_RESOLUTION (float): simulation resolution, sec/datapoint
 """
 
 import logging
@@ -13,23 +22,26 @@ import numpy as np
 # Progressbar config
 progressbar.streams.wrap_stderr()
 
-# Constants
+# Logging Constants
 DEFAULT_FORMAT = '%(asctime)s: %(levelname)s: %(message)s'
 LOGFILE_NAME = 'main_cnn.log'
 
+# Simulation Constants
+SIM_DATA_PATH = 'Data/simulation_labeled'
+SIM_LENGTH_TIME = 1.5 - .45
+SIM_RESOLUTION = .001
+SIM_LENGTH_FIX = 2
+SIM_LENGTH_SEQ = int(SIM_LENGTH_TIME / SIM_RESOLUTION) + SIM_LENGTH_FIX
+
 
 class CNNModel(object):
-    '''
-    CNNModel is a class that builds and trains a CNN Model
-    '''
-    # Constants
-    SIM_DATA_PATH = 'Data/simulation_rnn'
-    SEQUENCE_LENGTH = int((1.5 - .45) / .001) + 2   # sec/sec
-
+    """
+    CNNModel is a class that builds and trains a CNN Model.
+    """
     def __init__(self):
         """Constructor."""
         # VARYING ACROSS TESTS
-        self.n_epochs = 300                          # number of times we go through all data
+        self.n_epochs = 20                          # number of times we go through all data
         self.batch_size = 32                        # number of examples in a single batch
         self.num_filt_1 = 16                        # number of filters in first conv layer
         self.num_filt_2 = 14                        # number of filters in second conv layer
@@ -39,9 +51,9 @@ class CNNModel(object):
         # Exponential Decay Parameters
         # https://www.tensorflow.org/versions/r0.12/api_docs/python/train/decaying_the_learning_rate
         self.static_lr_val = 0.00005
-        self.exp_decay_enabled = False              # enable/disable exponentially decaying learning rate
-        self.exp_lr_starter_val = 0.05
-        self.exp_lr_decay_steps = 633
+        self.exp_decay_enabled = True              # enable/disable exponentially decaying learning rate
+        self.exp_lr_starter_val = .00005
+        self.exp_lr_decay_steps = 633 * 10
         self.exp_lr_decay_rate = 0.96
 
         # REGULARIZATION TO AVOID OVERFITTING
@@ -70,7 +82,7 @@ class CNNModel(object):
                                                      # Set false when evaluating, set true when training
 
     def preprocess_all_data(self):
-        all_files = self._create_filename_list(self.SIM_DATA_PATH)
+        all_files = self._create_filename_list(SIM_DATA_PATH)
         np.random.shuffle(all_files)
 
         train_val_test_files = self._split_datafiles(all_files)    # train_set, val_set, test_set
@@ -96,7 +108,7 @@ class CNNModel(object):
         val_files = []
         test_files = []
         for i in range(self.n_classes):
-            modified_data_path = os.path.join(self.SIM_DATA_PATH, str(i))
+            modified_data_path = os.path.join(SIM_DATA_PATH, str(i))
             class_files = self._create_filename_list(modified_data_path)
 
             # get files for each thing
@@ -145,85 +157,81 @@ class CNNModel(object):
 
     def build_model(self):
         """ Build the CNN Model """
-        self.x = tf.placeholder(tf.float32, shape=[None, self.SEQUENCE_LENGTH], name='input_data')
+        self.x = tf.placeholder(tf.float32, shape=[None, SIM_LENGTH_SEQ], name='input_data')
         self.y = tf.placeholder(tf.int64, shape=[None], name='input_labels')
 
-        with tf.name_scope("Reshaping_data"):
-            x_image = tf.reshape(self.x, [-1, self.SEQUENCE_LENGTH, 1, 1])
+        with tf.name_scope("Reshape_Data"):
+            # tf.nn.conv2d requires inputs to be shaped as follows:
+            # [batch, in_height, in_width, in_channels]
+            # so -1 = batch size, should adapt accordingly
+            # in_height = "height" of the image (so one dimension)
+            # in_width = "width" of image
+            x_image = tf.reshape(self.x, [-1, SIM_LENGTH_SEQ, 1, 1])
 
-        # CNN MODEL NOW
-        """Build the graph"""
-        # ewma is the decay for which we update the moving average of the
-        # mean and variance in the batch-norm layers
-        with tf.name_scope("Conv1"):
-            w_conv1 = tf.get_variable("Conv_Layer_1",
-                                      shape=[5, 1, 1, self.num_filt_1],
-                                      initializer=tf.contrib.layers.xavier_initializer())
-            b_conv1 = self._bias_variable([self.num_filt_1], 'bias_for_Conv_Layer_1')
-            a_conv1 = self._conv2d(x_image, w_conv1) + b_conv1
+        self.logger.debug('Input dims: {}'.format(x_image.get_shape()))
 
-        with tf.name_scope('Batch_norm_conv1'):
-            a_conv1 = tf.contrib.layers.batch_norm(a_conv1,
-                                                   is_training=self.trainable,
-                                                   updates_collections=None)
-            h_conv1 = tf.nn.relu(a_conv1)
+        with tf.variable_scope("Conv1"):
+            conv1 = tf.contrib.layers.conv2d(inputs=x_image,
+                                             num_outputs=self.num_filt_1,
+                                             kernel_size=[5, 1],
+                                             normalizer_fn=tf.contrib.layers.batch_norm,
+                                             normalizer_params={'is_training': self.trainable,
+                                                                'updates_collections': None})
+            self.logger.debug('Conv1 output dims: {}'.format(conv1.get_shape()))
 
-        with tf.name_scope("Conv2"):
-            w_conv2 = tf.get_variable("Conv_Layer_2",
-                                      shape=[4, 1, self.num_filt_1, self.num_filt_2],
-                                      initializer=tf.contrib.layers.xavier_initializer())
-            b_conv2 = self._bias_variable([self.num_filt_2], 'bias_for_Conv_Layer_2')
-            a_conv2 = self._conv2d(h_conv1, w_conv2) + b_conv2
+        with tf.variable_scope("Conv2"):
+            conv2 = tf.contrib.layers.conv2d(inputs=conv1,
+                                             num_outputs=self.num_filt_2,
+                                             kernel_size=[4, 1],
+                                             normalizer_fn=tf.contrib.layers.batch_norm,
+                                             normalizer_params={'is_training': self.trainable,
+                                                                'updates_collections': None})
+            self.logger.debug('Conv2 output dims: {}'.format(conv2.get_shape()))
 
-        with tf.name_scope('Batch_norm_conv2'):
-            a_conv2 = tf.contrib.layers.batch_norm(a_conv2,
-                                                   is_training=self.trainable,
-                                                   updates_collections=None)
-            h_conv2 = tf.nn.relu(a_conv2)
+        with tf.variable_scope("Fully_Connected1"):
+            flatten = tf.layers.flatten(conv2, name='Flatten')
+            fc1 = tf.contrib.layers.fully_connected(inputs=flatten,
+                                                    num_outputs=self.num_fc_1,
+                                                    weights_initializer=tf.contrib.layers.xavier_initializer(),
+                                                    biases_initializer=tf.constant_initializer(0.1))
+            fc1_dropout = tf.layers.dropout(fc1, self.dropout_prob, name='Dropout')
+            self.logger.debug('FCon1 output dims: {}'.format(fc1_dropout.get_shape()))
 
-        with tf.name_scope("Fully_Connected1"):
-            w_fc1 = tf.get_variable("Fully_Connected_layer_1",
-                                    shape=[self.SEQUENCE_LENGTH * self.num_filt_2, self.num_fc_1],
-                                    initializer=tf.contrib.layers.xavier_initializer())
-            b_fc1 = self._bias_variable([self.num_fc_1], 'bias_for_Fully_Connected_Layer_1')
-            h_conv3_flat = tf.reshape(h_conv2, [-1, self.SEQUENCE_LENGTH * self.num_filt_2])
-            h_fc1 = tf.nn.relu(tf.matmul(h_conv3_flat, w_fc1) + b_fc1)
-
-        with tf.name_scope("Fully_Connected2"):
-            h_fc1_drop = tf.nn.dropout(h_fc1, self.dropout_prob)
-            w_fc2 = tf.get_variable("w_fc2",
-                                    shape=[self.num_fc_1, self.n_classes],
-                                    initializer=tf.contrib.layers.xavier_initializer())
-            b_fc2 = tf.Variable(tf.constant(0.1,
-                                            shape=[self.n_classes]),
-                                            name='b_fc2')
-            self.pred = tf.matmul(h_fc1_drop, w_fc2) + b_fc2
+        with tf.variable_scope("Fully_Connected2"):
+            self.pred = tf.contrib.layers.fully_connected(inputs=fc1_dropout,
+                                                          num_outputs=self.n_classes,
+                                                          weights_initializer=tf.contrib.layers.xavier_initializer(),
+                                                          biases_initializer=tf.constant_initializer(0.1))
+            self.logger.debug('FCon2 output dims: {}'.format(self.pred.get_shape()))
             tf.summary.histogram('pred', self.pred)
 
+        # MEASURE MODEL ERROR
+        # Cross-Entropy: "measuring how inefficient our predictions are for describing the truth"
+        #    http://colah.github.io/posts/2015-09-Visual-Information/
+        #    https://stackoverflow.com/questions/41689451/valueerror-no-gradients-provided-for-any-variable
+        #    Use sparse softmax because we have mutually exclusive classes
+        # tf.reduce_mean = reduces tensor to mean scalar value of tensor
         with tf.name_scope("Softmax"):
-            # Cross-Entropy: "measuring how inefficient our predictions are for describing the truth"
-            # http://colah.github.io/posts/2015-09-Visual-Information/
-            # https://stackoverflow.com/questions/41689451/valueerror-no-gradients-provided-for-any-variable
-            # Use sparse Softmax because we have mutually exclusive classes
             cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=self.pred, labels=self.y)
-
-            # Reduce Mean: Computes the mean of elements across dimensions of a tensor.
-            # https://www.tensorflow.org/api_docs/python/tf/reduce_mean
             self.cost = tf.reduce_mean(cross_entropy, name='cost')
-            self.cost_again = tf.reduce_sum(cross_entropy, name='cost_again')
             tf.summary.scalar('cross_entropy_loss', self.cost)
 
         # EVALUATE OUR MODEL
         # tf.argmax = returns index of the highest entry in a tensor along some axis.
-        # So if we are one hot encoding the prediction, argmax returns the largest softmax'd val's index
-        # (which corresponds with class)
-        # So here, tf.equal is comparing predicted label to actual label, returns list of bools
+        #     Predictions are probabilities corresponding to class (ex. [0.7 0.2 0.1])
+        #     tf.argmax returns the most probable label (ex. 0)
+        # tf.equal = compares prediction to truth, returns list of bools (T if correct, F if not)
+        # tf.reduce_mean = reduces tensor to mean scalar value of tensor
+        # tf.cast = convert bools to 1 and 0
         with tf.name_scope("Evaluating"):
                 correct_pred = tf.equal(tf.argmax(self.pred, 1), self.y)
-                # tf.cast coverts bools to 1 and 0, tf.reduce_mean finds the mean of all values in the list
                 self.accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
                 tf.summary.scalar('accuracy', self.accuracy)
 
+
+        # OPTIMIZE OUR MODEL
+        # either use exponentially decaying learning rate or static learning rate with
+        #     AdamOptimizer to minimize the cost
         with tf.name_scope("Optimizing"):
             if self.exp_decay_enabled:
                 global_step = tf.get_variable('global_step',
@@ -244,7 +252,7 @@ class CNNModel(object):
 
             else:
                 learning_rate = tf.constant(self.static_lr_val)
-                self.optimizer = tf.train.AdamOptimizer(learning_rate).minimize(self.cost)
+                self.optimizer = tf.train.AdamOptimizer(learning_rate, name='train').minimize(self.cost)
 
             tf.summary.scalar('learning_rate', learning_rate)
 
@@ -353,25 +361,7 @@ class CNNModel(object):
         """Reset the model to prepare for next run."""
         tf.reset_default_graph()
 
-    ''' Helper Functions '''
-    @staticmethod
-    def _bias_variable(shape, name):
-        initial = tf.constant(0.1, shape=shape)
-        return tf.Variable(initial, name=name)
-
-    @staticmethod
-    def _conv2d(x, W):
-        return tf.nn.conv2d(x, W,
-                            strides=[1, 1, 1, 1],
-                            padding='SAME')
-
-    @staticmethod
-    def _max_pool_2x2(x):
-        return tf.nn.max_pool(x,
-                              ksize=[1, 2, 2, 1],
-                              strides=[1, 2, 2, 1],
-                              padding='SAME')
-
+    """ Helper Functions """
     @staticmethod
     def _create_filename_list(data_dir):
         """Identify the list of CSV files based on a given data_dir.
@@ -396,7 +386,7 @@ class CNNModel(object):
     def _split_datafiles(data, val_size=0.2, test_size=0.2):
         """Spit all the data we have into training, validating, and test sets.
 
-        By default, 50/25/25 split
+        By default, 60/20/20 split
         Credit: https://www.slideshare.net/TaegyunJeon1/electricity-price-forecasting-with-recurrent-neural-networks
 
         Args:
@@ -449,7 +439,7 @@ class CNNModel(object):
             self.logger.info('  exp_lr_decay_steps: %.3f', self.exp_lr_decay_steps)
             self.logger.info('  exp_lr_decay_rate: %.3f', self.exp_lr_decay_rate)
         else:
-            self.logger.info('static_lr_val: %.3f', self.static_lr_val)
+            self.logger.info('static_lr_val: %.5f', self.static_lr_val)
         self.logger.info('Dropout Prob: %.2f', self.dropout_prob)
 
 
@@ -471,7 +461,7 @@ if __name__ == '__main__':
     fh.setLevel(logging.DEBUG)
     # create console handler with a higher log level
     ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
+    ch.setLevel(logging.DEBUG)
     # create formatter and add it to the handlers
     formatter = logging.Formatter(DEFAULT_FORMAT)
     fh.setFormatter(formatter)
