@@ -2,6 +2,7 @@
 *.DS_Store
 *.textClipping
 .idea/
+*.pyc
 
 # Folders we want to ignore
 /Data

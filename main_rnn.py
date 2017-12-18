@@ -1,43 +1,45 @@
 """Created on 24 June 2017.
 @author: Alex Kost
 @description: Main python code file for Applying RNN as a TPMS
+
+Attributes:
+    DEFAULT_FORMAT (str): Logging format
+    LOGFILE_NAME (str): Logging file name
 """
 
+# Basic Python
 import logging
 import os
 import progressbar
 import time
 import tensorflow as tf
 
+# Alex Python
+from DataProcessor import DataProcessor
+
 # Constants
 DEFAULT_FORMAT = '%(asctime)s: %(levelname)s: %(message)s'
 LOGFILE_NAME = 'main_rnn.log'
 
-class LSTMModel(object):
+
+class LSTMModel(DataProcessor):
     '''
     ALLRNNStuff is a class of all the methods we use in the original script
     TODO: Break this up between data manipulation and training the model
     '''
     # Constants
-    SIM_DATA_PATH = 'Data/simulation'
+    SIM_DATA_PATH = 'Data/simulation_orig'
+    OUTPUT_DIR = 'output'
     SEQUENCE_LENGTH = int(1.75 / .001) + 1      # sec/sec
     CSV_N_COLUMNS = 5
-    LABEL_UNDER = 0
-    LABEL_NOM = 1
-    LABEL_OVER = 2
 
     def __init__(self):
         """Constructor."""
         # VARYING ACROSS TESTS
-        self.n_epochs = 20                   # number of times we go through all data
-        self.n_hidden = 40                  # number of features per hidden layer in LSTM
-        self.batch_size = 10                # number of examples in a single batch
-        self.n_layers = 5                   # number of hidden layers in model
-
-        # INPUT PIPELINE
-        self.filenames = self.create_filename_list(self.SIM_DATA_PATH)
-        self.ex_per_epoch = len(self.filenames)
-        self.train_length = self.n_epochs * self.ex_per_epoch
+        self.n_epochs = 50                  # number of times we go through all data
+        self.n_hidden = 30                  # number of features per hidden layer in LSTM
+        self.batch_size = 32                # number of examples in a single batch
+        self.n_layers = 3                   # number of hidden layers in model
 
         # LEARNING RATE
         # Exponential Decay Parameters
@@ -50,7 +52,7 @@ class LSTMModel(object):
 
         # REGULARIZATION TO AVOID OVERFITTING
         # http://uksim.info/isms2016/CD/data/0665a174.pdf - Use Dropout when n_hidden is large
-        self.reg_type = 'Dropout'                # 'L2 Loss' or 'Dropout'
+        self.reg_type = 'Dropout'           # 'L2 Loss' or 'Dropout'
         self.dropout_prob = 0.5             # dropout probability
         self.beta = 0.01                    # Regularization beta variable
 
@@ -61,18 +63,16 @@ class LSTMModel(object):
         self.logger = logging.getLogger(__name__)   # get the logger!
         self.normalize = False              # True = normalized features, false = raw
 
-    @staticmethod
-    def create_filename_list(data_dir):
-        """Identify the list of CSV files based on a given data_dir."""
-        filenames = []
-        for root, _, files in os.walk(data_dir):
-            for filename in files:
-                if filename.endswith(".csv"):
-                    rel_filepath = os.path.join(root, filename)
-                    abs_filepath = os.path.abspath(rel_filepath)
-                    filenames.append(abs_filepath)
+        # MODEL PARAMETERS
+        self.optimizer = None
+        self.accuracy = None
+        self.cost = None
+        self.learning_rate = None
 
-        return filenames
+        # INPUT PIPELINE
+        super(LSTMModel, self).__init__(self.batch_size, self.n_epochs, self.n_classes, self.n_features)
+        self.filenames = self._create_filename_list(self.SIM_DATA_PATH)
+        self.use_all_files_for_training(self.filenames)
 
     def create_filename_queue(self, filenames):
         """Ceate filename queue out of CSV files.
@@ -136,9 +136,9 @@ class LSTMModel(object):
         """Reset the model to prepare for next run."""
         tf.reset_default_graph()
 
-    def train_model(self):
-        """Train the model."""
-        with tf.name_scope("Input_Batch"):
+    def build_model(self):
+        """Build the RNN model."""
+        with tf.variable_scope("Input_Batch"):
             filename_queue = self.create_filename_queue(self.filenames)
 
             # FEATURES AND LABELS
@@ -150,28 +150,27 @@ class LSTMModel(object):
             x = tf.transpose(x, [0, 2, 1])
 
         # MODEL
-        with tf.name_scope("Model"):
-            # add stacked layers if more than one layer
-            if self.n_layers > 1:
-                cell = tf.contrib.rnn.MultiRNNCell([self._setup_lstm_cell() for _ in range(self.n_layers)],
-                                                   state_is_tuple=True)
-            else:
-                cell = self._setup_lstm_cell()
+        # add stacked layers if more than one layer
+        if self.n_layers > 1:
+            cell = tf.contrib.rnn.MultiRNNCell([self._setup_lstm_cell() for _ in range(self.n_layers)],
+                                               state_is_tuple=True)
+        else:
+            cell = self._setup_lstm_cell()
 
-            sequence_lengths = []
-            for _ in range(self.batch_size):
-                sequence_lengths.append(self.SEQUENCE_LENGTH)
+        sequence_lengths = []
+        for _ in range(self.batch_size):
+            sequence_lengths.append(self.SEQUENCE_LENGTH)
 
-            outputs, _ = tf.nn.dynamic_rnn(cell=cell,
-                                           inputs=x,
-                                           sequence_length=sequence_lengths,
-                                           dtype=tf.float32)
+        outputs, _ = tf.nn.dynamic_rnn(cell=cell,
+                                       inputs=x,
+                                       sequence_length=sequence_lengths,
+                                       dtype=tf.float32)
 
-            # We transpose the output to switch batch size with sequence size.
-            # http://monik.in/a-noobs-guide-to-implementing-rnn-lstm-using-tensorflow/
-            outputs = tf.transpose(outputs, [1, 0, 2])
+        # We transpose the output to switch batch size with sequence size.
+        # http://monik.in/a-noobs-guide-to-implementing-rnn-lstm-using-tensorflow/
+        outputs = tf.transpose(outputs, [1, 0, 2])
 
-        with tf.name_scope("Softmax"):
+        with tf.variable_scope("Fully_Connected"):
             # put the outputs into a classifier
             # weights = tf.Variable(shape=tf.random_normal([self.n_hidden, self.n_classes]), name='weights')
             # https://www.tensorflow.org/api_docs/python/tf/truncated_normal_initializer
@@ -179,7 +178,11 @@ class LSTMModel(object):
                                       initializer=tf.truncated_normal_initializer())
             biases = tf.get_variable('biases', [self.n_classes])
             pred = tf.nn.xw_plus_b(outputs[-1], weights, biases)     # LOGITS
+            tf.summary.histogram('weights', weights)
+            tf.summary.histogram('biases', biases)
+            tf.summary.histogram('pred', pred)
 
+        with tf.variable_scope("Softmax"):
             # Cross-Entropy: "measuring how inefficient our predictions are for describing the truth"
             # http://colah.github.io/posts/2015-09-Visual-Information/
             # https://stackoverflow.com/questions/41689451/valueerror-no-gradients-provided-for-any-variable
@@ -188,26 +191,27 @@ class LSTMModel(object):
 
             # Reduce Mean: Computes the mean of elements across dimensions of a tensor.
             # https://www.tensorflow.org/api_docs/python/tf/reduce_mean
-            cost = tf.reduce_mean(cross_entropy, name='total')
+            self.cost = tf.reduce_mean(cross_entropy, name='total')
+            tf.summary.scalar('cross_entropy_loss', self.cost)
 
             # http://www.ritchieng.com/machine-learning/deep-learning/tensorflow/regularization/
             # Loss function using L2 Regularization
             regularizer = None
             if self.reg_type == 'L2 Loss':
                 regularizer = tf.nn.l2_loss(weights)
-                cost = tf.reduce_mean(cost + self.beta * regularizer)
+                self.cost = tf.reduce_mean(self.cost + self.beta * regularizer)
 
         # EVALUATE OUR MODEL
         # tf.argmax = returns index of the highest entry in a tensor along some axis.
         # So here, tf.equal is comparing predicted label to actual label, returns list of bools
-        with tf.name_scope("Evaluating"):
-            with tf.name_scope('correct_prediction'):
+        with tf.variable_scope("Evaluating"):
                 correct_pred = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
-            with tf.name_scope('accuracy'):
                 # tf.cast coverts bools to 1 and 0, tf.reduce_mean finds the mean of all values in the list
-                accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
+                self.accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
-        with tf.name_scope("Optimizing"):
+                tf.summary.scalar('accuracy', self.accuracy)
+
+        with tf.variable_scope("Optimizing"):
             if self.exp_decay_enabled:
                 global_step = tf.get_variable('global_step', shape=(), initializer=tf.zeros_initializer(), trainable=False)
                 learning_rate = tf.train.exponential_decay(learning_rate=self.exp_lr_starter_val,
@@ -218,16 +222,20 @@ class LSTMModel(object):
                                                            name='learning_rate')
 
                 # Passing global_step to minimize() will increment it at each step.
-                optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate,
-                                                   name='train').minimize(cost, global_step=global_step)
+                self.optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate,
+                                                        name='train').minimize(self.cost, global_step=global_step)
 
             else:
                 learning_rate = tf.constant(self.static_lr_val)
-                optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost)
+                self.optimizer = tf.train.AdamOptimizer(learning_rate).minimize(self.cost)
 
+            tf.summary.scalar('learning_rate', learning_rate)
+
+    def train_model(self):
+        """Train the model."""
         """ Step 2: Set up Tensorboard """
         timestamp = str(time.strftime("%Y.%m.%d-%H.%M.%S"))
-        out_dir = os.path.abspath(os.path.join(os.path.curdir, "output_rnn"))
+        out_dir = os.path.abspath(os.path.join(os.path.curdir, self.OUTPUT_DIR))
         run_dir = os.path.abspath(os.path.join(out_dir, "trained_model_" + timestamp))
         # run_dir = os.path.abspath(os.path.join(out_dir, "trained_model"))
         checkpoint_dir = os.path.abspath(os.path.join(run_dir, "checkpoints"))
@@ -236,14 +244,6 @@ class LSTMModel(object):
             os.makedirs(checkpoint_dir)
         with tf.name_scope("Tensorboard"):
             saver = tf.train.Saver(tf.global_variables())
-            tf.summary.histogram('weights', weights)
-            tf.summary.histogram('biases', biases)
-            tf.summary.histogram('pred', pred)
-            tf.summary.scalar('cross_entropy', cost)
-            if regularizer is not None:
-                tf.summary.scalar('regularizer', regularizer)
-            tf.summary.scalar('learning_rate', learning_rate)
-            tf.summary.scalar('accuracy', accuracy)
 
         # Logging the Run
         self._new_run_logging(timestamp)
@@ -251,12 +251,13 @@ class LSTMModel(object):
         """ Step 3: Train the RNN """
         with tf.Session() as sess:
             # Initialization
-            bar = progressbar.ProgressBar(max_value=self.train_length)
+            bar = progressbar.ProgressBar(max_value=self.train_length_ex)
             sess.run(tf.global_variables_initializer())
             sess.run(tf.local_variables_initializer())
+            train_writer = tf.summary.FileWriter(run_dir + '/train', sess.graph)
             coord = tf.train.Coordinator()
             threads = tf.train.start_queue_runners(coord=coord)
-            writer = tf.summary.FileWriter(run_dir, sess.graph)
+            train_writer = tf.summary.FileWriter(run_dir, sess.graph)
             summary_op = tf.summary.merge_all()
             step = 0  # should correspond with global_step
 
@@ -265,23 +266,21 @@ class LSTMModel(object):
                 bar.start()
                 bar.update(0)
                 while not coord.should_stop():     # only stops when n_epochs = 1...
-                # while step <= self.train_length / self.batch_size:
+                # while step <= self.train_length_steps:
                     # Train
-                    _, acc, loss, rate, summary = sess.run([optimizer,
-                                                            accuracy,
-                                                            cost,
-                                                            learning_rate,
-                                                            summary_op])
+                    _, acc, loss, summary = sess.run([self.optimizer,
+                                                      self.accuracy,
+                                                      self.cost,
+                                                      summary_op])
 
                     # Display results every epoch
                     iteration = step * self.batch_size
                     if iteration % self.ex_per_epoch == 0:
                         saver.save(sess, checkpoint_prefix, global_step=step)
                         epoch = iteration / self.ex_per_epoch
-                        self.logger.info('Epoch: {}, Loss: {:.3f}, Accuracy: {:.3f}, Learning Rate: {:.3f}'
-                                         .format(epoch, loss, acc, rate))
+                        self.logger.info('Epoch: %d, Loss: %.3f, Accuracy: %.3f', epoch, loss, acc)
 
-                    writer.add_summary(summary, step)
+                    train_writer.add_summary(summary, step)
                     bar.update(iteration)
                     step += 1
             except tf.errors.OutOfRangeError:
@@ -294,7 +293,7 @@ class LSTMModel(object):
                 self.logger.info("The training is done.\n")
                 coord.request_stop()
                 coord.join(threads)
-                writer.close()
+                train_writer.close()
 
     ''' Helper Functions '''
     @staticmethod
@@ -386,8 +385,8 @@ class LSTMModel(object):
 def main():
     """Sup Main."""
     A = LSTMModel()
+    A.build_model()
     A.train_model()
-    A.reset_model()
 
 
 if __name__ == '__main__':
