@@ -3,7 +3,6 @@
 @description: Main python code file for preprocessing data
 
 Attributes:
-    DEFAULT_FORMAT (str): Logging format
     SIM_DATA_PATH (str): Local simulation data output folder path
 """
 
@@ -12,13 +11,12 @@ import os
 import numpy as np
 
 # Constants
-DEFAULT_FORMAT = '%(asctime)s: %(levelname)s: %(message)s'
 SIM_DATA_PATH = 'Data/simulation_labeled'
 
 
 class DataProcessor(object):
     """
-    DataProcessor is a class that can process datasets in different ways
+    DataProcessor is a class that processes datasets.
     """
     def __init__(self, batch_size, n_epochs, n_classes, n_features):
 
@@ -29,12 +27,12 @@ class DataProcessor(object):
         self.n_features = n_features
 
         # filenames
-        self.train_files = None
-        self.val_files = None
-        self.test_files = None
+        self.train_files = []
+        self.val_files = []
+        self.test_files = []
 
         # opened data
-        self.training_data = None
+        self.train_data = None
         self.val_data = None
         self.test_data = None
 
@@ -52,99 +50,53 @@ class DataProcessor(object):
         np.random.shuffle(all_files)
 
         train_val_test_files = self._split_datafiles(all_files)    # train_set, val_set, test_set
-        train_files = train_val_test_files[0]
-        val_files = train_val_test_files[1]
-        test_files = train_val_test_files[2]
+        self.train_files = train_val_test_files[0]
+        self.val_files = train_val_test_files[1]
+        self.test_files = train_val_test_files[2]
 
-        # Report sizes
-        self.logger.info('Train set size: %d', len(train_files))
-        self.logger.info('Validation set size: %d', len(val_files))
-        self.logger.info('Test set size: %d', len(test_files))
-
-        # Assign member variables
-        self.ex_per_epoch = len(train_files)
-        self.steps_per_epoch = self.ex_per_epoch / self.batch_size
-        self.training_data = self._load_data(train_files)   # features, labels
-        self.val_data = self._load_data(val_files)          # features, labels
-        self.test_data = self._load_data(test_files)        # features, labels
-        self.train_length_ex = self.n_epochs * self.ex_per_epoch
-        self.train_length_steps = self.train_length_ex / self.batch_size
+        # Report sizes and update member variables
+        self.logger.info('Train set size: %d', len(self.train_files))
+        self.logger.info('Validation set size: %d', len(self.val_files))
+        self.logger.info('Test set size: %d', len(self.test_files))
+        self._assign_member_variables()
 
     def preprocess_data_by_label(self):
         """Simulation data is organized by label. This method mixes and splits up the data."""
-        train_files = []
-        val_files = []
-        test_files = []
         for i in range(self.n_classes):
             modified_data_path = os.path.join(SIM_DATA_PATH, str(i))
             class_files = self._create_filename_list(modified_data_path)
 
             # get files for each thing
             result = self._split_datafiles(class_files)    # train_set, val_set, test_set
-            train_files.extend(result[0])
-            val_files.extend(result[1])
-            test_files.extend(result[2])
+            self.train_files.extend(result[0])
+            self.val_files.extend(result[1])
+            self.test_files.extend(result[2])
             self.logger.debug('%d/%d/%d added to train/val/test set from class %d.',
                               len(result[0]), len(result[1]),
                               len(result[2]), i)
 
         # Shuffle data
-        np.random.shuffle(train_files)
-        np.random.shuffle(val_files)
-        np.random.shuffle(test_files)
+        np.random.shuffle(self.train_files)
+        np.random.shuffle(self.val_files)
+        np.random.shuffle(self.test_files)
 
-        # Report sizes
-        self.logger.info('Train set size: %d', len(train_files))
-        self.logger.info('Validation set size: %d', len(val_files))
-        self.logger.info('Test set size: %d', len(test_files))
-
-        # Assign member variables
-        self.ex_per_epoch = len(train_files)
-        self.steps_per_epoch = self.ex_per_epoch / self.batch_size
-        self.training_data = self._load_data(train_files)   # features, labels
-        self.val_data = self._load_data(val_files)          # features, labels
-        self.test_data = self._load_data(test_files)        # features, labels
-        self.train_length_ex = self.n_epochs * self.ex_per_epoch
-        self.train_length_steps = self.train_length_ex / self.batch_size
-
-    def generate_batch(self, batch_idx):
-        """Generate a batch and increment the sliding batch window within the data"""
-        features = self.training_data[0]
-        labels = self.training_data[1]
-
-        start_idx = batch_idx * self.batch_size
-        end_idx = start_idx + self.batch_size - 1
-
-        # Error handling for if sliding window goes beyond data list length
-        if end_idx > self.ex_per_epoch:
-            end_idx -= (end_idx % self.ex_per_epoch)
-
-        if self.n_features > 1:
-            x_batch = features[:, start_idx:end_idx]
-        else:
-            x_batch = features[start_idx:end_idx]
-
-        y_batch = labels[start_idx:end_idx]
-        self.logger.debug('batch_idx: %d', batch_idx)
-        self.logger.debug('Got training examples %d to %d', start_idx, end_idx)
-
-        return x_batch, y_batch
-
-    def use_all_files_for_training(self, filename_list):
-        """ """
-        self.ex_per_epoch = len(filename_list)
-        self.train_length_ex = self.ex_per_epoch * self.n_epochs
-
-        # TODO(akost): Finish fixing these up
-        self.ex_per_epoch = len(train_files)
-        self.steps_per_epoch = self.ex_per_epoch / self.batch_size
-        self.training_data = self._load_data(train_files)   # features, labels
-        self.val_data = self._load_data(val_files)          # features, labels
-        self.test_data = self._load_data(test_files)        # features, labels
-        self.train_length_ex = self.n_epochs * self.ex_per_epoch
-        self.train_length_steps = self.train_length_ex / self.batch_size
+        # Report sizes and update member variables
+        self.logger.info('Train set size: %d', len(self.train_files))
+        self.logger.info('Validation set size: %d', len(self.val_files))
+        self.logger.info('Test set size: %d', len(self.test_files))
+        self._assign_member_variables()
 
     """ Helper Functions """
+    def _assign_member_variables(self):
+        """Assign class member variables after processing filenames."""
+        self.ex_per_epoch = len(self.train_files)
+        self.steps_per_epoch = self.ex_per_epoch / self.batch_size
+        self.train_data = self._load_data(self.train_files)   # features, labels
+        self.val_data = self._load_data(self.val_files)          # features, labels
+        self.test_data = self._load_data(self.test_files)        # features, labels
+        self.train_length_ex = self.n_epochs * self.ex_per_epoch
+        self.train_length_steps = self.train_length_ex / self.batch_size
+
     def _create_filename_list(self, data_dir):
         """Identify the list of CSV files based on a given data_dir.
 
@@ -197,12 +149,9 @@ class DataProcessor(object):
         features, labels = [], []
         for example_file in filenames:
             example_data = np.loadtxt(example_file, delimiter=',')
-            if self.n_features > 1:
-                ex_label = example_data[0, 0]
-                ex_feature = example_data[:, 1:]
-            else:
-                ex_label = example_data[0]
-                ex_feature = example_data[1:]
+
+            ex_label = example_data[0, 0] if self.n_features > 1 else example_data[0]
+            ex_feature = example_data[:, 1:] if self.n_features > 1 else example_data[1:]
 
             features.append(ex_feature)
             labels.append(ex_label)
