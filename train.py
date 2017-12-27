@@ -4,7 +4,8 @@
 
 Attributes:
     DEFAULT_FORMAT (str): Logging format
-    OUTPUT_DIR (str): Description
+    LOGFILE_NAME (str): Logging file name
+    OUTPUT_DIR (str): TensorBoard output directory
 """
 
 # Basic Python
@@ -13,7 +14,7 @@ import os
 import time
 import progressbar
 import tensorflow as tf
-import ipdb
+from math import ceil
 
 # Alex Python
 from data_processor import DataProcessor
@@ -23,9 +24,9 @@ from main_cnn import CNNModel     # CNN MODEL
 # Progressbar config
 progressbar.streams.wrap_stderr()
 
-# Constants
+# Logging constants
 DEFAULT_FORMAT = '%(asctime)s: %(levelname)s: %(message)s'
-LOGFILE_NAME = 'train.log'
+LOGFILE_NAME = 'main.log'
 OUTPUT_DIR = 'output'
 
 
@@ -34,23 +35,38 @@ class TrainModel(DataProcessor):
     CNNModel is a class that builds and trains a CNN Model.
     """
 
-    def __init__(self, model):
-        """Constructor."""
-        # VARYING ACROSS TESTS
-        self.n_epochs = 2                           # number of times we go through all data
-        self.batch_size = 32                        # number of examples in a single batch. https://arxiv.org/abs/1206.5533
+    def __init__(self, model, n_epochs=20, batch_size=32, learning_rate=.00005, dropout_rate=0.5):
+        """Constructor.
+
+        Args:
+            model (TensorFlow model): Model to train and evaluate
+            n_epochs (int): number of times we go through all data
+            batch_size (int): number of examples in a single batch
+            learning_rate (float): learning rate, used for optimizing
+            dropout_rate (float): dropout rate; 0.1 == 10% of input units drop out
+        """
+        # TRAINING PARAMETERS
+        self.n_epochs = n_epochs
+        self.batch_size = batch_size
+        self.learning_rate = learning_rate
+        self.dropout_rate = dropout_rate
 
         # CONSTANT
-        self.model = model(learning_rate=0.00005, dropout_rate=None)
+        self.model = model(self.learning_rate, self.dropout_rate)
         self.model.build_model()
+        self.summary_op = None
         self.logger = logging.getLogger(__name__)   # get the logger!
-        self.n_checks = None                        # number of times to check performance during training
-        if self.n_checks is None:
-            self.n_checks = self.n_epochs
+        self.n_checks = n_epochs                  # number of times to check performance during training
 
         # INPUT DATA/LABELS
-        super(TrainModel, self).__init__(self.batch_size, self.n_epochs, self.model.n_classes, self.model.n_features)
+        super(TrainModel, self).__init__(self.model.n_classes, self.model.n_features)
         self.preprocess_data_by_label()
+
+        # HELPER VARIABLES
+        self._ex_per_epoch = len(self.train_files)
+        self._steps_per_epoch = int(ceil(self._ex_per_epoch / float(self.batch_size)))
+        self._train_length_ex = self._ex_per_epoch * self.n_epochs
+        self._train_length_steps = self._steps_per_epoch * self.n_epochs
 
     def train_model(self):
         """Train the model."""
@@ -63,63 +79,59 @@ class TrainModel(DataProcessor):
         # TRAIN
         with tf.Session() as sess:
             # Initialization
-            bar = progressbar.ProgressBar(max_value=self.train_length_ex)
+            progress_bar = progressbar.ProgressBar(max_value=self._train_length_ex)
             sess.run(tf.global_variables_initializer())
             train_writer = tf.summary.FileWriter(run_dir + '/train', sess.graph)
-            test_writer = tf.summary.FileWriter(run_dir + '/test')
             val_writer = tf.summary.FileWriter(run_dir + '/val')
             batch_idx = 0
-            step = 0
             epoch_count = 0
-            bar.start()
-            bar.update(step * self.batch_size)
+            progress_bar.start()
+            progress_bar.update(0)
 
             self.logger.info("The training shall begin.")
             try:
                 _, acc_test_before, _ = self.evaluate_model_on_data(sess, 'test')
-                while step <= self.train_length_steps:
-                    if step % self.steps_per_epoch == 0:
-                        # reset stuff for batch identifying
-                        batch_idx = 0
-                        epoch_count += 1
-
-                    if step % (self.train_length_steps / self.n_checks) == 0 and step != 0:
+                for step in range(self._train_length_steps):
+                    if step % ceil(self._train_length_steps / float(self.n_checks)) == 0:
                         # Check training and validation performance
                         cost_train, acc_train, _ = self.evaluate_model_on_data(sess, 'train')
-                        _, _, summary = self.evaluate_model_on_data(sess, 'test')
-                        test_writer.add_summary(summary, step)
                         cost_val, acc_val, summary = self.evaluate_model_on_data(sess, 'val')
-                        val_writer.add_summary(summary, step)
 
-                        # Write information to TensorBoard
+                        # Report information to user
                         self.logger.info('%d epochs elapsed.', epoch_count)
                         self.logger.info('COST:     Train: %5.3f / Val: %5.3f', cost_train, cost_val)
                         self.logger.info('ACCURACY: Train: %5.3f / Val: %5.3f', acc_train, acc_val)
 
+                        # Save to Tensorboard
+                        val_writer.add_summary(summary, step)
                         saver.save(sess, checkpoint_prefix, global_step=step)
 
-                    # Training step.
+                    # Training step
                     x_batch, y_batch = self._generate_batch(batch_idx)
                     _, summary = sess.run([self.model.optimizer, self.summary_op],
                                           feed_dict={self.model.x: x_batch,
                                                      self.model.y: y_batch,
                                                      self.model.trainable: True})
 
-                    # Update progress bar and iterate step/batch_idx
+                    # Reset/incremenet batch_idx and epoch_count
+                    if step % self._steps_per_epoch == 0:
+                        batch_idx = 0
+                        epoch_count += 1
+                    else:
+                        batch_idx += 1
+
+                    # Save to Tensorboard, update progress bar
                     train_writer.add_summary(summary, step)
-                    bar.update(step * self.batch_size)
-                    batch_idx += 1
-                    step += 1
+                    progress = step * self.batch_size if step * self.batch_size < self._train_length_ex else self._train_length_ex
+                    progress_bar.update(progress)
             except KeyboardInterrupt:
                 self.logger.info('Keyboard Interrupt? Gracefully quitting.')
             finally:
-                step -= 1
-                bar.finish()
+                progress_bar.finish()
                 _, acc_test_after, _ = self.evaluate_model_on_data(sess, 'test')
                 self.logger.info("The training is done.")
                 self.logger.info('Test accuracy before training: %.3f.', acc_test_before)
                 self.logger.info('Test accuracy after training: %.3f.', acc_test_after)
-                test_writer.close()
                 train_writer.close()
                 val_writer.close()
 
@@ -156,7 +168,8 @@ class TrainModel(DataProcessor):
     """ Helper Functions """
     def _setup_tensorboard_and_log_new_run(self):
         timestamp = str(time.strftime("%Y.%m.%d-%H.%M.%S"))
-        model_name = 'trained_' + timestamp + '_' + self.model.__class__.__name__
+        model_type = self.model.__class__.__name__.replace('Model', '')
+        model_name = timestamp + '_' + model_type
         out_dir = os.path.abspath(os.path.join(os.path.curdir, OUTPUT_DIR))
         run_dir = os.path.abspath(os.path.join(out_dir, model_name))
         checkpoint_dir = os.path.abspath(os.path.join(run_dir, "checkpoints"))
@@ -170,6 +183,8 @@ class TrainModel(DataProcessor):
         self.logger.info('  batch_size: %d', self.batch_size)
         self.logger.info('  n_epochs: %d', self.n_epochs)
         self.logger.info('  n_features: %d', self.n_features)
+        self.logger.info('  learning_rate: %f', self.learning_rate)
+        self.logger.info('  dropout_rate: %.2f', 0 if self.dropout_rate is None else self.dropout_rate)
 
         return checkpoint_prefix, run_dir
 
@@ -182,8 +197,8 @@ class TrainModel(DataProcessor):
         end_idx = start_idx + self.batch_size - 1
 
         # Error handling for if sliding window goes beyond data list length
-        if end_idx > self.ex_per_epoch:
-            end_idx -= (end_idx % self.ex_per_epoch)
+        if end_idx > self._ex_per_epoch:
+            end_idx = self._ex_per_epoch
 
         if self.n_features > 1:
             x_batch = features[:, start_idx:end_idx]
@@ -196,18 +211,13 @@ class TrainModel(DataProcessor):
 
         return x_batch, y_batch
 
-    @staticmethod
-    def reset_model():
-        """Reset the model to prepare for next run."""
-        tf.reset_default_graph()
-
 
 def main():
-    """Sup Main."""
-    CNN = TrainModel(CNNModel)
+    """Sup Main!"""
+    CNN = TrainModel(CNNModel, n_epochs=200, batch_size=256, learning_rate=.00005, dropout_rate=0.5)
     CNN.train_model()
     CNN.reset_model()
-    LSTM = TrainModel(LSTMModel)
+    LSTM = TrainModel(LSTMModel, n_epochs=200, batch_size=256, learning_rate=.0005, dropout_rate=0.5)
     LSTM.train_model()
     LSTM.reset_model()
 

@@ -4,13 +4,24 @@
 
 Attributes:
     SIM_DATA_PATH (str): Local simulation data output folder path
+    SIM_LENGTH_FIX (int): bias to datapoint length due to slicing ops in Matlab, datapoints
+    SIM_LENGTH_SEQ (int): simulation length, datapoints
+    SIM_LENGTH_TIME (float): simulation time, sec
+    SIM_RESOLUTION (float): simulation resolution, sec/datapoint
 """
 
+# Basic Python
 import logging
 import os
+
+# Extended Python
 import numpy as np
 
-# Constants
+# Simulation Constants
+SIM_LENGTH_TIME = 1.5 - .45
+SIM_RESOLUTION = .001
+SIM_LENGTH_FIX = 2
+SIM_LENGTH_SEQ = int(SIM_LENGTH_TIME / SIM_RESOLUTION) + SIM_LENGTH_FIX
 SIM_DATA_PATH = 'Data/simulation_labeled'
 
 
@@ -18,34 +29,31 @@ class DataProcessor(object):
     """
     DataProcessor is a class that processes datasets.
     """
-    def __init__(self, batch_size, n_epochs, n_classes, n_features):
+    def __init__(self, n_classes, n_features):
+        """Constructor
 
+        Args:
+            n_classes (int): label classifications
+            n_features (int): features per example
+        """
         # assign input variables
-        self.batch_size = batch_size
-        self.n_epochs = n_epochs
         self.n_classes = n_classes
         self.n_features = n_features
 
-        # filenames
+        # FILENAME LISTS
         self.train_files = []
         self.val_files = []
         self.test_files = []
 
-        # opened data
+        # LOADED DATA
         self.train_data = None
         self.val_data = None
         self.test_data = None
 
-        # declare all the things
-        self.ex_per_epoch = None
-        self.steps_per_epoch = None
-        self.train_length_ex = None
-        self.train_length_steps = None
-
-        # get the logger!
-        self.logger = logging.getLogger(__name__)
+        self.logger = logging.getLogger(__name__)   # get the logger!
 
     def preprocess_all_data(self):
+        """Shuffle all data and then preprocess the files."""
         all_files = self._create_filename_list(SIM_DATA_PATH)
         np.random.shuffle(all_files)
 
@@ -54,11 +62,11 @@ class DataProcessor(object):
         self.val_files = train_val_test_files[1]
         self.test_files = train_val_test_files[2]
 
-        # Report sizes and update member variables
+        # Report sizes and load all datasets
         self.logger.info('Train set size: %d', len(self.train_files))
         self.logger.info('Validation set size: %d', len(self.val_files))
         self.logger.info('Test set size: %d', len(self.test_files))
-        self._assign_member_variables()
+        self._load_all_datasets()
 
     def preprocess_data_by_label(self):
         """Simulation data is organized by label. This method mixes and splits up the data."""
@@ -80,22 +88,18 @@ class DataProcessor(object):
         np.random.shuffle(self.val_files)
         np.random.shuffle(self.test_files)
 
-        # Report sizes and update member variables
+        # Report sizes and load all datasets
         self.logger.info('Train set size: %d', len(self.train_files))
         self.logger.info('Validation set size: %d', len(self.val_files))
         self.logger.info('Test set size: %d', len(self.test_files))
-        self._assign_member_variables()
+        self._load_all_datasets()
 
     """ Helper Functions """
-    def _assign_member_variables(self):
+    def _load_all_datasets(self):
         """Assign class member variables after processing filenames."""
-        self.ex_per_epoch = len(self.train_files)
-        self.steps_per_epoch = self.ex_per_epoch / self.batch_size
         self.train_data = self._load_data(self.train_files)   # features, labels
         self.val_data = self._load_data(self.val_files)          # features, labels
         self.test_data = self._load_data(self.test_files)        # features, labels
-        self.train_length_ex = self.n_epochs * self.ex_per_epoch
-        self.train_length_steps = self.train_length_ex / self.batch_size
 
     def _create_filename_list(self, data_dir):
         """Identify the list of CSV files based on a given data_dir.
@@ -104,7 +108,7 @@ class DataProcessor(object):
             data_dir (string): local path to where the data is saved.
 
         Returns:
-            list of strings: a list of CSV files found in the data directory
+            filenames (list of strings): a list of CSV files found in the data directory
         """
         filenames = []
         for root, _, files in os.walk(data_dir):
@@ -113,8 +117,6 @@ class DataProcessor(object):
                     rel_filepath = os.path.join(root, filename)
                     abs_filepath = os.path.abspath(rel_filepath)
                     filenames.append(abs_filepath)
-
-        self.ex_per_epoch = len(filenames)
 
         return filenames
 
@@ -145,6 +147,14 @@ class DataProcessor(object):
         return train_set, val_set, test_set
 
     def _load_data(self, filenames):
+        """Load data from the filenames
+
+        Args:
+            filenames (list of strings): filenames
+
+        Returns:
+            features, labels (np.array, np.array): loaded features and labels
+        """
         # Get features and labels from dataset
         features, labels = [], []
         for example_file in filenames:

@@ -1,27 +1,16 @@
 """Created on 24 June 2017.
 @author: Alex Kost
 @description: Main python code file for Applying CNN as a TPMS.
-
-Attributes:
-    DEFAULT_FORMAT (str): Logging format
-    LOGFILE_NAME (str): Logging file name
-    OUTPUT_DIR (str): Description
-    SIM_LENGTH_FIX (int): bias to datapoint length due to slicing ops in Matlab, datapoints
-    SIM_LENGTH_SEQ (int): simulation length, datapoints
-    SIM_LENGTH_TIME (float): simulation time, sec
-    SIM_RESOLUTION (float): simulation resolution, sec/datapoint
 """
 
 # Basic Python
 import logging
+
+# Extended Python
 import tensorflow as tf
 
-# Simulation Constants
-OUTPUT_DIR = 'output'
-SIM_LENGTH_TIME = 1.5 - .45
-SIM_RESOLUTION = .001
-SIM_LENGTH_FIX = 2
-SIM_LENGTH_SEQ = int(SIM_LENGTH_TIME / SIM_RESOLUTION) + SIM_LENGTH_FIX
+# Alex Python
+from data_processor import SIM_LENGTH_SEQ
 
 
 class CNNModel(object):
@@ -30,7 +19,12 @@ class CNNModel(object):
     """
 
     def __init__(self, learning_rate, dropout_rate):
-        """Constructor."""
+        """Constructor.
+
+        Args:
+            learning_rate (float): learning rate, used for optimizing
+            dropout_rate (float): dropout rate; 0.1 == 10% of input units drop out
+        """
         # HYPERPARAMETERS
         self.num_filt_1 = 16                        # number of filters in first conv layer
         self.num_filt_2 = 14                        # number of filters in second conv layer
@@ -44,16 +38,16 @@ class CNNModel(object):
         self.logger = logging.getLogger(__name__)   # get the logger!
 
         # MODEL MEMBER VARIABLES
-        self.x = None
-        self.y = None
-        self.cost = None
-        self.accuracy = None
-        self.optimizer = None
-        self.trainable = tf.placeholder(tf.bool, name='trainable')     # Guide batchnorm (false = evaluate, true=train)
+        self.x = None                               # input data
+        self.y = None                               # input label
+        self.cost = None                            # cross entropy loss
+        self.accuracy = None                        # step accuracy (predictions vs. labels)
+        self.optimizer = None                       # optimizing operation
+        self.trainable = tf.placeholder(tf.bool, name='trainable')  # flag to separate training/evaluating
         self.summary_op = None                      # summary operation to write data
 
     def build_model(self):
-        """ Build the CNN Model """
+        """Build the CNN Model."""
         input_shape = [None, SIM_LENGTH_SEQ, self.n_features] if self.n_features > 1 else [None, SIM_LENGTH_SEQ]
         self.x = tf.placeholder(tf.float32, shape=input_shape, name='input_data')
         self.y = tf.placeholder(tf.int64, shape=[None], name='input_labels')
@@ -94,8 +88,9 @@ class CNNModel(object):
                                                     normalizer_fn=tf.contrib.layers.batch_norm,
                                                     normalizer_params={'is_training': self.trainable,
                                                                        'updates_collections': None})
-            if self.dropout_rate:
-                fc1 = tf.layers.dropout(fc1, self.dropout_rate, name='Dropout')
+            fc1 = tf.layers.dropout(inputs=fc1,
+                                    rate=self.dropout_rate,
+                                    training=self.trainable)
             self.logger.debug('FCon1 output dims: {}'.format(fc1.get_shape()))
 
         with tf.variable_scope("Fully_Connected2"):
@@ -111,6 +106,7 @@ class CNNModel(object):
         #    http://colah.github.io/posts/2015-09-Visual-Information/
         #    https://stackoverflow.com/questions/41689451/valueerror-no-gradients-provided-for-any-variable
         #    Use sparse softmax because we have mutually exclusive classes
+        #    logits must be [batch_size, num_classes], label must be [batch_size]
         # tf.reduce_mean = reduces tensor to mean scalar value of tensor
         with tf.variable_scope("Softmax"):
             cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=pred, labels=self.y)
@@ -125,9 +121,9 @@ class CNNModel(object):
         # tf.reduce_mean = reduces tensor to mean scalar value of tensor
         # tf.cast = convert bools to 1 and 0
         with tf.variable_scope("Evaluating"):
-                correct_pred = tf.equal(tf.argmax(pred, 1), self.y)
-                self.accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
-                tf.summary.scalar('accuracy', self.accuracy)
+            correct_pred = tf.equal(tf.argmax(pred, 1), self.y)
+            self.accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
+            tf.summary.scalar('accuracy', self.accuracy)
 
         # OPTIMIZE OUR MODEL
         with tf.variable_scope("Optimizing"):
