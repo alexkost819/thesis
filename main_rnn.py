@@ -16,6 +16,23 @@ from data_processor import SIM_LENGTH_SEQ
 class LSTMModel(object):
     """
     LSTMModel is a class that builds and trains a RNN model with LSTM cells.
+
+    Attributes:
+        accuracy (TensorFlow operation): step accuracy (predictions vs. labels)
+        cost (TensorFlow operation): cross entropy loss
+        dropout_rate (float): dropout rate; 0.1 == 10% of input units drop out
+        learning_rate (float): learning rate, used for optimizing
+        logger (logger object): logging object to write to stream/file
+        n_classes (int): number of classifications: under, nominal, over pressure
+        n_features (int): number of features in input feature data: sprung_accel
+        n_hidden (int): number of features per hidden layer in RNN
+        num_fc_1 (int): number of neurons in first fully connected layer
+        n_layers (int): number of hidden layers in model
+        optimizer (TensorFlow operation): AdamOptimizer operation used to train the model
+        summary_op (TensorFlow operation): summary operation of all tf.summary objects
+        trainable (TensorFlow placeholder): boolean flag to separate training/evaluating
+        x (TensorFlow placeholder): input feature data
+        y (TensorFlow placeholder): input label data
     """
 
     def __init__(self, learning_rate, dropout_rate):
@@ -27,6 +44,7 @@ class LSTMModel(object):
         """
         # HYPERPARAMETERS
         self.n_hidden = 16                          # number of features per hidden layer in LSTM
+        self.num_fc_1 = 40                          # number of neurons in first fully connected layer
         self.n_layers = 3                           # number of hidden layers in model
         self.dropout_rate = dropout_rate            # dropout rate; 0.1 == 10% of input units drop out
         self.learning_rate = learning_rate          # learning rate, used for optimizing
@@ -75,9 +93,6 @@ class LSTMModel(object):
                                            inputs=x_reshaped,
                                            dtype=tf.float32)
 
-            # if self.dropout_rate:
-            #     outputs = tf.nn.dropout(outputs, self.dropout_rate)
-
             self.logger.debug('dynamic_rnn output dims: {}'.format(outputs.get_shape()))
 
             # We transpose the output to switch batch size with sequence size - http://monik.in/a-noobs-guide-to-implementing-rnn-lstm-using-tensorflow/
@@ -87,16 +102,14 @@ class LSTMModel(object):
 
         with tf.variable_scope("Fully_Connected1"):
             fc1 = tf.contrib.layers.fully_connected(inputs=last,
-                                                    num_outputs=self.n_hidden,
+                                                    num_outputs=self.num_fc_1,
                                                     weights_initializer=tf.contrib.layers.xavier_initializer(),
                                                     biases_initializer=tf.constant_initializer(0.1),
                                                     normalizer_fn=tf.contrib.layers.batch_norm,
                                                     normalizer_params={'is_training': self.trainable,
                                                                        'updates_collections': None})
 
-            fc1 = tf.layers.dropout(inputs=fc1,
-                                    rate=self.dropout_rate,
-                                    training=self.trainable)
+            fc1 = tf.layers.dropout(inputs=fc1, rate=self.dropout_rate, training=self.trainable)
             self.logger.debug('FCon1 output dims: {}'.format(fc1.get_shape()))
 
         with tf.variable_scope("Fully_Connected2"):
@@ -141,8 +154,8 @@ class LSTMModel(object):
 
         There's a bug in tf.contrib.rnn.MultiRNNCell that requires we create
         new cells every time we want to a mult-layered RNN. So we use this
-        helper function to create a LSTM cell.
-        See more here: https://github.com/udacity/deep-learning/issues/132#issuecomment-325158949
+        helper function to create a LSTM cell. See more here:
+        https://github.com/udacity/deep-learning/issues/132#issuecomment-325158949
 
         Returns:
             cell (BasicLSTMCell): BasicLSTM Cell

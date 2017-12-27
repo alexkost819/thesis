@@ -11,10 +11,12 @@ Attributes:
 # Basic Python
 import logging
 import os
-import time
+from time import strftime
+from math import ceil
+
+# Extended Python
 import progressbar
 import tensorflow as tf
-from math import ceil
 
 # Alex Python
 from data_processor import DataProcessor
@@ -32,14 +34,24 @@ OUTPUT_DIR = 'output'
 
 class TrainModel(DataProcessor):
     """
-    CNNModel is a class that builds and trains a CNN Model.
+    TrainModel is a class that builds and trains a provided model.
+
+    Attributes:
+        batch_size (int): number of examples in a single batch
+        dropout_rate (float): dropout rate; 0.1 == 10% of input units drop out
+        learning_rate (float): learning rate, used for optimizing
+        logger (logger object): logging object to write to stream/file
+        model (TensorFlow model object): Model to train and evaluate
+        n_checks (int): number of times to check performance while training
+        n_epochs (int): number of times we go through all data
+        summary_op (TensorFlow operation): summary operation of all tf.summary objects
     """
 
     def __init__(self, model, n_epochs=20, batch_size=32, learning_rate=.00005, dropout_rate=0.5):
         """Constructor.
 
         Args:
-            model (TensorFlow model): Model to train and evaluate
+            model (TensorFlow model object): Model to train and evaluate
             n_epochs (int): number of times we go through all data
             batch_size (int): number of examples in a single batch
             learning_rate (float): learning rate, used for optimizing
@@ -55,8 +67,8 @@ class TrainModel(DataProcessor):
         self.model = model(self.learning_rate, self.dropout_rate)
         self.model.build_model()
         self.summary_op = None
-        self.logger = logging.getLogger(__name__)   # get the logger!
-        self.n_checks = n_epochs                  # number of times to check performance during training
+        self.logger = logging.getLogger(__name__)
+        self.n_checks = 10
 
         # INPUT DATA/LABELS
         super(TrainModel, self).__init__(self.model.n_classes, self.model.n_features)
@@ -92,7 +104,8 @@ class TrainModel(DataProcessor):
             try:
                 _, acc_test_before, _ = self.evaluate_model_on_data(sess, 'test')
                 for step in range(self._train_length_steps):
-                    if step % ceil(self._train_length_steps / float(self.n_checks)) == 0:
+                    if (step % ceil(self._train_length_steps / float(self.n_checks)) == 0) or \
+                       (step == self._train_length_steps - 1):
                         # Check training and validation performance
                         cost_train, acc_train, _ = self.evaluate_model_on_data(sess, 'train')
                         cost_val, acc_val, summary = self.evaluate_model_on_data(sess, 'val')
@@ -167,7 +180,12 @@ class TrainModel(DataProcessor):
 
     """ Helper Functions """
     def _setup_tensorboard_and_log_new_run(self):
-        timestamp = str(time.strftime("%Y.%m.%d-%H.%M.%S"))
+        """Set up TensorBoard directories and Record new run with important details
+
+        Returns:
+            checkpoint_prefix, run_dir (string, string): checkpoint prefix, output root folder
+        """
+        timestamp = str(strftime("%Y.%m.%d-%H.%M.%S"))
         model_type = self.model.__class__.__name__.replace('Model', '')
         model_name = timestamp + '_' + model_type
         out_dir = os.path.abspath(os.path.join(os.path.curdir, OUTPUT_DIR))

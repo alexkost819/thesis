@@ -16,6 +16,23 @@ from data_processor import SIM_LENGTH_SEQ
 class CNNModel(object):
     """
     CNNModel is a class that builds and trains a CNN Model.
+
+    Attributes:
+        accuracy (TensorFlow operation): step accuracy (predictions vs. labels)
+        cost (TensorFlow operation): cross entropy loss
+        dropout_rate (float): dropout rate; 0.1 == 10% of input units drop out
+        learning_rate (float): learning rate, used for optimizing
+        logger (logger object): logging object to write to stream/file
+        n_classes (int): number of classifications: under, nominal, over pressure
+        n_features (int): number of features in input feature data: sprung_accel
+        num_fc_1 (int): number of neurons in first fully connected layer
+        num_filt_1 (int): number of filters in first conv layer
+        num_filt_2 (int): number of filters in second conv layer
+        optimizer (TensorFlow operation): AdamOptimizer operation used to train the model
+        summary_op (TensorFlow operation): summary operation of all tf.summary objects
+        trainable (TensorFlow placeholder): boolean flag to separate training/evaluating
+        x (TensorFlow placeholder): input feature data
+        y (TensorFlow placeholder): input label data
     """
 
     def __init__(self, learning_rate, dropout_rate):
@@ -28,7 +45,7 @@ class CNNModel(object):
         # HYPERPARAMETERS
         self.num_filt_1 = 16                        # number of filters in first conv layer
         self.num_filt_2 = 14                        # number of filters in second conv layer
-        self.num_fc_1 = 40                          # number of neurons in fully connected layer
+        self.num_fc_1 = 40                          # number of neurons in first fully connected layer
         self.dropout_rate = dropout_rate            # dropout rate; 0.1 == 10% of input units drop out
         self.learning_rate = learning_rate          # learning rate, used for optimizing
 
@@ -88,9 +105,7 @@ class CNNModel(object):
                                                     normalizer_fn=tf.contrib.layers.batch_norm,
                                                     normalizer_params={'is_training': self.trainable,
                                                                        'updates_collections': None})
-            fc1 = tf.layers.dropout(inputs=fc1,
-                                    rate=self.dropout_rate,
-                                    training=self.trainable)
+            fc1 = tf.layers.dropout(inputs=fc1, rate=self.dropout_rate, training=self.trainable)
             self.logger.debug('FCon1 output dims: {}'.format(fc1.get_shape()))
 
         with tf.variable_scope("Fully_Connected2"):
