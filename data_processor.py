@@ -28,6 +28,17 @@ SIM_DATA_PATH = 'Data/simulation_labeled'
 class DataProcessor(object):
     """
     DataProcessor is a class that processes datasets.
+
+    Attributes:
+        logger (logger object): logging object to write to stream/file
+        n_classes (int): number of classifications: under, nominal, over pressure
+        n_features (int): number of features in input feature data: sprung_accel
+        test_data (np.array): loaded data from test dataset
+        test_files (list of strings): list of filenames in test dataset
+        train_data (np.array): loaded data from training dataset
+        train_files (list of strings): list of filenames in training dataset
+        val_data (np.array): loaded data from validation dataset
+        val_files (list of strings): list of filenames in validation dataset
     """
     def __init__(self, n_classes, n_features):
         """Constructor
@@ -101,7 +112,8 @@ class DataProcessor(object):
         self.val_data = self._load_data(self.val_files)          # features, labels
         self.test_data = self._load_data(self.test_files)        # features, labels
 
-    def _create_filename_list(self, data_dir):
+    @staticmethod
+    def _create_filename_list(data_dir):
         """Identify the list of CSV files based on a given data_dir.
 
         Args:

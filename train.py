@@ -232,13 +232,33 @@ class TrainModel(DataProcessor):
 
 def main():
     """Sup Main!"""
-    CNN = TrainModel(CNNModel, n_epochs=200, batch_size=256, learning_rate=.00005, dropout_rate=0.5)
+    # CNN = TrainModel(CNNModel, n_epochs=200, batch_size=256, learning_rate=.00005, dropout_rate=0.5)
+    # CNN.train_model()
+    # CNN.reset_model()
+    # LSTM = TrainModel(LSTMModel, n_epochs=1000, batch_size=256, learning_rate=.0005, dropout_rate=0.5)
+    # LSTM.train_model()
+    # LSTM.reset_model()
+
+    CNN = TrainModel(CNNModel, n_epochs=1000, batch_size=256, learning_rate=.00005, dropout_rate=0.5)
     CNN.train_model()
     CNN.reset_model()
-    LSTM = TrainModel(LSTMModel, n_epochs=200, batch_size=256, learning_rate=.0005, dropout_rate=0.5)
+    LSTM = TrainModel(LSTMModel, n_epochs=1000, batch_size=256, learning_rate=.001, dropout_rate=0.5)
     LSTM.train_model()
     LSTM.reset_model()
 
+    CNN = TrainModel(CNNModel, n_epochs=1000, batch_size=128, learning_rate=.00005, dropout_rate=0.5)
+    CNN.train_model()
+    CNN.reset_model()
+    LSTM = TrainModel(LSTMModel, n_epochs=1000, batch_size=128, learning_rate=.0005, dropout_rate=0.5)
+    LSTM.train_model()
+    LSTM.reset_model()
+
+    CNN = TrainModel(CNNModel, n_epochs=1000, batch_size=128, learning_rate=.00005, dropout_rate=0.5)
+    CNN.train_model()
+    CNN.reset_model()
+    LSTM = TrainModel(LSTMModel, n_epochs=1000, batch_size=128, learning_rate=.001, dropout_rate=0.5)
+    LSTM.train_model()
+    LSTM.reset_model()
 
 if __name__ == '__main__':
     # create logger with 'spam_application'

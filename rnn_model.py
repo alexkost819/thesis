@@ -13,9 +13,9 @@ import tensorflow as tf
 from data_processor import SIM_LENGTH_SEQ
 
 
-class LSTMModel(object):
+class RNNModel(object):
     """
-    LSTMModel is a class that builds and trains a RNN model with LSTM cells.
+    RNNModel is a class that builds and trains a RNN model with LSTM cells.
 
     Attributes:
         accuracy (TensorFlow operation): step accuracy (predictions vs. labels)
