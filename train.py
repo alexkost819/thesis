@@ -20,15 +20,15 @@ import tensorflow as tf
 
 # Alex Python
 from data_processor import DataProcessor
-from main_rnn import LSTMModel    # RNN MODEL
-from main_cnn import CNNModel     # CNN MODEL
+from rnn_model import LSTMModel    # RNN MODEL
+from cnn_model import CNNModel     # CNN MODEL
 
 # Progressbar config
 progressbar.streams.wrap_stderr()
 
 # Logging constants
 DEFAULT_FORMAT = '%(asctime)s: %(levelname)s: %(message)s'
-LOGFILE_NAME = 'main.log'
+LOGFILE_NAME = 'train.log'
 OUTPUT_DIR = 'output'
 
 
