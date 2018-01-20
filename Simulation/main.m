@@ -25,26 +25,25 @@ set(0, 'DefaultFigureVisible', 'off');
 set(0, 'DefaultFigureWindowStyle', 'docked');
 
 %% Test parameters (user-provided)
-num_psi = 27;               % number of psis to simulate
-psi_min = 25.5;               % minimum psi
-psi_max = 38.5;               % maximum psi
+num_psi = 25;               % number of psis to simulate
+psi_min = 25.5;             % minimum psi
+psi_max = 38.5;             % maximum psi
 
 num_steps = 39;             % number of step sizes to simulate
 step_min = .1;              % minimum step size, m
 step_max = 2;               % maximum step size, m
 
-sim_time = 1.5;            % simulation time, s
-snr = 0;                   % signal-to-noise ratio per sample, dB
+sim_time = 1.5;             % simulation time, s
+snr = 0;                    % signal-to-noise ratio per sample, dB
 
 % save data path
-save_path = '/Users/alexkost/Dropbox/Grad Life/thesis/Data/simulation_rnn/';
+save_path = '/Users/alexkost/Dropbox/Grad Life/thesis/Data/simulated_labeled/';
 %% Test parameters (predefined)
 % Create a range of PSIs and Steps using defined values above
 psi_all = linspace(psi_min, psi_max, num_psi);
 steps_all = linspace(step_min, step_max, num_steps);
 
 % ICs for simulations (cannot be nested in functions)
-% Should consider making this dynamic... but don't know how
 IC = [-1.74412834455962e-12
     -2.44861738501480e-06
     -5.70054231468026e-11
@@ -53,7 +52,8 @@ IC = [-1.74412834455962e-12
 %% Run simulations and get outputs (CSVs and plots)
 for i=1:num_steps
     step_size = steps_all(i);
-    figure
+%    step_size = 2;
+    figure(i)
     hold on;
     for j=1:num_psi
         % run simulation
@@ -68,21 +68,21 @@ for i=1:num_steps
                 simout(:,k) = awgn(simout(:, k), snr);
             end
         end
-                       
+
         % interpret simulation outputs
         sprung_pos = simout(:,1);
         %sprung_vel = simout(:,2);
-        sprung_acc = simout(:,7);
         %unsprung_pos = simout(:,3);
         %unsprung_vel = simout(:,4);
-        unsprung_acc = simout(:,8);
-        step = simout(:,5);    % constant every run
-        time = simout(:,6);    % constant every run
+        step = simout(:,5);             % constant every run
+        time = simout(:,6);             % constant every run
+        sprung_acc = simout(:,7);
+        %unsprung_acc = simout(:,8);
 
         % Plot individual run
         str = strcat(num2str(psi, '%.1f'), ' psi');
         plot(time, sprung_pos, 'DisplayName', str);
-        
+
         % calculate label value
         if psi < 30
             label_val = 0;
@@ -93,20 +93,14 @@ for i=1:num_steps
         end
 
         % Output to CSV
-        filename = strcat('Sim_', ...
-                          num2str(psi, '%.1f'), 'psi_', ...
-                          num2str(step_size, '%.2f'), 'm.csv');
-        fullfilename = fullfile(save_path, num2str(label_val), filename);
-
-        % Original format. Not good for tensorflow
-        %label = ones(length(simout(:,6)),1) * label_val;
-        %M = [time sprung_acc unsprung_acc sprung_height label];
-        %csvwrite(fullfilename, M);
-
         % Modifications done for Tensorflow
         %    use sprung acceleration data only (1 feature)
         %    transpose so each row is independent example
         %    remove first .45 seconds of data
+        filename = strcat('Sim_', ...
+                          num2str(psi, '%.1f'), 'psi_', ...
+                          num2str(step_size, '%.2f'), 'm.csv');
+        fullfilename = fullfile(save_path, num2str(label_val), filename);
         acc_transposed = [sprung_acc]';
         M = acc_transposed(:,(.45/.001):end);
         label_val_column = ones(size(M, 1),1) * label_val;
@@ -124,5 +118,5 @@ for i=1:num_steps
     % save figure
     filename = sprintf('Plot_step_size_%g.png', step_size);
     fullfilename = fullfile(save_path, filename);
-    print(figure(i),fullfilename,'-dpng','-r300')
+    print(figure(i),fullfilename,'-dpng','-r300');
 end

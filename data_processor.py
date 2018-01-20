@@ -22,7 +22,7 @@ SIM_LENGTH_TIME = 1.5 - .45
 SIM_RESOLUTION = .001
 SIM_LENGTH_FIX = 2
 SIM_LENGTH_SEQ = int(SIM_LENGTH_TIME / SIM_RESOLUTION) + SIM_LENGTH_FIX
-SIM_DATA_PATH = 'Data/simulation_labeled'
+SIM_DATA_PATH = 'Data/simulated_labeled'
 
 
 class DataProcessor(object):

@@ -19,15 +19,18 @@ class CNNModel(object):
 
     Attributes:
         accuracy (TensorFlow operation): step accuracy (predictions vs. labels)
+        beta1 (float): exponential decay rate for the 1st moment estimates
+        beta2 (float): exponential decay rate for the 2nd moment estimates
         cost (TensorFlow operation): cross entropy loss
         dropout_rate (float): dropout rate; 0.1 == 10% of input units drop out
+        epsilon (float): a small constant for numerical stability
+        kernel_size (int): kernel size in conv layer
         learning_rate (float): learning rate, used for optimizing
         logger (logger object): logging object to write to stream/file
         n_classes (int): number of classifications: under, nominal, over pressure
         n_features (int): number of features in input feature data: sprung_accel
         num_fc_1 (int): number of neurons in first fully connected layer
-        num_filt_1 (int): number of filters in first conv layer
-        num_filt_2 (int): number of filters in second conv layer
+        num_filt_1 (int): number of filters in conv layer
         optimizer (TensorFlow operation): AdamOptimizer operation used to train the model
         summary_op (TensorFlow operation): summary operation of all tf.summary objects
         trainable (TensorFlow placeholder): boolean flag to separate training/evaluating
@@ -35,19 +38,17 @@ class CNNModel(object):
         y (TensorFlow placeholder): input label data
     """
 
-    def __init__(self, learning_rate, dropout_rate):
-        """Constructor.
-
-        Args:
-            learning_rate (float): learning rate, used for optimizing
-            dropout_rate (float): dropout rate; 0.1 == 10% of input units drop out
-        """
+    def __init__(self):
+        """Constructor."""
         # HYPERPARAMETERS
-        self.num_filt_1 = 16                        # number of filters in first conv layer
-        self.num_filt_2 = 14                        # number of filters in second conv layer
-        self.num_fc_1 = 40                          # number of neurons in first fully connected layer
-        self.dropout_rate = dropout_rate            # dropout rate; 0.1 == 10% of input units drop out
-        self.learning_rate = learning_rate          # learning rate, used for optimizing
+        self.num_filt_1 = 16                        # number of filters in conv layer
+        self.kernel_size = 5                        # kernel size in conv layer
+        self.num_fc_1 = 30                          # number of neurons in first fully connected layer
+        self.dropout_rate = 0.2                     # dropout rate; 0.1 == 10% of input units drop out
+        self.learning_rate = 0.001                  # learning rate, used for optimizing
+        self.beta1 = 0.9                            # exponential decay rate for the 1st moment estimates
+        self.beta2 = 0.999                          # exponential decay rate for the 2nd moment estimates
+        self.epsilon = 1e-08                        # a small constant for numerical stability
 
         # CONSTANT
         self.n_features = 1                         # sprung_accel
@@ -75,29 +76,21 @@ class CNNModel(object):
             # so -1 = batch size, should adapt accordingly
             # in_height = "height" of the image (so one dimension)
             # in_width = "width" of image
-            x_reshaped = tf.reshape(self.x, [-1, SIM_LENGTH_SEQ, 1, self.n_features])
+            x_reshaped = tf.reshape(self.x, [-1, SIM_LENGTH_SEQ, self.n_features])
             self.logger.debug('Input dims: {}'.format(x_reshaped.get_shape()))
 
         with tf.variable_scope("ConvBatch1"):
-            conv1 = tf.contrib.layers.conv2d(inputs=x_reshaped,
-                                             num_outputs=self.num_filt_1,
-                                             kernel_size=[5, 1],
-                                             normalizer_fn=tf.contrib.layers.batch_norm,
-                                             normalizer_params={'is_training': self.trainable,
-                                                                'updates_collections': None})
+            x_bn = tf.contrib.layers.batch_norm(inputs=x_reshaped,
+                                                is_training=self.trainable,
+                                                updates_collections=None)
+
+            conv1 = tf.layers.conv1d(inputs=x_bn,
+                                     filters=self.num_filt_1,
+                                     kernel_size=[self.kernel_size])
             self.logger.debug('Conv1 output dims: {}'.format(conv1.get_shape()))
 
-        with tf.variable_scope("ConvBatch2"):
-            conv2 = tf.contrib.layers.conv2d(inputs=conv1,
-                                             num_outputs=self.num_filt_2,
-                                             kernel_size=[4, 1],
-                                             normalizer_fn=tf.contrib.layers.batch_norm,
-                                             normalizer_params={'is_training': self.trainable,
-                                                                'updates_collections': None})
-            self.logger.debug('Conv2 output dims: {}'.format(conv2.get_shape()))
-
         with tf.variable_scope("Fully_Connected1"):
-            conv2_flatten = tf.layers.flatten(conv2, name='Flatten')
+            conv2_flatten = tf.layers.flatten(conv1, name='Flatten')
             fc1 = tf.contrib.layers.fully_connected(inputs=conv2_flatten,
                                                     num_outputs=self.num_fc_1,
                                                     weights_initializer=tf.contrib.layers.xavier_initializer(),
@@ -142,4 +135,7 @@ class CNNModel(object):
 
         # OPTIMIZE OUR MODEL
         with tf.variable_scope("Optimizing"):
-            self.optimizer = tf.train.AdamOptimizer(self.learning_rate).minimize(self.cost)
+            self.optimizer = tf.train.AdamOptimizer(self.learning_rate,
+                                                    beta1=self.beta1,
+                                                    beta2=self.beta2,
+                                                    epsilon=self.epsilon).minimize(self.cost)
